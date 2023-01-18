@@ -70,13 +70,11 @@ const s2 = "je suis une chaîne avec des double quotes";
 const s3 = `Je suis une chaîne avec des accents graves`;
 ```
 
-Pour les 2 premières syntaxes, le choix entre guillemets simples ou doubles est une question de préférences (_les goûts et les couleurs..._) car il n'y a pas de différence, la seule contrainte est qu'une fois qu'on a fait un choix, il faut s'y tenir sur l'ensemble du projet (conventions de code).
+Pour les 2 premières syntaxes, il n'y a aucune différence du point de vue technique. La seule différence, c'est que dans une chaîne délimitée par des guillemets simples, vous devrez échapper les guillemets simples que vous voulez insérer dans la chaîne (`'J\'ai faim'`) et inversement dans les chaîne délimitées par des guillemets doubles (`"Ce TP est \"super\" !"`).
 
-> _**NB :** Entre guillemets doubles ou simples, ma préférence va aux **guillemets simples** qui permettent de ne pas avoir à échapper les double quotes (souvent utilisées lorsqu'on génère du code HTML)._
-
-**La 3e syntaxe utilise les accents graves**. Ils permettent de créer ce qu'on appelle des [**"template strings"** (_mdn_)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). Ces "template strings" apportent plusieurs fonctionnalités dont ne disposent pas les guillemets simples et doubles :
-- la possibilité de déclarer des chaînes de caractères **multi-lignes**
-- **mais surtout la possibilité d'injecter dedans des valeurs** sans avoir besoin de faire de la concaténation (cf. prochain paragraphe)
+La 3e syntaxe appelée [**"template strings"** (_mdn_)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) est en revanche **très différente** des 2 autres car elle permet de faire des choses dont les autres sont incapables :
+- déclarer des chaînes de caractères **multi-lignes**
+- **mais surtout d'injecter dedans des valeurs** sans avoir besoin de faire de la concaténation (_ce qu'on va voir au prochain paragraphe_)
 
 
 ### D.2.2. Concaténation
@@ -147,13 +145,15 @@ Vérifiez si vous aviez vu juste en tapant le code dans la console !
 
 3. **Créez une constante nommée `url`.** Sa valeur initiale sera la concaténation de :
 	- la chaîne de caractères `'images/'`,
-	- la valeur de la variable `name` transformée en minuscules à l'aide de la méthode `.toLowerCase()` (_cf. [la doc de `toLowerCase()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)_) et dont les espaces sont remplacés par des tirets (`-`)
+	- la valeur de la variable `name` transformée en minuscules à l'aide de la méthode `.toLowerCase()` (_cf. [la doc de `toLowerCase()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)_) et dont les espaces sont remplacés par des tirets `-` (_On n'a pas vu récemment une méthode qui permettait de remplacer des caractères par un autre ?_ 🤔)
 	- et de la chaîne de caractères `'.jpg'`
 
 	Affichez la valeur de `url` dans la console, à l'aide de l'instruction `console.log(url);`, vous devez obtenir :
 	```js
 	'images/mario-kart-8-deluxe.jpg'
 	```
+
+	<img src="images/readme/screen-chaines-url.png" />
 
 	> _**NB :** Vous verrez que vscode vous **"barre" la constante name en vous disant qu'elle est dépréciée**._
 	>
@@ -165,12 +165,14 @@ Vérifiez si vous aviez vu juste en tapant le code dans la console !
 	- L'URL du lien (*attribut `href`*) devra correspondre à la valeur de la constante `url`.
 	- Le contenu de la balise `<a>` correspondra lui à la valeur de la constante `url`
 
-	> _**NB:** pour ça, les template strings sont parfaitement adaptées !_
-
-	Affichez dans la console la valeur de la variable html, on doit obtenir la chaîne de caractères suivante :
 	```bash
 	'<a href="images/mario-kart-8-deluxe.jpg">images/mario-kart-8-deluxe.jpg</a>'
 	```
+
+	Affichez dans la console la valeur de la variable html pour vérifier que le résultat est bien conforme à la chaîne indiquée ci-dessus.
+
+	> _**NB:** pour cet exercice, les template strings sont vraiment pratiques !_
+
 
 ## D.4. Injection dans la page HTML
 
@@ -180,13 +182,13 @@ Vérifiez si vous aviez vu juste en tapant le code dans la console !
 	```js
 	document.querySelector('.gameList').innerHTML = html;
 	```
-	Cette instruction va injecter le code HTML contenu dans la variable `html` à l'intérieur de la balise de classe CSS `"pageContent"`.
+	Cette instruction va injecter le code HTML contenu dans la variable `html` à l'intérieur de la balise de classe CSS `"gameList"`.
 
 	Si tout s'est bien passé, vous devriez désormais :
 	- voir le texte 'images/mario-kart-8-deluxe.jpg' dans la page de votre navigateur.
 	- pouvoir cliquer sur ce texte et être redirigé vers une image de Mario Kart !
 
-	<img src="images/readme/screenshot-chaine-ahref.png" />
+	<img src="images/readme/screen-chaines-ahref.png" />
 
 2. **Modifiez encore la variable html avant son affichage** en remplaçant le texte contenu dans la balise `<a>` par
 	- **une balise `<img>`** dont la source (_attribut `src`_) sera la chaîne `images/mario-kart-8-deluxe.jpg`
@@ -202,7 +204,7 @@ Vérifiez si vous aviez vu juste en tapant le code dans la console !
 
 	Le rendu doit être celui-ci :
 
-	<img src="images/readme/screenshot-chaine-ahref-img.png" />
+	<img src="images/readme/screen-chaines-ahref-img.png" />
 
 ## D.5. Affichage dynamique
 
@@ -223,7 +225,12 @@ Vérifiez que la chaîne que vous saisissez dans la popup s'affiche bien ensuite
 
 Maintenant faites en sorte que la valeur de la constante `name` ne soit plus `'Mario Kart 8 Deluxe'` en dur, mais récupérée à l'aide de `window.prompt()`.
 
-> _**NB :** si vous regardez le contenu du dossier `/images` du TP, vous trouverez quelques noms de jeux vidéos que vous pouvez utiliser pour qu'une image s'affiche bien dans la page_ 😎
+> _**NB :** si vous regardez le contenu du dossier `/images` du TP, vous trouverez quelques noms de jeux vidéos que vous pouvez saisir dans le prompt pour qu'une image s'affiche bien dans la page_ 😎
+
+Si on tape "`God of War Ragnarok`" dans le prompt, alors l'affichage doit être :
+
+<img src="images/readme/screen-chaines-ahref-img-prompt.png" />
+
 
 ### D.5.2. Rappels sur les fonctions
 
@@ -245,7 +252,7 @@ const makeEpisode = (hero) => { // arrow function ("lambda")
 
 Les 3 déclarations ont exactement le même effet : elles créent en mémoire une constante qui a le nom `"makeEpisode"` et qui contient une valeur de type [`Function` (_mdn_)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions).
 
-Elles s'utilisent donc toutes les 3 de la même manière :
+Elles s'appellent donc toutes les 3 de la même manière :
 
 ```js
 const newEpisode = makeEpisode('Benjen Stark');
@@ -274,8 +281,6 @@ const name = window.prompt('Quel jeu voulez vous ?');
 const html = renderGameThumbnail(name);
 document.querySelector('.gameList').innerHTML = html;
 ```
-
-![](image/readme/screenshot-chaines-final.mp4)
 
 Une fois que ça fonctionne, pour éviter d'avoir un prompt à chaque rechargement de page, commentez la ligne du prompt et remettez une valeur en dur dans la constante `name` :
 

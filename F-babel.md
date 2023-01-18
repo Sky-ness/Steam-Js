@@ -13,9 +13,9 @@
 
 **Comme vu en cours, ECMAScript est la spec suivie par JavaScript.**
 
-Cette Spec a connu un tournant avec la version ES6 (_sortie en 2015_) qui a révolutionné le développement JS en apportant tout un tas de nouveautés (_c'est en partie ce qui fait qu'aujourd'hui, non **JS n'est PAS un langage "merdique"**_)
+**Cette Spec a connu un tournant avec la version ES6 (_sortie en 2015_) qui a révolutionné le développement JS en apportant tout un tas de nouveautés** (_c'est en partie ce qui fait qu'aujourd'hui, non **JS n'est PAS un langage "merdique"**_)
 
-Depuis cette version ES6 (aussi appelée ES2015), une nouvelle version d'ECMAScript sort tous les ans ! Par exemple, cette année nous aurons en juin ES14/ES2023 !
+Depuis cette version ES6 (aussi appelée ES2015), une nouvelle version d'ECMAScript sort **tous les ans** ! Par exemple, cette année nous aurons en juin ES14/ES2023 !
 
 ## F.2. Le problème de la compatibilité
 
@@ -40,19 +40,19 @@ Jusque là dans ce TP vous n'avez pas eu de soucis car toutes les syntaxes ECMAS
 ## F.3. Le sauveur : Babel
 
 
-_**Heureusement pour nous existe un outil "magique" : c'est [Babel](https://babeljs.io).**_
+_**Heureusement pour nous, il existe un outil "magique" : c'est [Babel](https://babeljs.io)**_ ✨
 
 <img src="images/readme/header-babel.jpg" />
 
-**En effet, Babel est un compilateur de JS en JS !** 🤔 \
-En fait, il compile du code JS ES6+ (_tout beau tout neuf, avec toutes les fonctionnalités ECMAScript qu'on souhaite_), en code JS ES5 (_tout vieux, tout moche mais qui a l'avantage de fonctionner sur presque tous les navigateurs_) !
+**Babel est un compilateur de JS en... JS !** 🤔 \
+En fait, il compile du code JS **ES6+** (_tout beau tout neuf, avec toutes les fonctionnalités ECMAScript qu'on souhaite_), en code JS **ES5** (_tout vieux, tout moche mais qui a l'avantage de fonctionner sur presque tous les navigateurs_) !
 
 <a href="https://caniuse.com/es5"><img src="https://caniuse.bitsofco.de/image/es5.webp" /></a>\
 <small>_Le support de ES5 est quasi total_ 👆</small>
 
 Grâce à Babel on peut donc **coder avec toutes les syntaxes qu'on souhaite sans se préoccuper du support navigateur** car Babel va se charger de rendre notre code compatible avec les vieux navigateurs ! Merci Babel !
 
-Pour avoir un aperçu de comment fonctionne Babel, je vous invite à vous rendre sur cette page : [babeljs.io/repl#?...](https://babeljs.io/repl#?browsers=&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=PTAEEECdIewd1AMwK4DsDGAXAljVAoAGwFNNQBnAR2QENJjQBeUADyYD5XQAqVgblD58IUOjzlM-MagmhsTCtTrEAFABYATAEo-w4POYBGDQJHFoxZJFAATBmIC2AB2yEaOPBXk2Al44fEqJg-oCrSEjRBxFpCIiRk5GJOPviIMNYqoPFyCgAMAvIAPKDGoAUA1OWgWgDe-KCi4jAkAHSEMADmKtg69XKIoZiQyNF1DQ3ZBqAArLrjjTLNxG2d3b0NAL74W3q2xBLDWFbYqB34MApjoDQAXKAARDT3ADR9AEZ3928v27rZNTRnqA3hsFDBdEA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=false&presets=env&prettier=false&targets=&version=7.20.12&externalPlugins=&assumptions=%7B%7D). Vous verrez à gauche un exemple de code ES6+ et à droite sa version compilée par Babel en ES5 !
+Pour avoir un aperçu de comment fonctionne Babel, je vous invite à vous rendre sur [cette page : babeljs.io/repl#?browsers=&build=&builtIns=false&c...](https://babeljs.io/repl#?browsers=&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=PTAEEECdIewd1AMwK4DsDGAXAljVAoAGwFNNQBnAR2QENJjQBeUADyYD5XQAqVgblD58IUOjzlM-MagmhsTCtTrEAFABYATAEo-w4POYBGDQJHFoxZJFAATBmIC2AB2yEaOPBXk2Al44fEqJg-oCrSEjRBxFpCIiRk5GJOPviIMNYqoPFyCgAMAvIAPKDGoAUA1OWgWgDe-KCi4jAkAHSEMADmKtg69XKIoZiQyNF1DQ3ZBqAArLrjjTLNxG2d3b0NAL74W3q2xBLDWFbYqB34MApjoDQAXKAARDT3ADR9AEZ3928v27rZNTRnqA3hsFDBdEA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=false&presets=env&prettier=false&targets=&version=7.20.12&externalPlugins=&assumptions=%7B%7D). Vous verrez à gauche un exemple de code ES6+ et à droite sa version compilée par Babel en ES5 !
 
 <img src="images/readme/babeljs.repl.png">
 
@@ -115,10 +115,12 @@ Pour l'installer on va utiliser npm (_Node Package Manager - l'outil fourni avec
 2. **Une fois le fichier `build/main.js` créé, modifiez le fichier `index.html` pour charger ce fichier à la place du `src/main.js`.** Rechargez la page pour vérifier que tout fonctionne toujours correctement !
 
 
-3. **Pour simplifier le travail et éviter d'avoir à compiler manuellement à chaque modification**, vous pourrez utiliser dans les futurs TP, la commande suivante qui va tourner en tâche de fond et recompiler à chaque sauvegarde du fichier js/main.js :
+3. **Pour simplifier le travail et éviter d'avoir à compiler manuellement à chaque modification**, vous pouvez utiliser à partir de maintenant la commande suivante :
 	```bash
 	./node_modules/.bin/babel src -d build --verbose --watch --source-maps
 	```
+
+	Cette commande lance la compilation avec Babel en tâche de fond et recompile automatiquement à chaque fois que le fichier `src/main.js` est modifié ! Pratique !
 
 ## Étape suivante <!-- omit in toc -->
 Si tout fonctionne, vous pouvez passer à la dernière étape : [G. Destructuring, filtres et tris](./G-filtres-tri.md)

@@ -23,13 +23,14 @@ console.log('Welcome to ', {title:'JSteam', emoji: '🎮'});
 ```
 Puis rechargez la page pour voir le résultat dans la console du navigateur.
 
-En fait l'objet `console` est un objet global qui contient la méthode `.log()` mais aussi d'autres méthodes qui permettent d'avoir un rendu différent et de filtrer les messages. Essayez les méthodes suivantes et constatez le résultat dans la console :
+En fait "`console`" est un objet global qui contient la méthode `.log()` mais aussi d'autres méthodes qui permettent d'avoir un rendu différent et de filtrer les messages. Essayez les méthodes suivantes et constatez le résultat dans la console :
 - `console.warn('Oh oh attention')`
 - `console.error('fatal error lol')`
 - `console.clear()`
 - `console.table([['Walter','White'],['Skyler','White'],['Saul','Goodman']])`
 
-Enfin, **la console permet de tester rapidement du code JS grâce à un champ de saisie**. Tapez-y l'instruction `42+"12"-10` puis <kbd>Entrée</kbd>. Le résultat s'affiche directement dans la console. Incroyable !
+Enfin, **la console permet de tester rapidement du code JS grâce à un champ de saisie**. Tapez-y l'instruction `42+"12"-10` puis <kbd>Entrée</kbd>. \
+Le résultat s'affiche directement dans la console. Incroyable !
 
 ## C.2. L'inspecteur d'éléments
 
@@ -63,6 +64,9 @@ console.log('Hold', 'the', what );
 
 	**Une fois la page rechargée, l'exécution est maintenant interrompue**, et il est possible de voir à droite, dans l'onglet "Scope", les valeurs des variables locales et notamment de la constante `what`. Vous pouvez aussi consulter la valeur des variables au survol de la variable directement dans le code !
 
+	<img src="images/readme/devtools-breakpoint.png" >
+
+
 	Pour reprendre l'exécution de la page, cliquez sur le bouton play bleu.
 
 	Cliquez ensuite à nouveau sur le numéro de la 2e ligne pour enlever le breakpoint.
@@ -80,7 +84,7 @@ console.log('Hold', 'the', what );
 
 	Rechargez la page à nouveau avec les devtools ouverts, et constatez que l'exécution s'est arrêtée automatiquement sans avoir eu besoin de mettre de point d'arrêt manuel ! Pratique !
 
-	Voilà, vous connaissez les principales façons de mettre des breakpoints, supprimez l'instruction `debugger;` et rechargez la page.
+	Voilà, vous connaissez les principales façons de mettre des breakpoints, supprimez les 3 lignes du `main.js` qu'on a rajouté (`const what; ....`).
 
 ## Étape suivante <!-- omit in toc -->
 Maintenant que vous avez vu les principaux devtools offerts par les navigateurs, attaquons nous au code à proprement parler avec quelques exercices sur les chaînes de caractères : [D. Les chaînes de caractères](D-chaines.md)
