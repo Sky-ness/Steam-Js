@@ -1,0 +1,25 @@
+body > footer {
+	background-color: #171a21;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px;
+	color: #8F98A0;
+	font-size: 12px;
+}
+body > footer a {
+	text-decoration: none;
+	color: #C6D4DF;
+}
+body > footer > div {
+	width: 100%;
+	max-width: 1000px;
+	border-top: 1px solid #363c44;
+	padding: 20px 0;
+}
+body > footer img[src="images/logo-iut.png"] {
+	width: 100px;
+	filter: invert() brightness(100);
+	opacity: .6;
+	display: block;
+}

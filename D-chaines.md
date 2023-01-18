@@ -190,13 +190,13 @@ Vérifiez si vous aviez vu juste en tapant le code dans la console !
 
 2. **Modifiez encore la variable html avant son affichage** en remplaçant le texte contenu dans la balise `<a>` par
 	- **une balise `<img>`** dont la source (_attribut `src`_) sera la chaîne `images/mario-kart-8-deluxe.jpg`
-	- **une balise `<section>`** contenant la constante `name`
+	- **une balise `<footer>`** contenant la constante `name`
 
 	Contrôlez dans l'inspecteur d'éléments que le résultat obtenu est bien :
 	```html
 	<a href="images/mario-kart-8-deluxe.jpg">
 		<img src="images/mario-kart-8-deluxe.jpg"/>
-		<section>Mario Kart 8 Deluxe</section>
+		<footer>Mario Kart 8 Deluxe</footer>
 	</a>
 	```
 
@@ -276,6 +276,14 @@ document.querySelector('.gameList').innerHTML = html;
 ```
 
 ![](image/readme/screenshot-chaines-final.mp4)
+
+Une fois que ça fonctionne, pour éviter d'avoir un prompt à chaque rechargement de page, commentez la ligne du prompt et remettez une valeur en dur dans la constante `name` :
+
+```js
+// const name = window.prompt('Quel jeu voulez vous ?');
+const name = 'Mario Kart 8 Deluxe';
+```
+
 
 ## Étape suivante <!-- omit in toc -->
 Si tout fonctionne, vous pouvez passer à l'étape suivante : [E. Les tableaux et les objets littéraux](E-tableaux-objets.md)

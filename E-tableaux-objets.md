@@ -52,15 +52,15 @@ Parcourez ensuite ce tableau afin d'injecter dans la page (_à l'aide de la fonc
 ```html
 <a href="images/mario-kart-8-deluxe.jpg">
 	<img src="images/mario-kart-8-deluxe.jpg"/>
-	<section>Mario Kart 8 Deluxe</section>
+	<footer>Mario Kart 8 Deluxe</footer>
 </a>
 <a href="images/god-of-war-ragnarok.jpg">
 	<img src="images/god-of-war-ragnarok.jpg"/>
-	<section>God of War Ragnarok</section>
+	<footer>God of War Ragnarok</footer>
 </a>
 <a href="images/the-last-of-us-part-2.jpg">
 	<img src="images/the-last-of-us-part-2.jpg"/>
-	<section>The Last of Us Part 2</section>
+	<footer>The Last of Us Part 2</footer>
 </a>
 ```
 
@@ -98,7 +98,7 @@ C'est ce qu'on va faire ici : utiliser des objets littéraux pour "décrire" cha
 			released: '2022-11-09',
 			metacritic: 94,
 			background_image: 'images/god-of-war-ragnarok.jpg',
-		}
+		},
 		{
 			name: 'The Last of Us Part II',
 			released: '2020-06-19',
@@ -122,13 +122,13 @@ C'est ce qu'on va faire ici : utiliser des objets littéraux pour "décrire" cha
 	```html
 	<a href="images/mario-kart-8-deluxe.jpg">
 		<img src="images/mario-kart-8-deluxe.jpg" />
-		<section>
-			<h4>Mario Kart 8 Deluxe</h4>
+		<footer>
+			<h3>Mario Kart 8 Deluxe</h3>
 			<div class="infos">
 				<time datetime="2017-04-27">2017-04-27</time>
 				<span class="metacritic">92</span>
 			</div>
-		</section>
+		</footer>
 	</a>
 	```
 
