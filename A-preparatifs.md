@@ -25,12 +25,19 @@ Dans ce cas il vous faudra installer :
 - **Git** : https://git-scm.com/
 - **Node.js** (_version "Current" **19.x**_): https://nodejs.org/en/download/current/
 	> _**Attention :** si vous aviez déjà une version plus ancienne de Node (tapez `node -v` dans un terminal pour en avoir le coeur net) alors je vous conseille **VIVEMENT** de la désinstaller complètement avant d'installer la nouvelle version._
+
+	> ⚠️ _**ATTENTION AUSSI :**_ ⚠️ _si vous êtes sous windows, pendant le processus d'installation, **COCHEZ** la case _"Automatically install the necessary tools. ..."_ sur l'écran **"Tools for native modules"**_
+	>
+	> <img src="images/readme/node-install.png" >
+	>
+	> Cette case permettra d'installer des dépendances utiles pour un futur TP (notamment python et les visual c++ build tools).
+
 - **VSCodium** https://vscodium.com ou **VSCode** https://code.visualstudio.com
 	> _**NB :** Si vous avez déjà VSCode, ça fera très bien l'affaire, VSCodium et VSCode sont quasi identiques (_cf. [A.4. VSCod[e/ium]](#a4-vscodeium)_) !_
 
 ## A.2. À propos de ce repo
 
-**Ce repo contient un ensemble de fichiers qui vous seront utiles pour la réalisation des exercices de ce cours.**
+**Ce repo contient un ensemble de fichiers qui vous seront utiles pour la réalisation de ce TP.**
 
 Il contient notamment des fichiers html, css et des assets graphiques (images et vidéos) qui vous permettront de vous concentrer sur le JS sans trop vous soucier de l'apparence de ce que vous codez tout en ayant **quand même** quelque chose de présentable visuellement 😎
 
@@ -92,7 +99,7 @@ Malheureusement des questions de licence liées à Microsoft [plus ou moins obsc
 
 ## A.5. Ouvrir le projet dans VSCodium
 
-_**Pour travailler efficacement avec vscodium, je vous recommande d'ouvrir tout le dossier de votre projet plutôt que d'ouvrir les fichiers un à un. Cela vous permettra notamment de passer plus rapidement de l'un à l'autre.**_
+_**Pour travailler efficacement avec vscodium, je vous recommande d'ouvrir le DOSSIER de votre projet plutôt que d'ouvrir les fichiers un à un. Cela vous permettra notamment de passer plus rapidement de l'un à l'autre.**_
 
 1. **Commencez donc par ouvrir le dossier du TP dans VSCodium :**
 	- soit en lançant VSCodium **depuis un terminal** directement dans le dossier (*adaptez le chemin vers le projet*):
@@ -101,7 +108,7 @@ _**Pour travailler efficacement avec vscodium, je vous recommande d'ouvrir tout 
 		```
 		> _**NB :** Si vous utilisez VSCode, la commande `codium` doit être remplacée par `code`_
 	- soit en ouvrant VSCodium, et **en glissant le dossier** du TP (_celui dans lequel vous avez cloné_) depuis l'explorateur de fichier/finder directement sur la fenêtre de VSCodium
-	- soit en **ouvrant le dossier du projet** avec le raccourci <kbd>CTRL</kbd>+<kbd>O</kbd> ou via le menu `File` > `Open` de VSCodium
+	- soit en **ouvrant le dossier du projet** avec le raccourci <kbd>CTRL</kbd>+<kbd>O</kbd> ou via le menu `File` > `Open Folder` (_Win_) / `Open` (_Mac_) de VSCodium
 
 2. **Une fois le projet ouvert, profitez-en pour tester quelques raccourcis clavier :**
 	- <kbd>CTRL</kbd>+<kbd>P</kbd> : Permet d'ouvrir un fichier à partir de son nom

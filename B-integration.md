@@ -5,7 +5,6 @@
 ***Maintenant que l'on a récupéré les fichiers du TP et que notre éditeur de code est prêt, lançons le projet pour voir à quoi ça ressemble !***
 
 ## Sommaire <!-- omit in toc -->
-
 - [B.1. Lancement d'un serveur HTTP](#b1-lancement-dun-serveur-http)
 - [B.2. Inclure le JS dans la page](#b2-inclure-le-js-dans-la-page)
 - [B.3. Tester la page](#b3-tester-la-page)
@@ -21,7 +20,7 @@ On pourrait, pour cet exercice, utiliser n'importe quel serveur http (apache, to
 	> - _pas besoin de jongler entre plusieurs fenêtres pour passer de l'IDE au terminal_
 	> - _le terminal s'ouvre **directement dans le dossier du projet**_
 
-2. **Dans ce terminal intégré, lancez un serveur http dans le dossier du TP** :
+2. **Dans ce terminal intégré, lancez un serveur http à la racine du TP** :
 	```bash
 	npx serve -l 8000
 	```
