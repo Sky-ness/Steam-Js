@@ -5,7 +5,7 @@
 _**Lorsque l'on développe en JS, les outils de debug dont on dispose nous sont fournis par le navigateur. Tous les navigateurs (même Internet Explorer...) disposent d'outils de développement. Sur Chrome, pour les afficher c'est donc, comme vu plus haut, la touche <kbd>F12</kbd>. On peut également les afficher en faisant un clic droit dans la page et en cliquant sur "Inspecter l'élément".**_
 
 ### IMPORTANT !! <!-- omit in toc -->
-**Pendant les TP gardez TOUJOURS les outils de développement (_et notamment la console_) ouverts, ça vous sauvera la vie !**
+⚠️ ⚠️ **Pendant les TP gardez TOUJOURS les outils de développement (_et notamment la console_) ouverts, ça vous sauvera la vie !** ⚠️ ⚠️
 
 ## Sommaire <!-- omit in toc -->
 - [C.1. La console](#c1-la-console)
@@ -19,8 +19,9 @@ La console sert à afficher les instructions `console.log()` mais aussi les erre
 
 La méthode `console.log()` peut recevoir plusieurs paramètres, ils seront dans ce cas affichés les un après les autres, séparés par un espace. Remplacez le `console.log(...);` du `main.js` par :
 ```js
-console.log('Welcome to ', {title:'PizzaLand', emoji: '🍕'});
+console.log('Welcome to ', {title:'JSteam', emoji: '🎮'});
 ```
+Puis rechargez la page pour voir le résultat dans la console du navigateur.
 
 En fait l'objet `console` est un objet global qui contient la méthode `.log()` mais aussi d'autres méthodes qui permettent d'avoir un rendu différent et de filtrer les messages. Essayez les méthodes suivantes et constatez le résultat dans la console :
 - `console.warn('Oh oh attention')`

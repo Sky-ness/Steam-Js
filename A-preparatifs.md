@@ -23,10 +23,10 @@ Suivez donc [ce tuto spécifique aux machines des salles TP de l'IUT](A-preparat
 ### Si vous utilisez votre propre machine <!-- omit in toc -->
 Dans ce cas il vous faudra installer :
 - **Git** : https://git-scm.com/
-- **Node.js** (_version "Current" **17.x**_): https://nodejs.org/en/download/current/
-	> _**Attention :** si vous aviez déjà une version plus ancienne de Node (tapez `node -v` dans un terminal pour en avoir le coeur net) alors je vous conseille de la désinstaller complètement avant d'installer la nouvelle version._
+- **Node.js** (_version "Current" **19.x**_): https://nodejs.org/en/download/current/
+	> _**Attention :** si vous aviez déjà une version plus ancienne de Node (tapez `node -v` dans un terminal pour en avoir le coeur net) alors je vous conseille **VIVEMENT** de la désinstaller complètement avant d'installer la nouvelle version._
 - **VSCodium** https://vscodium.com ou **VSCode** https://code.visualstudio.com
-	> _**NB :** Si vous avez déjà VSCode, ça fera très bien l'affaire, VSCodium et VSCode sont quasi identiques (_cf. [A.3. VSCod[e/ium]](#a3-vscodeium)_) !_
+	> _**NB :** Si vous avez déjà VSCode, ça fera très bien l'affaire, VSCodium et VSCode sont quasi identiques (_cf. [A.4. VSCod[e/ium]](#a4-vscodeium)_) !_
 
 ## A.2. À propos de ce repo
 
@@ -46,28 +46,30 @@ _**Allons y !**_
 	- soit en cliquant sur le bouton `"Créer une divergence"` (_`"Fork"` sur la version anglaise de gitlab_)
 	- soit en vous rendant directement sur https://gitlab.univ-lille.fr/js/tp1/-/forks/new
 
-	Choisissez de placer le fork dans votre profil utilisateur et vérifiez que le repo est **bien en mode "privé"**
+	Pour le `namespace` choisissez de placer le fork dans votre profil utilisateur.\
+	Pour `Visibility Level` selectionnez le **mode "private"**
 
 2. **Ajoutez-votre encadrant de TP en tant que "reporter" pour qu'il ait accès à votre code :**
-	- dans le menu de gauche, cliquez sur `"Membres"`,
-	- entrez comme **nom d'utilisateur** celui de votre encadrant de TP (`@nicolas.anquetil`, `@patricia.everaere-caillier` ou `@thomas.fritsch`)
+	- dans le menu de gauche, cliquez sur **`Project information`** > **`Members`**
+	- cliquez sur le bouton en haut à droite **`"Invite members"`**
+	- entrez comme **nom d'utilisateur** celui de votre encadrant de TP (`@patricia.everaere-caillier` ou `@thomas.fritsch`)
 	- ... et `"reporter"` comme **rôle**.
 
-3. **Ouvrez ensuite un terminal et récupérez les fichiers de ce TP grâce à Git en clonant votre fork dans un dossier de votre choix :**
+3. **Ouvrez ensuite un terminal et récupérez les fichiers de ce TP grâce à Git en clonant votre fork dans un dossier de votre choix** (_dans mon exemple ~/tps-js_) :
 	```bash
 	mkdir ~/tps-js
 	git clone https://gitlab.univ-lille.fr/<votre-username>/tp1.git ~/tps-js/tp1
 	```
 
-	> _**NB1 :** si ce n'est pas déjà fait, il faut que vous renseigniez un mot de passe dans votre compte gitlab ([Paramètres > Mot de passe](https://gitlab.univ-lille.fr/profile/password/edit)) pour pouvoir cloner en http_
+	> _**NB1 :** si ce n'est pas déjà fait, il faut que vous renseigniez un mot de passe dans votre compte gitlab ([`Preferences` > `Password`](https://gitlab.univ-lille.fr/-/profile/password/edit)) pour pouvoir cloner en http_
 
 	> _**NB2 :** ici je clone dans mon dossier `/home/thomas/tps-js/tp1`. **Si vous êtes sous windows faites attention au sens des slashs et au caractère `"~"`** qui représente le dossier de l'utilisateur sur système unix : utilisez **Git bash** (qui comprend cette syntaxe) ou si vous tenez vraiment à utiliser **cmd** ou **powershell** pensez à adapter la commande !_
 
-	> _**NB3 :** si vous préférez **cloner en SSH** pour ne pas avoir à taper votre mot de passe à chaque fois que vous clonerez un TP, renseignez votre clé SSH dans votre [compte utilisateur gitlab](https://gitlab.univ-lille.fr/profile/keys) et clonez à partir de cette URL : `git@gitlab-ssh.univ-lille.fr:js/tp1.git`_
+	> _**NB3 :** si vous préférez **cloner en SSH** pour ne pas avoir à taper votre mot de passe à chaque fois que vous clonerez un TP, renseignez votre clé SSH dans votre [compte utilisateur gitlab](https://gitlab.univ-lille.fr/-/profile/keys) et clonez à partir de cette URL : `git@gitlab-ssh.univ-lille.fr:votre-username/tp1.git`_
 
 
 
-## A.4. VSCod[e/ium]
+## A.4. VSCod\[e/ium\]
 
 _**Pour développer en JS, je vous recommande d'utiliser un éditeur adapté au JS moderne. Si vous ne l'avez pas encore testé, je ne peux que vous conseiller d'utiliser Visual Studio Code / VSCodium au moins pour ce cours.**_
 
@@ -80,7 +82,7 @@ Malheureusement des questions de licence liées à Microsoft [plus ou moins obsc
 > _**NB :** Si vous avez déjà VSCode et que vous ne souhaitez pas faire la bascule vers VSCodium, pas de soucis, comme les deux sont strictement identiques en terme de fonctionnalités (hormis le store d'extension qui diffère), les TP fonctionneront de la même manière avec vscode !_
 
 
-1. **Ouvrez le panneau des extensions de VSCod[e/ium]** à l'aide du raccourci <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>X</kbd>
+1. **Ouvrez le panneau des extensions de VSCod\[e/ium\]** à l'aide du raccourci <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>X</kbd>
 
 1. **Installez l'extension `Prettier - Code formatter`** (_esbenp.prettier-vscode_)
 

@@ -26,15 +26,15 @@ Vous allez donc avoir besoin d'installer Node vous même, sans droit d'admin, da
 
 1. **Lancez l'install de `nvm`** :
 	```bash
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 	```
 	puis rechargez les variables d'environnement ajoutées par nvm :
 	```bash
 	source ~/.bashrc
 	```
-2. **Téléchargez et installez ensuite la version de Node que l'on souhaite** (_ici la 17_) grâce à nvm :
+2. **Téléchargez et installez ensuite la version de Node que l'on souhaite** (_ici la 19_) grâce à nvm :
 	```bash
-	nvm install 17
+	nvm install 19
 	```
 	> _**NB :** si la commande `nvm` n'est pas reconnue, tentez de fermer et relancer votre terminal. Si ça ne suffit pas, ajoutez les lignes suivantes à votre `.bashrc` :_
 	> ```bash
@@ -50,7 +50,7 @@ Vous allez donc avoir besoin d'installer Node vous même, sans droit d'admin, da
 	```bash
 	node -v
 	```
-	doit retourner `v17.4.0`
+	doit retourner `v19.4.0`
 
 ## 3. Configurer le proxy (_optionnel_)
 **Cette étape est à priori optionnelle, car par défaut node doit utiliser les variables `http_proxy` et `https_proxy` configurées à l'étape 1.**
