@@ -87,6 +87,12 @@ Affichez dans la console :
 
 	<img src="images/readme/innerhtml-footer.png" />
 
+	> _**NB :** **cet exercice est plus compliqué qu'il n'en a l'air puisque la page contient plusieurs balises `<footer>`** (1 pour chaque jeu et 1 en bas de la page - celle dans laquelle on veut écrire le texte)._ \
+	>
+	> _Malheureusement il n'y a pas de classe CSS spécifique sur cette balise qui nous permettrait de la distinguer des autres._
+	>
+	> _Par contre il est possible dans votre sélecteur CSS d'utiliser le [sélecteur d'enfants (_mdn)](https://developer.mozilla.org/fr/docs/Web/CSS/Child_combinator) `>`. En effet, les `footer` des jeux sont tous contenus dans des balises `<a>`, le `footer` de la page est le seul a être un enfant direct du `body` !..._
+
 	> _**Rappel :** innerHTML est accessible en écriture ET en lecture !_
 
 ### B.2.2. getAttribute/setAttribute
