@@ -115,12 +115,10 @@ body > header ul.mainMenu li a:after {
 	transition-delay: 0, .5s;
 }
 body > header ul.mainMenu li a:hover,
-body > header ul.mainMenu li a:focus,
 body > header ul.mainMenu li a.active {
 	color: #fff;
 }
-body > header ul.mainMenu li a:hover:after,
-body > header ul.mainMenu li a:focus:after {
+body > header ul.mainMenu li a:hover:after {
 	opacity: 1;
 	width: 20px;
 	transition-delay: 0,0;

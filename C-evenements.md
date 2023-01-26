@@ -8,6 +8,12 @@ _**Maintenant que l'on sait sélectionner et modifier des éléments de la page 
 - [C.1. Rappels](#c1-rappels)
 - [C.2. Afficher/masquer un élément](#c2-affichermasquer-un-élément)
 - [C.3. Navigation en JS : Le menu](#c3-navigation-en-js-le-menu)
+	- [C.3.1. Détecter le clic](#c31-détecter-le-clic)
+	- [C.3.2. Modifier le titre](#c32-modifier-le-titre)
+	- [C.3.3. Activer le lien cliqué](#c33-activer-le-lien-cliqué)
+	- [C.3.4. Afficher la bonne page](#c34-afficher-la-bonne-page)
+	- [C.3.5. Routing](#c35-routing)
+	- [C.3.6. Routing](#c36-routing)
 	- [C.3.1. Le principe du Routing](#c31-le-principe-du-routing)
 	- [C.3.2. Mise en oeuvre](#c32-mise-en-oeuvre)
 
@@ -28,9 +34,10 @@ link.addEventListener('click', handleClick); // écoute l'événement
 ```
 
 **Notez que comme vu en cours :**
-1. le 2e paramètre que l'on passe à `addEventListener` est une **référence de la fonction `handleClick`** (_son nom_) et pas l'exécution de la fonction (`handleClick()` _avec les parenthèses_)
-2. la fonction qui est passée à `addEventListener()` **reçoit automatiquement en paramètre un objet de type [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)**
-3. Il faut presque systématiquement (_sauf cas très particuliers_) **appeler en premier lieu la méthode `event.preventDefault()`** : cette méthode permet d'éviter que le navigateur n'exécute le traitement par défaut de l'événement (par exemple rediriger l'utilisateur vers une nouvelle page lorsqu'il clique sur un lien, recharger la page lorsqu'il soumet un formulaire, etc.).
+1. Le 2e paramètre que l'on passe à `addEventListener` est une **référence de la fonction `handleClick`** (_son nom_) et pas l'exécution de la fonction (`handleClick()` _avec les parenthèses_).
+2. Cette fonction que l'on passe en paramètre c'est ce que l'on appelle une **fonction de callback**.
+3. La fonction de callback qui est passée à `addEventListener()` **reçoit automatiquement en paramètre un objet de type [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)**
+4. À l'intérieur de cette fonction de callback, il faut presque systématiquement (_sauf cas très particuliers_) **appeler en premier lieu la méthode `event.preventDefault()`** : cette méthode permet d'éviter que le navigateur n'exécute le traitement par défaut de l'événement (_par exemple rediriger l'utilisateur vers une nouvelle page lorsqu'il clique sur un lien, recharger la page lorsqu'il soumet un formulaire, etc._).
 
 ## C.2. Afficher/masquer un élément
 **Il existe plusieurs façons de gérer la navigation en JS.**
@@ -40,15 +47,22 @@ link.addEventListener('click', handleClick); // écoute l'événement
 
 1. **Dans le fichier `index.html`, localisez la balise suivante :**
 	```html
-	<article class="gameListView">
-		<section class="gameList"></section>
-	</article>
+	<article class="gameList"></article>
 	```
-	Puis ajoutez à l'**INTERIEUR** de cette balise `<article class="gameListView">` mais **AVANT** la `<section class="gameList">` le code HTML suivant (_à la main, en "dur" dans le fichier `index.html`, pas en JS !_) :
+	C'est cette balise dans laquelle on affiche la liste des jeux à l'aide de la ligne du `main.js` :
+	```js
+	document.querySelector('.gameList').innerHTML = html;
+	```
+
+	Ce qu'on va faire, c'est modifier le code HTML de cette balise de façon à avoir dedans à la fois la liste des jeux mais aussi, en plus, un mini formulaire de recherche.
+
+	<img src="images/readme/searchform-final.png">
+
+	Ajoutez à l'**INTERIEUR** de cette balise `<article class="gameList">` le code HTML suivant (_à la main, en "dur" dans le fichier `index.html`, pas en JS !_) :
 	```html
 	<header class="searchBar">
 		<button class="toggleSearchButton">Rechercher</button>
-		<form class="searchForm" style="display:none">
+		<form class="searchForm" style="display: none;">
 			<input type="text" name="search" placeholder="Nom du jeu"/>
 			<select name="ordering">
 				<option value="">Tri par pertinence</option>
@@ -58,16 +72,29 @@ link.addEventListener('click', handleClick); // écoute l'événement
 			<button type="submit">Filtrer</button>
 		</form>
 	</header>
+	<section class="results"></section>
 	```
-	Vous devez obtenir le rendu suivant :
+
+	On a rajouté dans la base `gameList` un `<header>` et une `<section class="results">`, mais si vous affichez la page dans le navigateur, rien n'a changé :
+
+	<img src="images/readme/gamelist.png">
+
+	Vous avez une idée de pourquoi ? Inspectez le code html généré dans les devtools du navigateur...
+
+	En fait l'explication est "simple" : l'instruction `document.querySelector('.gameList').innerHTML = html;` dont on parlait tout à l'heure **ÉCRASE** tout le code HTML qu'on a mis en dur dans le `index.html`. 😭
+
+	Pour résoudre ce problème il faut modifier la balise dans laquelle on affiche les jeux : ce ne doit plus être la balise `<article class="gameList">` mais `<section class="results"></section>` qui se trouve dans `gameList`.
+
+	Corrigez donc le sélecteur passé à `querySelector` pour pointer vers la bonne balise, cette fois le rendu devrait ressembler à ceci
 
 	<img src="images/readme/searchForm-hidden.png">
 
-	Vous noterez que seul le bouton avec la "loupe" s'affiche, il s'agit du `<button class="toggleSearchButton">Rechercher</button>`.
 
-	La balise `<form class="searchForm" style="display:none">` est elle masquée "à cause" du `style="display:none"` qui lui est appliqué.
-
-	On verra plus tard comment l'afficher.
+	> _**NB:** Vous noterez que seul le bouton avec la "loupe" s'affiche, il s'agit du `<button class="toggleSearchButton">Rechercher</button>`._
+	>
+	> _La balise `<form class="searchForm" style="display: none;">` est elle masquée "à cause" du `style="display:none"` qui lui est appliqué._
+	>
+	> On va voir comment l'afficher.
 
 2. **Dans `src/main.js` commencez par détecter le clic sur le bouton "loupe" à l'aide de la méthode `addEventListener`.**
 
@@ -85,21 +112,56 @@ link.addEventListener('click', handleClick); // écoute l'événement
 
 	Modifiez la fonction déclenchée au clic sur le bouton "loupe" pour faire en sorte de masquer le formulaire s'il est affiché et inversement.
 
-5. **Pour peaufiner tout ça, on va terminer cet exercice en modifiant le rendu du bouton "loupe"** : quand le formulaire est affiché, on va montrer à l'utilisateur qu'il peut à nouveau cliquer sur ce bouton pour masquer le formulaire en remplaçant l'icône "loupe" par une icône "croix".
+5. **Pour peaufiner tout ça, on va terminer cette partie de l'exercice en modifiant le rendu du bouton "loupe"** : quand le formulaire est affiché, on va montrer à l'utilisateur qu'il peut à nouveau cliquer sur ce bouton pour masquer le formulaire en remplaçant l'icône "loupe" par une "croix".
 
-	Rassurez-vous, la CSS est déjà prête, tout ce que vous avez à faire c'est d'**ajouter sur le bouton la classe CSS `"opened"` quand le formulaire est affiché**, et de l'enlever quand il est masqué.\
+	Rassurez-vous, la CSS est déjà prête, tout ce que vous avez à faire c'est **d'ajouter sur le bouton la classe CSS `"opened"` quand le formulaire est affiché**, et de l'enlever quand il est masqué.\
 	Facile ?
 
 	<img src="images/readme/toggleSearchForm.gif">
 
 ## C.3. Navigation en JS : Le menu
 
-⚠️⚠️⚠️⚠️⚠️WIP⚠️⚠️⚠️⚠️⚠️⚠️
+_**Pour vérifier si vous avez bien compris le principe, on va maintenant essayer d'appliquer tout ça au menu de navigation.**_
 
-La technique de navigation vue à l'instant (_masquer/afficher des balises_) est pratique pour des applications simples, où tout le contenu HTML est déjà généré côté serveur (_en JAVA, en PHP, en C# ou encore avec Node.JS_). \
-**En revanche elle n'est pas très adaptée aux SPA où en général on a du contenu dynamique à injecter dans la page.**
+Décomposons un peu le problème
 
-On va donc revenir à la principale technique de navigation employée dans les SPA, celle que l'on utilisait jusque là : **générer dynamiquement (en JS) le code HTML de la page en fonction de ce que demande l'utilisateur** (_comme on le faisait avec la `PizzaList` par exemple_).
+### C.3.1. Détecter le clic
+
+1. **Commencez par détecter le clic sur deuxième lien du menu ("À PROPOS") et au clic, affichez dans la console le texte `"À PROPOS"`.**
+
+	> _Contrairement à l'exercice C.2. où l'on cliquait sur une balise `<button>` on clique cette fois sur un lien `<a href="...">`. La conséquence c'est que lorsqu'on clique sur le lien le navigateur vous redirige vers l'URL contenue dans son `href`._
+	>
+	> _On n'aurait pas vu tout à l'heure une méthode pour éviter ce comportement et dire au navigateur d'ignorer le clic ???_
+
+2. **Ajoutez sur le même modèle un écouteur de clic pour les 2 autres liens du menu : "MAGASIN" et "SUPPORT"**
+
+	> _Bien sûr quand on clique sur le lien "MAGASIN" il faut que ce soit "MAGASIN" et pas "À PROPOS" qui s'affiche dans la console... même chose pour le lien "SUPPORT" !_
+
+3. **Plutôt que d'avoir les chaînes à afficher dans la console en dur (_et donc 3 fonctions de click différentes_), on va optimiser un peu notre code :**
+	- utilisez la **même** fonction de callback pour les 3 `addEventListener`
+	- plutôt que d'avoir 3 `querySelector` différents (_1 pour chaque lien_) utilisez plutôt un seul `querySelectorAll` pour récupérer d'un coup tous les liens contenus la balise `<ul class="mainMenu">` et faites une boucle dessus pour écouter le click sur chaque lien
+	- pour récupérer le texte du lien sur lequel on a cliqué, vous aurez besoin de la propriété [`event.currentTarget` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Event/currentTarget) et de la propriété [`element.innerHTML` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Element/innerHTML)_
+
+### C.3.2. Modifier le titre
+
+_**Maintenant que l'on est capables de détecter le clic sur chaque lien du menu, modifions le contenu de la page en fonction de là où clique l'utilisateur !**_
+
+Pour commencer, faites en sorte que à chaque fois qu'on clique sur un lien du menu, le contenu de la balise `<header class="viewTitle"></header>` soit remplacé par un `<h1>` dans lequel figure le texte du lien sur lequel on a cliqué.
+
+Par exemple si je clique sur le lien "À PROPOS" je m'attends à avoir cet affichage :
+
+<img src="images/readme/menu-title.png">
+
+### C.3.3. Activer le lien cliqué
+
+
+### C.3.4. Afficher la bonne page
+
+### C.3.5. Routing
+problematique = lien logo > pas le bon titre donc passer par un tableau de correspondances path > titre+classe
+
+
+### C.3.6. Routing
 
 Pour approfondir cette technique de navigation et **permettre de passer d'une page à une autre**, je vous propose de nous appuyer sur la classe `Router` que vous avez développée lors du TP2 (_[D.3. Propriétés et méthodes statiques : La classe Router](https://gitlab.univ-lille.fr/js/tp2/-/blob/master/D-poo-avancee.md#d3-propri%C3%A9t%C3%A9s-et-m%C3%A9thodes-statiques-la-classe-router)_) et dont ma version se trouve dans ce repo (_vous pouvez la consulter dans [`src/Router.js`](./src/Router.js)_).
 
