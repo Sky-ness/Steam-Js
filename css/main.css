@@ -30,7 +30,7 @@ body {
 	background-position: -200px -250px;
 	padding: 0 40px 100px;
 }
-.viewContainer .pageTitle,
+.viewContainer .viewTitle,
 .viewContainer .viewContent {
 	width: 100%;
 	max-width: 1100px;
@@ -46,6 +46,7 @@ h1, h2, h3, h4 {
 h1 {
 	font-size: 48px;
 	margin-bottom: 10px;
+	text-transform: uppercase;
 }
 h2 {
 	font-size: 26px;

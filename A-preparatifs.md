@@ -3,51 +3,16 @@
 # A. Préparatifs <!-- omit in toc -->
 
 ## Sommaire <!-- omit in toc -->
-- [A.1. Installations](#a1-installations)
-- [A.2. À propos de ce repo](#a2-à-propos-de-ce-repo)
-- [A.3. Récupération des fichiers](#a3-récupération-des-fichiers)
-- [A.4. VSCod\[e/ium\]](#a4-vscodeium)
-- [A.5. Ouvrir le projet dans VSCodium](#a5-ouvrir-le-projet-dans-vscodium)
+- [A.1. Récupération du projet](#a1-récupération-du-projet)
+- [A.2. Configuration de Prettier](#a2-configuration-de-prettier)
+- [A.3. Lancement de l'application](#a3-lancement-de-lapplication)
+- [A.4. Le fichier `package.json`](#a4-le-fichier-packagejson)
+- [A.5. Créer un script de build personnalisé](#a5-créer-un-script-de-build-personnalisé)
 
+## A.1. Récupération du projet
 
-## A.1. Installations
-**Avant de démarrer le TP il va vous falloir faire quelques installs et configurations.** Selon que vous utilisez une machine de l'Université ou votre propre ordinateur la situation n'est pas la même :
-
-### Si vous êtes sur une machine des salles TP de l'IUT <!-- omit in toc -->
-Dans ce cas, un certain nombre de logiciels sont déjà pré-installés (notamment Git et VSCode) mais vous aurez quand même besoin :
-- de configurer le **proxy** de l'Université
-- d'installer une version de **NodeJS** plus récente que celle fournie sur les machines
-
-Suivez donc [ce tuto spécifique aux machines des salles TP de l'IUT](A-preparatifs-linux.md) puis revenez suivre la suite du TP ici.
-
-### Si vous utilisez votre propre machine <!-- omit in toc -->
-Dans ce cas il vous faudra installer :
-- **Git** : https://git-scm.com/
-- **Node.js** (_version "Current" **19.x**_): https://nodejs.org/en/download/current/
-	> _**Attention :** si vous aviez déjà une version plus ancienne de Node (tapez `node -v` dans un terminal pour en avoir le coeur net) alors je vous conseille **VIVEMENT** de la désinstaller complètement avant d'installer la nouvelle version._
-
-	> ⚠️ _**ATTENTION AUSSI :**_ ⚠️ _si vous êtes sous windows, pendant le processus d'installation, **COCHEZ** la case _"Automatically install the necessary tools. ..."_ sur l'écran **"Tools for native modules"**_
-	>
-	> <img src="images/readme/node-install.png" >
-	>
-	> Cette case permettra d'installer des dépendances utiles pour un futur TP (notamment python et les visual c++ build tools).
-
-- **VSCodium** https://vscodium.com ou **VSCode** https://code.visualstudio.com
-	> _**NB :** Si vous avez déjà VSCode, ça fera très bien l'affaire, VSCodium et VSCode sont quasi identiques (_cf. [A.4. VSCod[e/ium]](#a4-vscodeium)_) !_
-
-## A.2. À propos de ce repo
-
-**Ce repo contient un ensemble de fichiers qui vous seront utiles pour la réalisation de ce TP.**
-
-Il contient notamment des fichiers html, css et des assets graphiques (images et vidéos) qui vous permettront de vous concentrer sur le JS sans trop vous soucier de l'apparence de ce que vous codez tout en ayant **quand même** quelque chose de présentable visuellement 😎
-
-La première étape est donc de récupérer (_via git_) les fichiers du TP.<br>
-_**Allons y !**_
-
-
-## A.3. Récupération des fichiers
-
-**La solution la plus simple pour récupérer les fichiers du TP consiste à cloner ce repository à l'aide de git :**
+**Ce repo contient une solution commentée du précédent TP.** <br>
+Il va vous servir de base pour ce nouveau TP.
 
 1. **Commencez par faire un fork du TP :**
 	- soit en cliquant sur le bouton `"Créer une divergence"` (_`"Fork"` sur la version anglaise de gitlab_)
@@ -75,50 +40,164 @@ _**Allons y !**_
 	> _**NB3 :** si vous préférez **cloner en SSH** pour ne pas avoir à taper votre mot de passe à chaque fois que vous clonerez un TP, renseignez votre clé SSH dans votre [compte utilisateur gitlab](https://gitlab.univ-lille.fr/-/profile/keys) et clonez à partir de cette URL : `git@gitlab-ssh.univ-lille.fr:votre-username/tp1.git`_
 
 
+4. **Ouvrez le projet dans VSCodium/VSCode** (pour les différentes façon d'ouvrir le projet relisez les [instructions du TP1](https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs.md#a5-ouvrir-le-projet-dans-vscodium) )
+	```bash
+	codium ~/tps-js/tp2
+	```
 
-## A.4. VSCod\[e/ium\]
+5. **Installez les paquets npm nécessaires au projet** notamment le compilateur [Babel](https://babeljs.io).<br>
+	Ouvrez un terminal intégré à VSCodium (<kbd>CTRL</kbd>+<kbd>J</kbd> *(PC)* / <kbd>CMD</kbd>+<kbd>J</kbd> *(Mac)*) et tapez juste :
+	```bash
+	npm install
+	```
 
-_**Pour développer en JS, je vous recommande d'utiliser un éditeur adapté au JS moderne. Si vous ne l'avez pas encore testé, je ne peux que vous conseiller d'utiliser Visual Studio Code / VSCodium au moins pour ce cours.**_
+	> _**NB :** Vous noterez qu'on ne précise pas les paquets à installer comme on l'avait fait dans le précédent TP (`npm install @babel/core`, `@babel/cli`, etc.). npm va en effet tous les récupérer **automatiquement** en parcourant le fichier `package.json` et plus particulièrement les sections `"dependencies"` et `"devDependencies"` qui indiquent quels sont les paquets qui ont été installés précédemment._
+	>
+	> **Magique !** 🙌
 
-<img src="images/readme/vscode-ium.jpg" />
+## A.2. Configuration de Prettier
 
-[Visual Studio Code](https://code.visualstudio.com/) (vscode) est à l'heure actuelle l'un des éditeurs les plus **populaires** pour le développement web et en particulier dans l'écosystème JS. C'est un éditeur opensource et développé avec [Electron](https://electronjs.org/), c'est donc un outil qui est **lui-même développé en JS !**
+<img src="images/readme/header-prettier.jpg" />
 
-Malheureusement des questions de licence liées à Microsoft [plus ou moins obscures](https://vscodium.com/#why) viennent ternir un peu le tableau. Je vous conseille donc d'utiliser **la distribution "vraiment opensource" du logiciel qu'est [VSCodium](https://vscodium.com/)** (_aucune différence de fonctionnalité, hormis le [store d'extensions](https://github.com/VSCodium/vscodium/blob/master/DOCS.md#extensions-marketplace)_).
+_**Lors du précédent TP, vous avez en principe installé l'extension Prettier dans VSCodium** (Si ce n'est pas le cas, installez la maintenant en suivant le précédent TP : [TP1 / A.4. VSCod\[e/ium\]](https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs.md#a4-vscodeium))_
 
-> _**NB :** Si vous avez déjà VSCode et que vous ne souhaitez pas faire la bascule vers VSCodium, pas de soucis, comme les deux sont strictement identiques en terme de fonctionnalités (hormis le store d'extension qui diffère), les TP fonctionneront de la même manière avec vscode !_
+Prettier est un formateur de code automatique qui est le plus populaire à l'heure actuelle dans l'écosystème JavaScript.
+
+**C'est le moment de configurer cette extension** pour l'utiliser dans notre projet.
+
+1. **Créez un dossier nommé `/.vscode` à la racine du TP** (_au même niveau que le `package.json` et le `index.html`_)
+2. **Dans ce dossier `.vscode`, créez un fichier nommé `settings.json`** avec le contenu suivant :
+
+	```json
+	{
+		"[javascript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		}
+	}
+	```
+3. **Créez ensuite un fichier `.prettierrc`** à la **racine** du TP :
+	```json
+	{
+		"singleQuote": true,
+		"trailingComma": "es5",
+		"endOfLine": "lf",
+		"useTabs": true,
+		"arrowParens": "avoid"
+	}
+	```
+4. **Enfin, installez le paquet npm `prettier` dans le projet** (_nécessaire pour que l'extension vscodium fonctionne_) :
+	```bash
+	npm install --save-dev prettier
+	```
+	Avec cette configuration, vos fichiers JS seront maintenant automatiquement formatés à chaque sauvegarde ! Plus besoin de vous tracasser avec les retours à la ligne, les tabulations, les espaces, tout sera géré automatiquement par Prettier !
+
+	> _**NB :** si vous souhaitez en savoir plus sur la liste des configurations possibles, rendez vous sur https://prettier.io/docs/en/options.html_
+
+## A.3. Lancement de l'application
+
+Comme dans le précédent TP lancez un serveur HTTP et la compilation du projet **dans deux terminaux côte à côte** ([terminaux splittés](https://code.visualstudio.com/docs/editor/integrated-terminal#_terminal-splitting)) :
+
+1. **Lancez un serveur http** dans un terminal intégré de VSCodium (<kbd>CTRL</kbd>+<kbd>J</kbd> *(PC)* / <kbd>CMD</kbd>+<kbd>J</kbd> *(Mac)*) :
+	```bash
+	npx serve -l 8000
+	```
+
+2. **Lancez la compilation de votre projet** dans un **deuxième** [terminal splitté](https://code.visualstudio.com/docs/editor/integrated-terminal#_terminal-splitting) (*le `watch` et `npx serve` doivent tourner en parallèle*) :
+	```bash
+	./node_modules/.bin/babel src -d build --verbose --watch --source-maps
+	```
+
+3. **Vérifiez dans le navigateur que la page `index.html` s'affiche correctement** en ouvrant l'url http://localhost:8000.
+
+	Le résultat attendu est le suivant :
+
+	<img src="images/readme/screen-00.png" >
+
+	> _**NB : Si la page ne s'affiche pas correctement**, vérifiez que vous avez bien lancé le serveur http dans le dossier du projet, c'est à dire celui où se trouve le fichier `index.html`. Puis vérifiez dans la `Console` ou dans l'onglet `Sources` (Chrome) ou `Debugger` (Firefox) qu'l n'y a pas d'erreur JS lorsque la page se charge._
 
 
-1. **Ouvrez le panneau des extensions de VSCod\[e/ium\]** à l'aide du raccourci <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>X</kbd>
+## A.4. Le fichier `package.json`
 
-1. **Installez l'extension `Prettier - Code formatter`** (_esbenp.prettier-vscode_)
+**Lors du précédent TP nous avons créé un fichier `package.json` dans le projet grâce à la commande `npm init`.**
 
-	Prettier permet de formater automatiquement notre code en respectant de base un certain nombre de bonnes pratiques. Les possibilités de configuration sont volontairement limitées mais suffisantes pour avoir quand même l'impression d'avoir encore un peu la main sur son formatage 😄
+Ce fichier sert à plusieurs choses et notamment :
+1. **Il permet de conserver l'historique de tous les paquets qui sont installés dans le projet.** C'est en quelque sorte l'équivalent du fichier `pom.xml` en JAVA ou encore du `composer.json` en PHP. Vérifiez que dans la section `devDependencies` sont bien listés les paquets suivants :
+	- `@babel/cli`
+	- `@babel/core`
+	- `@babel/preset-env`
+	- `prettier`
 
-	On configurera cette extension dans le prochain TP.
+	À chaque fois qu'on installe un paquet npm :
 
-## A.5. Ouvrir le projet dans VSCodium
+	1. le paquet en question se télécharge dans le dossier `node_modules`
+	2. puis le nom du paquet ainsi que sa version sont automatiquement ajoutés dans le fichier `package.json`.
 
-_**Pour travailler efficacement avec vscodium, je vous recommande d'ouvrir le DOSSIER de votre projet plutôt que d'ouvrir les fichiers un à un. Cela vous permettra notamment de passer plus rapidement de l'un à l'autre.**_
+	> _**NB :** Le dossier **`node_modules` n'est jamais versionné** (c'est en général un dossier relativement volumineux) mais le **`package.json` lui l'est** car il servira de "recette" pour indiquer aux développeurs qui rejoindraient le projet quels sont les paquets nécessaires._
+	>
+	> _En effet, grâce au `package.json`, un nouveau développeur n'a qu'à exécuter la commande `npm install` (sans préciser de nom de paquet) pour installer automatiquement toutes les dépendances du projet (c'est d'ailleurs ce que vous avez fait au début du TP) !_
 
-1. **Commencez donc par ouvrir le dossier du TP dans VSCodium :**
-	- soit en lançant VSCodium **depuis un terminal** directement dans le dossier (*adaptez le chemin vers le projet*):
-		```bash
-		codium ~/tps-js/tp1
-		```
-		> _**NB :** Si vous utilisez VSCode, la commande `codium` doit être remplacée par `code`_
-	- soit en ouvrant VSCodium, et **en glissant le dossier** du TP (_celui dans lequel vous avez cloné_) depuis l'explorateur de fichier/finder directement sur la fenêtre de VSCodium
-	- soit en **ouvrant le dossier du projet** avec le raccourci <kbd>CTRL</kbd>+<kbd>O</kbd> ou via le menu `File` > `Open Folder` (_Win_) / `Open` (_Mac_) de VSCodium
+2. **Dans ce fichier on va également pouvoir ajouter des "scripts personnalisés" que l'on pourra lancer à l'aide de la commande `npm run xxxxx`.** C'est cette dernière possibilité que l'on va maintenant exploiter pour nous simplifier la vie dans la suite du TP.
 
-2. **Une fois le projet ouvert, profitez-en pour tester quelques raccourcis clavier :**
-	- <kbd>CTRL</kbd>+<kbd>P</kbd> : Permet d'ouvrir un fichier à partir de son nom
-	- <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> : Permet de lancer n'importe quelle commande de n'importe quel menu
-	- <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>:</kbd> : commente/décommente une ligne de code
+## A.5. Créer un script de build personnalisé
+Jusque là pour lancer la compilation avec [Babel](https://babeljs.io), nous lancions un des deux commandes suivantes :
 
-	- cheat sheet windows : https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
-	- cheat sheet mac : https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf
-	- cheat sheet linux : https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf
+```bash
+./node_modules/.bin/babel src -d build
+```
+ou
+```bash
+./node_modules/.bin/babel src -d build --verbose --watch --source-maps
+```
+
+Grâce au `package.json` **on va créer des "raccourcis" pour lancer ces commandes plus facilement.**
+1. **Stoppez d'abord la commande "./node_modules/.bin/babel ... --watch ..." que vous aviez lancée au point A.3.2.**
+2. Dans VSCodium, **ouvrez le fichier `package.json`** en tapant <kbd>CTRL</kbd>+<kbd>P</kbd> puis le nom du fichier ( <kbd>Enter</kbd> _pour ouvrir le fichier_)
+3. **Localisez la section "scripts" du fichier**. Elle doit ressembler à :
+	```json
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	```
+4. **Cette section permet d'indiquer des tâches qui pourront être lancées à l'aide de la commande `npm run <nom-du-script>`.** Par défaut le `package.json` contient une tâche `"test"`. Lancez donc ce script `"test"` en tapant :
+	```bash
+	npm run test
+	```
+	Vous verrez la commande `"echo \"Error: no test specified\" && exit 1"` s'exécuter dans le terminal :
+
+	<img src="images/readme/npm-run-test.gif" />
+
+	`"test"` est donc une sorte d'**alias**, de **"raccourci"**, permettant de lancer une commande plus complexe.
+5. **Ajoutez maintenant dans le `package.json` un nouveau script qu'on appellera "build"** et qui permettra de lancer la compilation Babel :
+	```json
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "babel src -d build"
+	},
+	```
+	> _**NB :** Vous noterez que **le chemin `./node_modules/.bin/`** que l'on utilisait jusque là dans notre commande de compilation **n'est ici plus nécessaire** : en effet, comme l'on se trouve dans un script npm, node va aller chercher les exécutables directement dans le dossier `./node_modules/.bin/`, plus besoin donc de le préciser !_
+
+6. **Lancez la commande `npm run build`** et constatez avec émerveillement que la compilation babel se lance !
+
+	<img src="images/readme/npm-run-build.gif" />
+
+	> _**NB :** Si la compilation ne se lance pas, plusieurs raisons sont possibles :_
+	> - _soit Babel n'est pas correctement installé,_
+	> - _soit la section "scripts" n'est pas correctement formatée (pensez qu'il s'agit d'un fichier JSON, par conséquent l'oubli d'une **virgule** entre chaque script ou au contraire l'ajout d'une virgule à la fin du dernier script, sont considérés comme des **erreurs** de syntaxe)._
+
+7. **Ajoutez un nouveau script nommé `"watch"`** qui permettra de lancer la commande :
+	```bash
+	./node_modules/.bin/babel src -d build --verbose --watch --source-maps
+	```
+
+	> _**NB :** Inspirez-vous de la commande que l'on a tapée pour le "build" : comme on est dans un script npm, il y a moyen de simplifier la commande ! Si vous ne voyez pas où je veux en venir, relisez donc le **NB** du point A.5.5. ..._
+
+	Lancez la commande `npm run watch` dans votre terminal et vérifiez que lorsque vous modifiez le fichier `src/main.js`, le fichier `build/main.js` est bien mis automatiquement à jour.
+
+	<img src="images/readme/npm-run-watch.gif" />
+
+	Vous voyez que le watch ne vous rend pas la main sur le terminal, il faut en effet le laisser ouvert car il va permettre de recompiler automatiquement à chaque fois que vous modifierez un fichier ! Essayez de modifier le contenu du fichier main.js, vous verrez que la compilation se relance toute seule !
 
 
 ## Étape suivante <!-- omit in toc -->
-Si tout fonctionne, vous pouvez passer à l'étape suivante : [B. Intégration du JS](B-integration.md)
+Maintenant que votre code compile, vous pouvez passer à l'étape suivante : [B. Les bases de l'API DOM](B-les-bases.md)

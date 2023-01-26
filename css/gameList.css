@@ -1,3 +1,52 @@
+.searchBar {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding-top: 20px;
+	margin-bottom: -20px;
+}
+.toggleSearchButton {
+	background-color: #0005;
+	border: none;
+	border-radius: 5px;
+	font-size: 0;
+	width: 30px;
+	height: 30px;
+	margin: 15px 0;
+	z-index: 1;
+	text-align: right;
+	cursor: pointer;
+	background-image: url('../images/search.svg');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.toggleSearchButton:hover {
+	background-color: #fff5;
+	background-size: 16px;
+}
+.toggleSearchButton.opened {
+	background-image: url('../images/close.svg');
+	background-size: 8px;
+}
+.toggleSearchButton.opened:hover {
+	background-size: 10px;
+}
+.searchForm {
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	padding: 15px;
+	padding-left: 60px;
+	margin-left: -50px;
+	margin-right: -10px;
+	background-image: linear-gradient(#505f6e 0%, #2c3037 300%);
+}
+.searchForm:not([style*="display: none"]) {
+	animation: fadeIn .2s ease, slide .15s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 .gameList {
 	display: flex;
 	flex-wrap: wrap;
