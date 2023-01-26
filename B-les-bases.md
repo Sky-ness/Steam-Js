@@ -39,9 +39,9 @@ cette instruction vous retourne la balise qui a comme classe `"gameList"`
 **Sur le même principe, affichez dans la console :**
 1. La balise `<img>` contenue dans le logo (le "JS" dans un cercle)
 2. Le lien du menu "A propos"
-3. la note metacritic du premier jeu de la liste (`92`)
+3. la note metacritic du premier jeu de la liste
 
-<img src="images/readme/queryselector-console.png">
+<img src="images/readme/querySelector-console.png">
 
 ### B.1.2. querySelectorAll()
 **La méthode [`querySelectorAll()`](https://developer.mozilla.org/fr/docs/Web/API/Document/querySelectorAll) permet de récupérer non pas un, mais TOUS les éléments qui correspondent au sélecteur CSS passé en paramètre** (_sous la forme d'un tableau_).
