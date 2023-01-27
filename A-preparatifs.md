@@ -14,12 +14,12 @@
 **Ce repo contient une solution commentée du précédent TP.** <br>
 Il va vous servir de base pour ce nouveau TP.
 
-1. **Commencez par faire un fork du TP :**
-	- soit en cliquant sur le bouton `"Créer une divergence"` (_`"Fork"` sur la version anglaise de gitlab_)
-	- soit en vous rendant directement sur https://gitlab.univ-lille.fr/js/tp2/-/forks/new
+1. **Commencez par faire un fork du TP en vous rendant directement sur https://gitlab.univ-lille.fr/js/tp2/-/forks/new**
 
 	Pour le `namespace` choisissez de placer le fork dans votre profil utilisateur.\
 	Pour `Visibility Level` sélectionnez le **mode "private"**
+
+	> _**NB :** Comme ce nouveau TP est lui-même un fork du TP précédent, vous êtes obligé.e de passer par le lien que j'ai fourni ci-dessus, le bouton "Fork"/"Créer une divergence" ne fonctionnera pas dans ce cas et vous redirigera bêtement sur votre propre fork du précédent TP._
 
 2. **Ajoutez-votre encadrant de TP en tant que "reporter" pour qu'il ait accès à votre code :**
 	- dans le menu de gauche, cliquez sur **`Project information`** > **`Members`**
