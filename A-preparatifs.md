@@ -16,10 +16,10 @@ Il va vous servir de base pour ce nouveau TP.
 
 1. **Commencez par faire un fork du TP :**
 	- soit en cliquant sur le bouton `"Créer une divergence"` (_`"Fork"` sur la version anglaise de gitlab_)
-	- soit en vous rendant directement sur https://gitlab.univ-lille.fr/js/tp1/-/forks/new
+	- soit en vous rendant directement sur https://gitlab.univ-lille.fr/js/tp2/-/forks/new
 
 	Pour le `namespace` choisissez de placer le fork dans votre profil utilisateur.\
-	Pour `Visibility Level` selectionnez le **mode "private"**
+	Pour `Visibility Level` sélectionnez le **mode "private"**
 
 2. **Ajoutez-votre encadrant de TP en tant que "reporter" pour qu'il ait accès à votre code :**
 	- dans le menu de gauche, cliquez sur **`Project information`** > **`Members`**
@@ -30,14 +30,14 @@ Il va vous servir de base pour ce nouveau TP.
 3. **Ouvrez ensuite un terminal et récupérez les fichiers de ce TP grâce à Git en clonant votre fork dans un dossier de votre choix** (_dans mon exemple ~/tps-js_) :
 	```bash
 	mkdir ~/tps-js
-	git clone https://gitlab.univ-lille.fr/<votre-username>/tp1.git ~/tps-js/tp1
+	git clone https://gitlab.univ-lille.fr/<votre-username>/tp2.git ~/tps-js/tp2
 	```
 
 	> _**NB1 :** si ce n'est pas déjà fait, il faut que vous renseigniez un mot de passe dans votre compte gitlab ([`Preferences` > `Password`](https://gitlab.univ-lille.fr/-/profile/password/edit)) pour pouvoir cloner en http_
 
-	> _**NB2 :** ici je clone dans mon dossier `/home/thomas/tps-js/tp1`. **Si vous êtes sous windows faites attention au sens des slashs et au caractère `"~"`** qui représente le dossier de l'utilisateur sur système unix : utilisez **Git bash** (qui comprend cette syntaxe) ou si vous tenez vraiment à utiliser **cmd** ou **powershell** pensez à adapter la commande !_
+	> _**NB2 :** ici je clone dans mon dossier `/home/thomas/tps-js/tp2`. **Si vous êtes sous windows faites attention au sens des slashs et au caractère `"~"`** qui représente le dossier de l'utilisateur sur système unix : utilisez **Git bash** (qui comprend cette syntaxe) ou si vous tenez vraiment à utiliser **cmd** ou **powershell** pensez à adapter la commande !_
 
-	> _**NB3 :** si vous préférez **cloner en SSH** pour ne pas avoir à taper votre mot de passe à chaque fois que vous clonerez un TP, renseignez votre clé SSH dans votre [compte utilisateur gitlab](https://gitlab.univ-lille.fr/-/profile/keys) et clonez à partir de cette URL : `git@gitlab-ssh.univ-lille.fr:votre-username/tp1.git`_
+	> _**NB3 :** si vous préférez **cloner en SSH** pour ne pas avoir à taper votre mot de passe à chaque fois que vous clonerez un TP, renseignez votre clé SSH dans votre [compte utilisateur gitlab](https://gitlab.univ-lille.fr/-/profile/keys) et clonez à partir de cette URL : `git@gitlab-ssh.univ-lille.fr:votre-username/tp2.git`_
 
 
 4. **Ouvrez le projet dans VSCodium/VSCode** (pour les différentes façon d'ouvrir le projet relisez les [instructions du TP1](https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs.md#a5-ouvrir-le-projet-dans-vscodium) )

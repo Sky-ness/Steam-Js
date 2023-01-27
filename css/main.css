@@ -35,7 +35,9 @@ body {
 	width: 100%;
 	max-width: 1100px;
 }
-
+.viewContainer .viewContent.activeOnly > article:not(.active) {
+	display: none;
+}
 img {
 	/* max-width: 100%; */
 }

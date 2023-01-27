@@ -12,3 +12,4 @@ Pour plus de clarté, les instructions du TP se trouvent dans des fichiers disti
 2. [B. Les bases de l'API DOM](B-les-bases.md)
 3. [C. Les événements](C-evenements.md)
 4. [D. Les formulaires](D-formulaires.md)
+5. [E. Le Formulaire de recherche](E-formulaire-recherche.md)

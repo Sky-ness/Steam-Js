@@ -2,20 +2,16 @@
 
 # C. Les événements de l'API DOM <!-- omit in toc -->
 
-_**Maintenant que l'on sait sélectionner et modifier des éléments de la page HTML, voyons comment réagir aux actions de l'utilisateurs avec les événements.**_
+_**Maintenant que l'on sait sélectionner et modifier des éléments de la page HTML, voyons comment réagir aux actions de l'utilisateur avec les événements.**_
 
 ## Sommaire <!-- omit in toc -->
 - [C.1. Rappels](#c1-rappels)
 - [C.2. Afficher/masquer un élément](#c2-affichermasquer-un-élément)
-- [C.3. Navigation en JS : Le menu](#c3-navigation-en-js-le-menu)
+- [C.3. Navigation en JS : le menu](#c3-navigation-en-js-le-menu)
 	- [C.3.1. Détecter le clic](#c31-détecter-le-clic)
 	- [C.3.2. Modifier le titre](#c32-modifier-le-titre)
 	- [C.3.3. Activer le lien cliqué](#c33-activer-le-lien-cliqué)
 	- [C.3.4. Afficher la bonne page](#c34-afficher-la-bonne-page)
-	- [C.3.5. Routing](#c35-routing)
-	- [C.3.6. Routing](#c36-routing)
-	- [C.3.1. Le principe du Routing](#c31-le-principe-du-routing)
-	- [C.3.2. Mise en oeuvre](#c32-mise-en-oeuvre)
 
 
 ## C.1. Rappels
@@ -75,26 +71,38 @@ link.addEventListener('click', handleClick); // écoute l'événement
 	<section class="results"></section>
 	```
 
-	On a rajouté dans la base `gameList` un `<header>` et une `<section class="results">`, mais si vous affichez la page dans le navigateur, rien n'a changé :
+	On a rajouté dans la balise `gameList` un `<header>` et une `<section class="results">`, mais si vous affichez la page dans le navigateur, rien n'a changé, le formulaire n'apparaît pas :
 
 	<img src="images/readme/gamelist.png">
 
-	Vous avez une idée de pourquoi ? Inspectez le code html généré dans les devtools du navigateur...
+	Est-ce que vous avez une idée de pourquoi ? Inspectez le code html généré dans les devtools du navigateur pour voir si le formulaire se trouve toujours là ou pas...
 
-	En fait l'explication est "simple" : l'instruction `document.querySelector('.gameList').innerHTML = html;` dont on parlait tout à l'heure **ÉCRASE** tout le code HTML qu'on a mis en dur dans le `index.html`. 😭
+	<br/>
+	<br/>
+	<br/>
 
-	Pour résoudre ce problème il faut modifier la balise dans laquelle on affiche les jeux : ce ne doit plus être la balise `<article class="gameList">` mais `<section class="results"></section>` qui se trouve dans `gameList`.
+	En fait l'explication est "simple" : l'instruction `document.querySelector('.gameList').innerHTML = html;` dont on parlait tout à l'heure **ÉCRASE** tout le code HTML qu'on vient de mettre en dur dans le `index.html` et donc elle efface aussi notre formulaire de recherche. 😭
 
-	Corrigez donc le sélecteur passé à `querySelector` pour pointer vers la bonne balise, cette fois le rendu devrait ressembler à ceci
+	Pour résoudre ce problème il faut modifier la balise dans laquelle on affiche les jeux : ce ne doit plus être la balise `<article class="gameList">` mais la balise ...
 
-	<img src="images/readme/searchForm-hidden.png">
+	```html
+	<section class="results"></section>
+	```
+	... qui se trouve dans `gameList`.
+
+	**Corrigez donc le sélecteur passé à `querySelector` pour pointer vers la bonne balise, cette fois le rendu devrait ressembler à ceci :**
+
+	<img src="images/readme/searchform-hidden.png">
 
 
-	> _**NB:** Vous noterez que seul le bouton avec la "loupe" s'affiche, il s'agit du `<button class="toggleSearchButton">Rechercher</button>`._
+	> _**NB:** Vous noterez que seul le bouton avec la "loupe" s'affiche, il s'agit de la balise :_
+	> ```html
+	> <button class="toggleSearchButton">Rechercher</button>
+	> ```
 	>
-	> _La balise `<form class="searchForm" style="display: none;">` est elle masquée "à cause" du `style="display:none"` qui lui est appliqué._
+	> _La balise `<form class="searchForm" style="display: none;">` est en revanche masquée "à cause" du `style="display:none"` qui lui est appliqué._
 	>
-	> On va voir comment l'afficher.
+	> On va voir comment l'afficher au clic sur le bouton.
 
 2. **Dans `src/main.js` commencez par détecter le clic sur le bouton "loupe" à l'aide de la méthode `addEventListener`.**
 
@@ -102,11 +110,11 @@ link.addEventListener('click', handleClick); // écoute l'événement
 
 3. **Si vous arrivez bien à détecter le clic, vous pouvez maintenant tenter d'afficher (_toujours au clic sur le bouton_) le formulaire de recherche** à l'aide de la méthode `setAttribute()`.
 
-	> _**NB1 :** Pour afficher une balise qui est en `display:none`, vous pouvez remplacer la valeur du style `display` par `''` (chaîne vide)._
+	> _**NB1 :** Pour afficher une balise qui est en `style="display: none;"`, vous pouvez simplement vider l'attribut style en remplaçant `display: none` par `''` (chaîne vide)._
 
-	> _**NB2 :** Pour manipuler les styles vous pouvez aussi utiliser la propriété [`myElement.style` _(mdn)_](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Using_dynamic_styling_information#modify_an_element_style) qui permet d'agir sur l'attribut `style="..."` de manière un peu plus simple qu'avec `setAttribute()`._
+	> _**NB2 :** Pour manipuler les styles vous pouvez aussi utiliser la propriété [`myElement.style` (mdn)](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Using_dynamic_styling_information#modify_an_element_style) qui permet d'agir sur l'attribut `style="..."` de manière un peu plus simple qu'avec `setAttribute()`._
 
-	> _**NB3 :** Plus "bourrin" mais qui peut fonctionner aussi dans ce cas là, il existe aussi une méthode [`myElement.removeAttribute()` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Element/removeAttribute)..._
+	> _**NB3 :** Plus "bourrin" mais qui peut fonctionner aussi dans ce cas là, il existe aussi une méthode [`myElement.removeAttribute()` (mdn)](https://developer.mozilla.org/fr/docs/Web/API/Element/removeAttribute)..._
 
 4. **Maintenant que vous arrivez à afficher le formulaire, ce serait pas mal si l'on pouvait, toujours au clic sur le bouton "loupe", masquer à nouveau le formulaire.**
 
@@ -117,9 +125,9 @@ link.addEventListener('click', handleClick); // écoute l'événement
 	Rassurez-vous, la CSS est déjà prête, tout ce que vous avez à faire c'est **d'ajouter sur le bouton la classe CSS `"opened"` quand le formulaire est affiché**, et de l'enlever quand il est masqué.\
 	Facile ?
 
-	<img src="images/readme/toggleSearchForm.gif">
+	<img src="images/readme/searchform-toggle.gif">
 
-## C.3. Navigation en JS : Le menu
+## C.3. Navigation en JS : le menu
 
 _**Pour vérifier si vous avez bien compris le principe, on va maintenant essayer d'appliquer tout ça au menu de navigation.**_
 
@@ -129,168 +137,118 @@ Décomposons un peu le problème
 
 1. **Commencez par détecter le clic sur deuxième lien du menu ("À PROPOS") et au clic, affichez dans la console le texte `"À PROPOS"`.**
 
-	> _Contrairement à l'exercice C.2. où l'on cliquait sur une balise `<button>` on clique cette fois sur un lien `<a href="...">`. La conséquence c'est que lorsqu'on clique sur le lien le navigateur vous redirige vers l'URL contenue dans son `href`._
+	> _Si vous avez une erreur 404 quand vous cliquez sur le lien, pensez que contrairement à l'exercice C.2. où l'on cliquait sur une balise `<button>`, on clique cette fois sur un lien `<a href="...">`. La conséquence c'est que lorsqu'on clique sur le lien le navigateur vous redirige vers l'URL contenue dans son `href`..._
 	>
-	> _On n'aurait pas vu tout à l'heure une méthode pour éviter ce comportement et dire au navigateur d'ignorer le clic ???_
+	> _On n'aurait pas vu tout à l'heure une méthode pour **éviter ce comportement et dire au navigateur d'ignorer le clic** ???_
 
 2. **Ajoutez sur le même modèle un écouteur de clic pour les 2 autres liens du menu : "MAGASIN" et "SUPPORT"**
 
 	> _Bien sûr quand on clique sur le lien "MAGASIN" il faut que ce soit "MAGASIN" et pas "À PROPOS" qui s'affiche dans la console... même chose pour le lien "SUPPORT" !_
 
 3. **Plutôt que d'avoir les chaînes à afficher dans la console en dur (_et donc 3 fonctions de click différentes_), on va optimiser un peu notre code :**
-	- utilisez la **même** fonction de callback pour les 3 `addEventListener`
 	- plutôt que d'avoir 3 `querySelector` différents (_1 pour chaque lien_) utilisez plutôt un seul `querySelectorAll` pour récupérer d'un coup tous les liens contenus la balise `<ul class="mainMenu">` et faites une boucle dessus pour écouter le click sur chaque lien
+	- utilisez donc la **même** fonction de callback pour les 3 liens
 	- pour récupérer le texte du lien sur lequel on a cliqué, vous aurez besoin de la propriété [`event.currentTarget` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Event/currentTarget) et de la propriété [`element.innerHTML` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Element/innerHTML)_
 
 ### C.3.2. Modifier le titre
 
 _**Maintenant que l'on est capables de détecter le clic sur chaque lien du menu, modifions le contenu de la page en fonction de là où clique l'utilisateur !**_
 
-Pour commencer, faites en sorte que à chaque fois qu'on clique sur un lien du menu, le contenu de la balise `<header class="viewTitle"></header>` soit remplacé par un `<h1>` dans lequel figure le texte du lien sur lequel on a cliqué.
+Pour commencer, faites en sorte qu'à chaque fois qu'on clique sur un lien du menu, le contenu de la balise `<header class="viewTitle"></header>` soit remplacé par un `<h1>` dans lequel figure le texte du lien sur lequel on a cliqué.
 
 Par exemple si je clique sur le lien "À PROPOS" je m'attends à avoir cet affichage :
 
-<img src="images/readme/menu-title.png">
+<img src="images/readme/menu-title-a-propos.png">
 
 ### C.3.3. Activer le lien cliqué
+
+**On a vu dans la partie [B.2.2. getAttribute/setAttribute](./B-les-bases.md#b22-getattributesetattribute) que lorsqu'on ajoutait une classe "active" sur les liens du menu, le style du lien changeait** (_changement de couleur + ajout d'un souligné bleu_)
+
+L'idée maintenant c'est d'ajouter cette classe "active" sur les liens lorsqu'on clique dessus.
+
+1. **Ajoutez la classe CSS "active"** sur la balise `<a>` sur laquelle l'utilisateur a cliqué.
+
+	> _**NB :** Pour simplifier le travail, plutôt que d'utiliser l'instruction `setAttribute('class', ...)` **je vous recommande plutôt la propriété [`element.classList` (mdn)](https://developer.mozilla.org/fr/docs/Web/API/Element/classList) et ses méthodes `element.classList.add()` et `element.classList.remove()`** qui permettent de ne pas se soucier des autres classes CSS déjà présentes sur les balises en plus de la classe `"active"`_
+
+2. **enlevez la classe `"active"` sur le précédent lien actif** (de manière à n'avoir qu'un seul lien actif à la fois)
+
+<img src="images/readme/menu-active.gif">
 
 
 ### C.3.4. Afficher la bonne page
 
-### C.3.5. Routing
-problematique = lien logo > pas le bon titre donc passer par un tableau de correspondances path > titre+classe
+Notre navigation fonctionne presque totalement, le lien cliqué s'active, le titre change : il ne reste plus qu'à faire en sorte que le contenu de la page change aussi !
 
+Dans le fichier `index.html`, inspectez le contenu de la balise `<div class="viewContent">` :
 
-### C.3.6. Routing
-
-Pour approfondir cette technique de navigation et **permettre de passer d'une page à une autre**, je vous propose de nous appuyer sur la classe `Router` que vous avez développée lors du TP2 (_[D.3. Propriétés et méthodes statiques : La classe Router](https://gitlab.univ-lille.fr/js/tp2/-/blob/master/D-poo-avancee.md#d3-propri%C3%A9t%C3%A9s-et-m%C3%A9thodes-statiques-la-classe-router)_) et dont ma version se trouve dans ce repo (_vous pouvez la consulter dans [`src/Router.js`](./src/Router.js)_).
-
-**Si vous n'aviez pas fait cette partie du TP2, voici quelques explications sur le fonctionnement de cette classe :**
-
-### C.3.1. Le principe du Routing
-
-**De manière générale, en web le terme "routing" ("routage" en français) désigne la façon dont une application décide de quelle page afficher à quel moment.**
-
-Dans [de](https://laravel.com/docs/8.x/routing) [nombreux](https://reactrouter.com/) [frameworks](https://angular.io/guide/router) [de](https://guides.emberjs.com/release/routing/) [développement](https://router.vuejs.org/) (_frontend, [backend](https://symfony.com/doc/current/routing.html) ou [mobile](https://reactnavigation.org/) !_) ce mécanisme de **"routing"** est confié à ce qu'on appelle un **"router"** (_d'où le nom de notre classe_).
-
-**Le principe d'un `Router` est toujours le même :**
-- il dispose de la liste de **toutes les pages de l'application**
-- **à chaque page** de la liste est associée **une "clé"** (_un "identifiant"_)
-- au clic sur un lien, on envoie au `Router` **la clé de la page que l'on veut afficher**
-- le `Router` cherche alors **la page correspondant à cette clé** puis l'affiche
-
-Dans `pizzaland` j'ai choisi d'utiliser comme **clés** des morceaux d'URL, des "chemins" (_"path" en anglais_) : \
-Si l'on prend le code actuellement dans `src/main.js`, on trouve ceci :
-```js
-Router.routes = [
-	{ path: '/', page: pizzaList, title: 'La carte' }
-];
-```
-> _**NB :** dans votre fichier il n'y a pas de sauts de ligne à cause du formatage de Prettier, mais j'en ai ajouté ici pour faciliter la compréhension_
-
-**`Router.routes` est donc le tableau des pages de notre application dont on parlait tout à l'heure.**
-(_Vous aurez remarqué qu'actuellement il n'y a qu'une seule page -`pizzaList`- mais justement le but du TP est d'en ajouter d'autres, patience !..._)
-
-On voit donc que pour une page, on a en fait un objet littéral (_dictionnaire_) avec **3 propriétés** : la page à afficher, son titre **et notre fameuse "clé" : la propriété `"path"`**. On voit dans ce tableau, que pour la pizzalist le `path` est en fait l'URL `"/"`.
-
-C'est la raison pour laquelle dans `src/main.js` vous trouverez la ligne :
-```js
-Router.navigate('/'); // affiche la liste des pizzas
+```html
+<div class="viewContent">
+	<article class="gameList">
+		<header class="searchBar">
+			<!-- ... -->
+		</header>
+		<section class="results"></section>
+	</article>
+	<article class="gameDetail"></article>
+	<article class="about"></article>
+	<article class="help"></article>
+</div>
 ```
 
-Une fois que cette méthode `Router.navigate('/')` est appelée, le `Router` recherche dans son tableau `Router.routes` la page correspondant au `path` `"/"` puis l'affiche elle et son `title` dans le DOM (_via les propriétés `Router.contentElement` et `Router.titleElement` qui sont envoyées au Router au début de `src/main.js`_) cf. https://gitlab.univ-lille.fr/js/tp3/-/blob/master/src/Router.js#L14-21
+Vous voyez qu'on a, en plus de la `gameList`, 3 autres balises `<article>` : on en a notamment une pour la page "À PROPOS" (`<article class="about">`) et une autre pour la page "SUPPORT" (`<article class="help">`).
 
-> _Si ces explications ne sont pas claires pour vous, n'hésitez pas à consulter directement le code de la [classe `src/Router.js`](https://gitlab.univ-lille.fr/js/tp3/-/blob/master/src/Router.js) ou à demander de l'aide à votre professeur !_
+Ce qu'on va faire maintenant c'est modifier notre pour que :
+- Seule une des 4 balises `<article>` soit visible à la fois
+- Quand on clique sur un lien du menu, la balise `<article>` correspondante s'affiche et les autres se masquent
 
 
-### C.3.2. Mise en oeuvre
+1. **Commencez par modifier le fichier `index.html` (_à la main, pas en JS_) pour ajouter la classe CSS "activeOnly" à la balise `<div class="viewContent">`** :
 
-**L'objectif de l'exercice ici est simple : faire en sorte que lorsque l'utilisateur clique sur les liens du menu, on affiche la bonne page grâce à la méthode `Router.navigate()`.**
-
-<img src="images/readme/nav-simple.gif">
-
-1. **Dans `src/main.js`, on va commencer par ajouter des pages dans notre application en plus de la pizzaList.** Commencez donc par remplacer la ligne :
-	```js
-	const pizzaList = new PizzaList([]);
-	```
-	par
-	```js
-	import Component from './components/Component';
-
-	const pizzaList = new PizzaList(data),
-		aboutPage = new Component('section', null, 'Ce site est génial'),
-		pizzaForm = new Component('section', null, 'Ici vous pourrez ajouter une pizza');
-	```
-	> _**NB :** pour le moment on utilise pour ces 2 nouvelles pages des `Component` très simples, "en dur", mais on les passera dans des classes spécifiques plus tard._
-
-	Tout le code qui concernait la `pizzaList` n'est plus nécessaire, vous pouvez supprimer les lignes :
-	```js
-	Router.navigate('/'); // affiche une page vide
-	pizzaList.pizzas = data; // appel du setter
+	```html
+	<div class="viewContent activeOnly">
 	```
 
-	et ne conserver que le dernier `Router.navigate` :
-	```js
-	Router.navigate('/'); // affiche la liste des pizzas
+	> _Cette classe CSS est configurée dans le fichier `css/main.css` et permet de masquer toutes les balises `<article>` enfants_
+
+	Ajoutez aussi du texte dans les autres balises `<article>` pour qu'on ait un contenu qui s'affiche dans la page lorsque tout fonctionnera.\
+	**Toujours en dur dans le fichier `index.html` ajoutez du texte dans ces balises `<article>` :**
+
+	```html
+	<article class="gameDetail">Contenu de la vue "Détail"</article>
+	<article class="about">Contenu de la vue "À propos"</article>
+	<article class="help">Contenu de la vue "Support"</article>
 	```
 
-2. **Une fois ces pages créées, ajoutez les dans le tableau `Router.routes`** (_**AVANT** l'instruction `Router.navigate('/')`_) :
-	```js
-	Router.routes = [
-		{ path: '/', page: pizzaList, title: 'La carte' },
-		{ path: '/a-propos', page: aboutPage, title: 'À propos' },
-		{ path: '/ajouter-pizza', page: pizzaForm, title: 'Ajouter une pizza' },
-	];
-	```
-	> _**NB :** Vous voyez qu'ici on associe les path **`/a-propos`** à `aboutPage` et **`/ajouter-pizza`** à `pizzaForm`._
-	>
-	> _Ce n'est pas un hasard car si vous regardez les **URL des différents liens du menu dans le fichier `index.html`**, vous verrez que les `"path"` qu'on a donné à nos pages, correspondent en fait aux attributs `href="..."` des liens du menu. Ça va nous être évidemment très utile pour savoir **quel lien amène sur quelle page** !_
+	A ce stade, la `gameList` et les 3 autres balises `<article>` doivent avoir disparu :
 
-3. **Maintenant que notre `Router` est configuré avec la liste des pages de l'application, il faut encore qu'on arrive à détecter le clic sur les liens du menu**.
+	<img src="images/readme/viewcontent-activeonly.png">
 
-	On pourrait coder la détection du clic directement dans `src/main.js`, mais pour des raison de **[séparation des responsabilités _(wikipedia)_](https://fr.wikipedia.org/wiki/S%C3%A9paration_des_pr%C3%A9occupations)** je vous propose plutôt de coder tout ça dans le `Router`.
+2. **Pour ré-afficher la gameList, ajoutez maintenant _EN JS_ (_dans le `main.js` donc_) la classe CSS `"active"` sur la balise `<article class="gameList">`.**
 
-	> _**NB :** coder ça dans le `Router` permet de **centraliser** tout ce qui concerne la navigation : la détection du clic + le mécanisme de changement de page en lui-même (`Router.navigate()`). Quelle bonne idée !_
+	> _**NB :** Comme pour les liens du menu de navigation (cf. [C.3.3. Activer le lien cliqué](#c33-activer-le-lien-cliqué)) **je vous recommande d'utiliser la propriété [`element.classList` (mdn)](https://developer.mozilla.org/fr/docs/Web/API/Element/classList)** et ses méthodes `element.classList.add()` et `element.classList.remove()`_
 
-	Pour faire ça, je vous propose de créer ce qu'on appelle **un "setter"**. \
-	Comme vu dans le [TP2 / D. POO avancée](https://gitlab.univ-lille.fr/js/tp2/-/blob/master/D-poo-avancee.md#d42-rappels-getterssetters) un setter est en fait **une méthode "déguisée" en propriété** ! Au lieu de faire `obj.setter(value)` on écrit `obj.setter = value`. Ça ne change pas grand chose au fonctionnement final, mais c'est une question de "design" de code.
+	La gameList est en principe à nouveau visible :
 
-	Dans le `src/main.js`, ajoutez donc la ligne suivante :
-	```js
-	Router.menuElement = document.querySelector('.mainMenu');
-	```
-	> _**NB :** grâce à cette ligne on envoie au Router une **référence vers la balise `<ul class="mainMenu">`**. C'est cette balise qui contient tout le menu de navigation. Cela permettra au Router de faire ses querySelector sur cette balise plutôt que sur `document` (risque d'écouter le clic sur les mauvais liens), en plus c'est cohérent avec le fonctionnement des autres propriétés `Router.titleElement` et `Router.contentElement`_
+	<img src="images/readme/viewcontent-activeonly-active.png">
 
-	Puis **collez dans le corps de la classe `Router`** le code de base du setter :
-	```js
-	static #menuElement; // propriété statique privée
-	/**
-	 * Setter qui indique au Router la balise HTML contenant le menu de navigation.
-	 * Écoute le clic sur chaque lien et déclenche la méthode navigate.
-	 * @param element Élément HTML qui contient le menu principal
-	 */
-	static set menuElement(element) { // setter
-		this.#menuElement = element;
-		// au clic sur n'importe quel lien (<a href>) contenu dans "element"
-		// déclenchez un appel à Router.navigate(path)
-		// où "path" est la valeur de l'attribut `href=".."` du lien cliqué
-	}
-	```
+3. **Lorsqu'on clique sur un lien du menu de navigation affichez dans la console l'attribut `href` du lien qui a été cliqué**. \
+	Par exemple si l'utilisateur clique sur le lien **"À PROPOS"**, la console doit afficher la chaîne de caractères **`"/about"`** (_l'URL du lien_)
 
-	À l'aide de ce setter, **détectez maintenant le clic sur n'importe quel lien du menu** (_actuellement il n'y a en a que 3, mais votre code doit fonctionner quelque soit le nombre de liens : il faudra donc une boucle_) et lorsqu'un clic est détecté **affichez dans la console l'attribut `href` du lien qui a été cliqué**. \
-	Par exemple si l'utilisateur clique sur le lien **"À propos"**, la console doit afficher la chaîne de caractères **`"/a-propos"`** (_l'URL du lien_)
+	> _**NB :** vous aurez besoin pour cela de la méthode [`element.getAttribute()` (mdn)](https://developer.mozilla.org/fr/docs/Web/API/Element/getAttribute)_
 
-	> _**NB1 :** vous aurez besoin pour cela de la propriété [`event.currentTarget` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Event/currentTarget) et de la méthode [`element.getAttribute()` _(mdn)_](https://developer.mozilla.org/fr/docs/Web/API/Element/getAttribute)_
+4. **Maintenant que vous avez récupéré le `href` du lien cliqué, vous devez être capable de trouver la balise `article` qui lui correspond.**
 
-	> _**NB2 :** en cas de **problème de scope**, rappelez vous que dans un callback d'événement, la valeur de `this` est parfois modifiée ! Relisez donc la fin du paragraphe [C.1. Rappels](#c1-rappels), juste au cas où..._
+	En effet, si on regarde bien, **l'attribut `href`** du lien "À PROPOS" est **`/about`**.
 
-4. **Pour terminer, maintenant que vous avez récupéré le `href` du lien cliqué, il ne vous reste plus qu'à invoquer la méthode `Router.navigate()` en lui passant en paramètre le `href` en question !**
+	Comme par hasard, **la classe CSS** de la balise `article` à afficher est justement **`class="about"`** (_idem pour la page "Support" / "help"_)
 
-	> _**NB :** Là aussi, si vous avez des difficultés à appeler `Router.navigate()` pour des questions **de scope**, relisez la fin du paragraphe [C.1. Rappels](#c1-rappels)..._
+	Une fois que vous avez réussi à trouver la balise correspondant au lien cliqué, il ne vous reste plus qu'à lui ajouter la classe CSS `"active"` comme on l'a fait il y a quelques instants pour la `gameList`.
 
-	Vérifiez que votre code fonctionne : quand l'utilisateur clique sur un lien du menu, **le contenu de la route correspondante doit s'afficher dans la page !**
+5. **Pour terminer retirez la classe `"active"` de la balise `<article>` qui était précédemment affichée !**
 
+	Vérifiez que votre code fonctionne : quand l'utilisateur clique sur un lien du menu, **le contenu de la vue correspondante doit s'afficher dans la page !**
 
+	<img src="images/readme/navigation-finale.gif">
 
 ## Étape suivante <!-- omit in toc -->
-Maintenant que l'on est capable de détecter les actions de l'utilisateur et de modifier la page HTML en conséquence, attaquons nous à la gestion des formulaires : [D. Les formulaires](./D-formulaires.md).
+Maintenant que l'on est capable de détecter les actions de l'utilisateur et de modifier la page HTML en conséquence, attaquons nous pour terminer à la gestion des formulaires : [D. Les formulaires](./D-formulaires.md).
