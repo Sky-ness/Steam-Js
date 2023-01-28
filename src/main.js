@@ -32,7 +32,7 @@ function renderGameThumbnail({name, background_image, released, metacritic}){
 			</a>`;
 }
 let html = '';
-data.forEach( name  => html += renderGameThumbnail(name) );
+data.forEach( game  => html += renderGameThumbnail(game) );
 /* avec la méthode reduce on aurait pu éviter de faire un `let` et gagner 1 ligne : */
 // const html = data.reduce((str, game)  => str + renderGameThumbnail(game), '');
 document.querySelector('.gameList').innerHTML = html;
