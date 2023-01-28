@@ -19,7 +19,7 @@ const data = [
 	},
 ];
 function renderGameThumbnail({name, background_image, released, metacritic}){
-		const releasedDate = new Date();
+		const releasedDate = new Date(released);
 		return `<a href="${background_image}">
 				<img src="${background_image}" />
 				<footer>
