@@ -35,11 +35,37 @@
 	</header>
 	<section class="viewContainer">
 		<header class="viewTitle"></header>
-		<div class="viewContent">
-			<article class="gameList"></article>
-			<article class="gameDetail"></article>
-			<article class="about"></article>
-			<article class="help"></article>
+		<div class="viewContent activeOnly">
+			<article class="gameList">
+				<header class="searchBar">
+					<button class="toggleSearchButton">Rechercher</button>
+					<form class="searchForm" style="display: none;">
+						<input type="text" name="search" placeholder="Nom du jeu"/>
+						<select name="ordering">
+							<option value="">Tri par pertinence</option>
+							<option value="-metacritic">Tri par note</option>
+							<option value="-released">Tri par date de sortie</option>
+						</select>
+						<button type="submit">Filtrer</button>
+					</form>
+				</header>
+				<section class="results"></section>
+			</article>
+			<article class="gameDetail">Contenu de la vue "Détail"</article>
+			<article class="about">Contenu de la vue "À propos"</article>
+			<article class="help">
+				<form class="helpForm">
+					<label>
+						Sujet
+						<input type="text" name="subject" />
+					</label>
+					<label>
+						Votre message
+						<textarea name="body" rows="5"></textarea>
+					</label>
+					<button type="submit">Envoyer</button>
+				</form>
+			</article>
 		</div>
 	</section>
 	<footer>
