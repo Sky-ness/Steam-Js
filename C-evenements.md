@@ -135,7 +135,7 @@ Décomposons un peu le problème
 
 ### C.3.1. Détecter le clic
 
-1. **Commencez par détecter le clic sur deuxième lien du menu ("À PROPOS") et au clic, affichez dans la console le texte `"À PROPOS"`.**
+1. **Commencez par détecter le clic sur deuxième lien du menu ("À PROPOS") et au clic, affichez dans la console le texte `"À propos"`.**
 
 	> _Si vous avez une erreur 404 quand vous cliquez sur le lien, pensez que contrairement à l'exercice C.2. où l'on cliquait sur une balise `<button>`, on clique cette fois sur un lien `<a href="...">`. La conséquence c'est que lorsqu'on clique sur le lien le navigateur vous redirige vers l'URL contenue dans son `href`..._
 	>
@@ -143,7 +143,7 @@ Décomposons un peu le problème
 
 2. **Ajoutez sur le même modèle un écouteur de clic pour les 2 autres liens du menu : "MAGASIN" et "SUPPORT"**
 
-	> _Bien sûr quand on clique sur le lien "MAGASIN" il faut que ce soit "MAGASIN" et pas "À PROPOS" qui s'affiche dans la console... même chose pour le lien "SUPPORT" !_
+	> _Bien sûr quand on clique sur le lien "MAGASIN" il faut que ce soit "Magasin" et pas "À propos" qui s'affiche dans la console... même chose pour le lien "SUPPORT" !_
 
 3. **Plutôt que d'avoir les chaînes à afficher dans la console en dur (_et donc 3 fonctions de click différentes_), on va optimiser un peu notre code :**
 	- plutôt que d'avoir 3 `querySelector` différents (_1 pour chaque lien_) utilisez plutôt un seul `querySelectorAll` pour récupérer d'un coup tous les liens contenus la balise `<ul class="mainMenu">` et faites une boucle dessus pour écouter le click sur chaque lien
