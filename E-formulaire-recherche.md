@@ -18,6 +18,7 @@ Voici donc ce que l'on vous demande :
 	- **"Tri par date de sortie"** : les résultats doivent s'afficher par date de sortie décroissante (_le plus récent en premier_)
 	- **"Tri par pertinence"** : les résultats doivent s'afficher dans l'ordre initial du tableau tel qu'il se trouvait au chargement de la page (_NB : attention souvenez vous du TP1 : la méthode `sort` **modifie le tableau sur lequel on l'appelle**, il faudra en faire une "sauvegarde"/un clone..._)
 
+> _**NB :** pour que le tri par note et le tri par date de sortie retournent un ordre différent vous avez le droit de modifier les notes des jeux du tableau data, vous pouvez par exemple passer la note de "The Last of Us Part 2" à 95_
 <br/>
 <br/>
 <br/>
