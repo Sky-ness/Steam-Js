@@ -12,7 +12,7 @@ _**Youhou c'est l'aventure !**_
 Voici donc ce que l'on vous demande :
 
 À la soumission du formulaire de recherche :
-1. **N'affichez que les jeux dont le nom contiennent la chaîne saisie par l'utilisateur dans le champ "search"**
+1. **N'affichez que les jeux dont le nom contient la chaîne saisie par l'utilisateur dans le champ "search"**
 2. **Changez l'ordre d'affichage selon la valeur sélectionnée dans la liste déroulante "ordering" :**
 	- **"Tri par note"** : les résultats doivent s'afficher par ordre de note metacritic décroissante (_la meilleure note en premier_)
 	- **"Tri par date de sortie"** : les résultats doivent s'afficher par date de sortie décroissante (_le plus récent en premier_)
