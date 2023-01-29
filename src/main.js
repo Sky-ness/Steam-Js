@@ -153,8 +153,8 @@ function handleHelpFormSubmit(event) {
 	// on aurait aussi pu faire : form.reset();
 }
 // on écoute la soumission du formulaire
-const form = document.querySelector('.helpForm');
-form.addEventListener('submit', handleHelpFormSubmit);
+const helpForm = document.querySelector('.helpForm');
+helpForm.addEventListener('submit', handleHelpFormSubmit);
 
 /* TP2 / E. Formulaire de recherche */
 const sortByMetacritic = (a, b) => b.metacritic - a.metacritic;
