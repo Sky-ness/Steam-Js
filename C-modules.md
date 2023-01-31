@@ -11,9 +11,10 @@ Malheureusement toutes ces fonctionnalités ont été rajoutées dans le seul fi
 ## Sommaire <!-- omit in toc -->
 - [C.1. Rappels](#c1-rappels)
 - [C.2. Support natif dans les navigateurs modernes](#c2-support-natif-dans-les-navigateurs-modernes)
-- [C.3. Utiliser un bundler](#c3-utiliser-un-bundler)
-- [C.4. mode dev vs mode prod](#c4-mode-dev-vs-mode-prod)
-- [C.5. Live reload](#c5-live-reload)
+- [C.3. Réorganisation du code](#c3-réorganisation-du-code)
+- [C.4. Webpack : Utiliser un bundler](#c4-webpack-utiliser-un-bundler)
+- [C.5. Webpack : mode dev vs mode prod](#c5-webpack-mode-dev-vs-mode-prod)
+- [C.6. Webpack : Live reload](#c6-webpack-live-reload)
 
 ## C.1. Rappels
 **Comme vu en cours, le système de modules ES6 permet de répartir son code dans plusieurs fichiers et de gérer les dépendances de l'application fichier par fichier** (_plutôt que d'avoir à maintenir une longue liste de balises `<script>` dans le fichier html_).
@@ -113,23 +114,25 @@ Nous verrons plus tard dans le TP comment rendre nos modules compatibles avec le
 
 	<img src="images/readme/modules-network.png" />
 
-7. Maintenant que vous avez réussi à passer data dans un module distinct, on va pouvoir répartir le reste de notre code dans différents modules. \
-	Passez successivement (_pensez à tester à chaque étape que tout fonctionne toujours !_) :
-	- la fonction `handleMenuLinkClick` dans un module `src/Router.js` (_export nommé ie. sans le mot clé `défault`_)
+## C.3. Réorganisation du code
 
-		> _**NB :** On ne déplace ici que la **déclaration** de la fonction, **PAS** le `addEventListener` qui y fait référence !_
-		>
-		> _Même principe pour les prochaines fonctions à déplacer ci-dessous_
-	- la fonction `handleHelpFormSubmit` dans un module `src/Help.js` (_export nommé ie. sans le mot clé `défault`_)
-	- la fonction `renderGameThumbnail` dans un module `src/renderGameThumbnail.js` (_export default_)
-	- la fonction `renderGameList` (_export default_) dans un module `src/GameList.js`
+Maintenant que vous avez réussi à passer `data` dans un module distinct, on va pouvoir répartir le reste de notre code dans différents modules.
+
+Passez successivement (_pensez à tester à chaque étape que tout fonctionne toujours !_) :
+1. **la fonction `handleMenuLinkClick` dans un module `src/Router.js`** (_export nommé ie. sans le mot clé `défault`_)
+
+	> _**NB :** On ne déplace ici que la **déclaration** de la fonction, **PAS** le `addEventListener` qui y fait référence !_
+	>
+	> _Même principe pour les prochaines fonctions à déplacer ci-dessous_
+2. **la fonction `handleHelpFormSubmit` dans un module `src/Help.js`** (_export nommé ie. sans le mot clé `défault`_)
+3. **la fonction `renderGameThumbnail` dans un module `src/renderGameThumbnail.js`** (_export default_)
+4. **la fonction `renderGameList` (_export default_) dans un module `src/GameList.js`**
 
 		> _la fonction renderGameList utilise des informations issues d'autres modules (notamment le tableau `data` et la fonction `renderGameThumbnail`) pensez donc à utiliser les bons import et à faire le ménage des imports désormais inutiles dans le `main.js` !_
 
-7. **Passez enfin les fonctions `toggleSearchForm` et `handleSearchFormSubmit` dans le module `src/GameList.js`**
+5. **Passez enfin les fonctions `toggleSearchForm` et `handleSearchFormSubmit` dans le module `src/GameList.js`** créé précédemment.
 
 	Rechargez la page dans votre navigateur et tentez d'afficher le formulaire de recherche : **une erreur se déclenche :**
-
 
 	<img src="images/readme/module-referenceerror.png">
 
@@ -193,7 +196,7 @@ Nous verrons plus tard dans le TP comment rendre nos modules compatibles avec le
 
 **On vient de le voir, répartir son code dans des modules, si on a pas pensé en amont aux dépendances des différentes fonctions les unes par rapport aux autres peut être parfois compliqué ! La partie sur la POO devrait nous aider à améliorer un peu tout ça.**
 
-## C.3. Utiliser un bundler
+## C.4. Webpack : Utiliser un bundler
 
 <img src="images/readme/header-webpack.png">
 
@@ -252,7 +255,7 @@ Comme vu en cours, le bundler le plus employé en JS est [Webpack](https://webpa
 
 	<img src="images/readme/modules-network-bundle.png" />
 
-## C.4. mode dev vs mode prod
+## C.5. Webpack : mode dev vs mode prod
 
 Vous l'aurez peut-être remarqué, les deux scripts que l'on vient d'ajouter au fichier `package.json` utilisent un paramètre "mode" avec une valeur différente. Voyons l'impact de ce paramètre :
 
@@ -261,7 +264,7 @@ Vous l'aurez peut-être remarqué, les deux scripts que l'on vient d'ajouter au 
 3. **Comparez** le fichier `main.bundle.js` généré avec le mode "production" et le `main.bundle.dev.js` qui avait été généré en mode "development". A votre avis, quelle est l'utilité du mode "production" ?
 4. **Demandez au formateur qui encadre votre séance TP si vous avez vu juste avant de passer à la suite.**
 
-## C.5. Live reload
+## C.6. Webpack : Live reload
 **Pour terminer ce chapitre sur les modules et puisqu'on vient d'installer webpack, je vous propose d'utiliser une fonctionnalité de webpack qui va nous simplifier la vie à savoir le ["webpack dev server" _(documentation)_](https://webpack.js.org/configuration/dev-server/).**
 
 Jusque là pour lancer JSteam on avait besoin de 2 terminaux :
