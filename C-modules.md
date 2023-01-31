@@ -157,6 +157,10 @@ Nous verrons plus tard dans le TP comment rendre nos modules compatibles avec le
 
 	**En effet ces deux lignes utilisent les constantes qu'on vient de déplacer.** On pourrait résoudre le problème en les exportant depuis `GameList.js` pour les importer ensuite dans le `main.js` mais je vous propose ici plutôt de passer ces deux lignes directement dans le module `GameList.js` ainsi pas besoin de rajouter des export/import supplémentaires et par ailleurs ça va nous arranger pour la suite des exercices.
 
+	> ⚠️⚠️ _**Attention :**_ ⚠️⚠️ _un module ne devrait normalement contenir que des déclarations de fonctions, de classes ou des constantes "simples", et c'est le code qui "importe" le module qui décide de déclencher ou non, et à quel moment, les fonctions ou méthodes importées._
+	>
+	> _Ici on ajoute dans notre module des instructions qui vont s'exécuter automatiquement dès qu'on va l'importer, sans que le module appelant (celui dans lequel on a le `import`) ne fasse quoique ce soit : **c'est une mauvaise pratique qu'il ne faut surtout pas réitérer dans la vraie vie et qu'on essaiera de résoudre grâce à la POO dans le prochain chapitre**._
+
 
 	Une fois tous déplacé, ne devraient rester dans votre `main.js` que les lignes suivantes :
 
