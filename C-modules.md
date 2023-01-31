@@ -224,7 +224,7 @@ Comme vu en cours, le bundler le plus employé en JS est [Webpack](https://webpa
 		// Fichier de sortie :
 		output: {
 			path: path.resolve(__dirname, './build'),
-			filename: 'main.bundle.js'
+			filename: 'main.bundle.js',
 		},
 		// compatibilité anciens navigateurs (si besoin du support de IE11 ou android 4.4)
 		target: ['web', 'es5'],
@@ -234,14 +234,15 @@ Comme vu en cours, le bundler le plus employé en JS est [Webpack](https://webpa
 				{
 					test: /\.js$/, // tous les fichiers js ...
 					exclude: /node_modules/, // ... sauf le dossier node_modules ...
-					use: { // ... seront compilés par babel !
+					use: {
+						// ... seront compilés par babel !
 						loader: 'babel-loader',
-					}
-				}
-			]
+					},
+				},
+			],
 		},
-		devtool: 'source-map'
-	}
+		devtool: 'source-map',
+	};
 	```
 
 5. **Modifiez les scripts `"build"` et `"watch"` du fichier `package.json` pour remplacer babel par webpack** (_notez quand même que **babel sera toujours utilisé mais en arrière plan** par webpack grâce au `webpack.config.js` que l'on vient d'écrire_):
@@ -298,7 +299,12 @@ Avec **webpack dev server** on va pouvoir lancer les 2 à la fois, en une seule 
 	- à la fin du fichier, entre la clé `devtool: 'source-map',` et la dernière accolade, insérez :
 		```js
 		devServer: {
-			static: './',
+			static: {
+				directory: './',
+				watch: {
+					ignored: 'node_modules',
+				},
+			},
 			port: 8000,
 		},
 		```
