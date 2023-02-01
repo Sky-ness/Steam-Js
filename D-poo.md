@@ -106,8 +106,8 @@ const helpView = new HelpView(document.querySelector('.viewContent .help'));
 ```
 
 Le principe sera le suivant :
-1. on envoie à notre classe `HelpView` l'élément HTML (_la balise_) dans laquelle se trouve le formulaire `<article class="help">` (_[l. 56 du fichier `index.html`](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/index.html#L56)_).
-2. le constructeur de la classe ajoute l'écouteur d'événement submit sur le formulaire
+- on enverra à notre classe `HelpView` l'élément HTML (_la balise_) dans laquelle se trouve le formulaire `<article class="help">` (_[l. 56 du fichier `index.html`](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/index.html#L56)_).
+- c'est le constructeur de la classe qui ajoutera l'écouteur d'événement submit sur le formulaire
 
 1. **Dans `HelpView.js`, créez une classe nommée `HelpView`** (_à côté de la fonction `handleHelpFormSubmit`_)
 2. **Ajoutez-y un constructeur** qui recevra un paramètre nommé `element`
