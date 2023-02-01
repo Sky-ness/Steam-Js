@@ -109,6 +109,8 @@ Le principe sera le suivant :
 - on enverra à notre classe `HelpView` l'élément HTML (_la balise_) dans laquelle se trouve le formulaire `<article class="help">` (_[l. 56 du fichier `index.html`](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/index.html#L56)_).
 - c'est le constructeur de la classe qui ajoutera l'écouteur d'événement submit sur le formulaire
 
+**Si le principe est compris passons à la pratique**(_dans le cas contraire, demandez  de l'aide à votre encadrant.e de TP_) :
+
 1. **Dans `HelpView.js`, créez une classe nommée `HelpView`** (_à côté de la fonction `handleHelpFormSubmit`_)
 2. **Ajoutez-y un constructeur** qui recevra un paramètre nommé `element`
 3. **Ajoutez ensuite une propriété publique nommée elle aussi `element`**. Dans le constructeur, stockez la valeur du paramètre `element` dans cette propriété publique `element`.
