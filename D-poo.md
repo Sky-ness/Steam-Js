@@ -36,6 +36,7 @@ Or, dans notre projet ce n'est pas vraiment le cas car plusieurs de nos modules 
 	```
 - Par ailleurs, comme vu au précédent chapitre, on a un autre problème : le module `GameList.js` déclenche des traitements dès qu'on l'importe : le seul fait d'importer le module va ajouter -_automatiquement et dès l'import_- plusieurs écouteurs d'événements `addEventListener` sans qu'on le sache.
 
+**On va donc voir dans ce chapitre comment on peut répondre à ces deux problèmes à l'aide de la POO.**
 
 ## D.2. Rappels de syntaxe
 ### D.2.1. class & propriétés publiques
