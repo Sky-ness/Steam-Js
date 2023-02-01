@@ -14,7 +14,10 @@ _**Dans cette partie du TP nous allons faire un peu de POO pour essayer d'améli
 	- [D.2.2. méthodes](#d22-méthodes)
 - [D.3. La classe HelpView](#d3-la-classe-helpview)
 - [D.4. Héritage : La classe View](#d4-héritage-la-classe-view)
-- [D.5. Propriété et méthodes statiques : la classe Router](#d5-propriété-et-méthodes-statiques-la-classe-router)
+- [D.5. _Propriétés et méthodes statiques :_ La classe Router](#d5-propriétés-et-méthodes-statiques-la-classe-router)
+	- [D.5.1. Principe du Routing](#d51-principe-du-routing)
+	- [D.5.2 Rappels de syntaxe](#d52-rappels-de-syntaxe)
+	- [D.5.3. La classe `Router`](#d53-la-classe-router)
 
 
 ## D.1. Notre problème
@@ -25,13 +28,13 @@ En fait, le principe des modules est normalement d'avoir **des fichiers JS qui p
 Or, dans notre projet ce n'est pas vraiment le cas car plusieurs de nos modules :
 - font référence à la variable globale `document` (_pour faire des `document.querySelector`_) et vont donc chercher eux-même les balises n'importe où dans la page.
 
-	C'est un problème car si on importe par exemple notre module `Help.js` (_formulaire de contact/support_) dans un autre projet, et que ce projet contient plusieurs formulaires différents sur la même page en plus du formulaire de contact, on ne peut pas garantir que les 2 lignes suivantes iront bien cibler les bonnes balises, celles du formulaire de contact, et pas celles d'un autre formulaire de la page :
+	C'est un problème car si on importe par exemple notre module `Help.js` (_formulaire de contact/support_) dans un autre projet, et que ce projet contient, dans son code HTML, plusieurs formulaires différents en plus du formulaire de contact, on ne peut pas garantir que les 2 lignes suivantes iront bien chercher les bonnes balises, celles du formulaire de contact, et pas celles d'un autre formulaire de la page :
 	```js
-	// récupération des 2 champs du formulaire
+	// src/Help.js
 	const subjectInput = document.querySelector('input[name=subject]');
 	const bodyTextarea = document.querySelector('textarea[name=body]');
 	```
-- Par ailleurs, comme vu au précédent chapitre, on a un autre problème : le module `GameList.js` déclenche des traitements dès qu'on l'importe : le seul fait d'importer le module va ajouter -_dès l'import_- plusieurs écouteurs d'événements `addEventListener` sans qu'on le sache.
+- Par ailleurs, comme vu au précédent chapitre, on a un autre problème : le module `GameList.js` déclenche des traitements dès qu'on l'importe : le seul fait d'importer le module va ajouter -_automatiquement et dès l'import_- plusieurs écouteurs d'événements `addEventListener` sans qu'on le sache.
 
 
 ## D.2. Rappels de syntaxe
@@ -86,10 +89,189 @@ heisenberg.fullName();
 
 
 ## D.3. La classe HelpView
+Pour commencer cette amélioration de notre code avec la POO, travaillons un peu sur le module `src/HelpView.js`.
+
+Actuellement il contient uniquement une fonction `handleHelpFormSubmit` qui fait référence à la variable globale `document` :
+
+```js
+// récupération des 2 champs du formulaire
+const subjectInput = document.querySelector('input[name=subject]');
+const bodyTextarea = document.querySelector('textarea[name=body]');
+```
+
+Pour résoudre ce problème, vous allez créer dans ce module une classe `HelpView` qu'on utilisera dans le `main.js` de la manière suivante :
+```js
+const helpView = new HelpView(document.querySelector('.viewContent .help'));
+```
+
+Le principe sera le suivant :
+1. on envoie à notre classe `HelpView` l'élément HTML (_la balise_) dans laquelle se trouve le formulaire `<article class="help">` (_[l. 56 du fichier `index.html`](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/index.html#L56)_).
+2. le constructeur de la classe ajoute l'écouteur d'événement submit sur le formulaire
+
+1. **Dans `HelpView.js`, créez une classe nommée `HelpView`** (_à côté de la fonction `handleHelpFormSubmit`_)
+2. **Ajoutez-y un constructeur** qui recevra un paramètre nommé `element`
+3. **Ajoutez ensuite une propriété publique nommée elle aussi `element`**. Dans le constructeur, stockez la valeur du paramètre `element` dans cette propriété publique `element`.
+4. **Créez dans la classe `HelpView` une méthode `handleSubmit(event)`** et mettez-y le code contenu dans la fonction `handleHelpFormSubmit` (_vous pouvez ensuite supprimer la fonction `handleHelpFormSubmit`_)
+
+	Remplacez y toutes les références à l'objet `document` par la propriété publique `element`
+
+	> _**Rappel :** dans une classe en JS, le mot clé `this` est toujours obligatoire pour accéder à une propriété ou une méthode_
+
+5. **Dans le constructeur de la classe, ajoutez un écouteur d'événement `'submit'` sur le formulaire contenu dans la balise `this.element` et qui déclenche la méthode `handleSubmit`**
+
+	Vous pouvez vous inspirer des deux lignes du `main.js` suivantes :_
+
+	```js
+	// on écoute la soumission du formulaire de contact
+	const helpForm = document.querySelector('.helpForm');
+	helpForm.addEventListener('submit', handleHelpFormSubmit);
+	```
+	> _**Attention 1 :** la classe `HelpView` ne doit plus utiliser la variable globale `document` !_
+
+	> _**Attention 2 :** lorsqu'on utilise `addEventListener()` dans une classe on se retrouve confrontés à des problèmes de scope de `this` : dans la méthode déclenchée lorsque l'événement se produit, la valeur de `this` est "transformée" : ce n'est plus notre instance mais ça devient l'élément HTML qui a déclenché l'événement (dans notre cas la balise `<form>`)._
+	>
+	> Pour éviter ces problèmes le mieux quand on travaille avec des classes et de préférer l'emploi de **arrow functions** comme ceci :
+	> ```js
+	> myElement.addEventListener('click', event => this.maMethode(event));
+	> ```
+
+
+	Une fois l'écouteur d'événement ajouté, vous pouvez supprimer ces 2 lignes du `main.js`.
+
+6. **Si vous ne l'aviez pas déjà fait ajoutez dans le fichier `mains.js` la ligne suivante :**
+	```js
+	const helpView = new HelpView(document.querySelector('.viewContent .help'));
+	```
+
+	A partir de maintenant notre application doit fonctionner comme avant (_vérifiez que la `HelpView` fait correctement son travail et détecte bien les champs vides puis ouvre bien la fenêtre de rédaction d'un email_) mais avec deux avantages :
+	- notre module `HelpView` n'a plus besoin d'accéder à la variable globale `document`
+	- on a pu simplifier le code du `main.js` en écoutant le `submit` directement depuis la classe `HelpView` elle-même
 
 ## D.4. Héritage : La classe View
+_**Je vous propose maintenant de créer une classe `View` qui va servir de base à toutes nos vues**_ (_`GameList`, `HelpView` et les futures "pages" de notre application JSteam_).
 
-## D.5. Propriété et méthodes statiques : la classe Router
+1. **Dans un nouveau module nommé `View.js` créez une classe `View` avec :**
+	- une propriété publique `element`
+	- un constructeur qui reçoit un paramètre `element` et le stocke dans la propriété publique `element`
+	- une méthode `show()` qui ajoute la classe CSS `"active"` sur la balise HTML contenue dans `element`
+	- une méthode `hide()` qui retire la classe CSS `"active"` sur la balise contenue dans `element`
+
+2. **Faites hériter la classe `HelpView` de la classe `View`**
+
+	> _**NB :** vous pouvez supprimer la déclaration de la propriété publique `element` puisqu'elle est maintenant héritée_
+
+	> _**Souvenez-vous :** pour appeler le constructeur de la classe parente, c'est la fonction `super()` qu'il faut invoquer. Par ailleurs ça doit obligatoirement être la première instruction de votre constructeur enfant._
+
+3. **Pour vérifier si votre classe fonctionne correctement**, faites appel à la méthode `show` de votre instance `helpView` :
+	```js
+	const helpView = new HelpView(document.querySelector('.viewContent > .help'));
+	helpView.show();
+	```
+
+	Le formulaire de "support" doit s'afficher en dessous de la gameList :
+
+	<img src="images/readme/helpview-show.png" >
+
+	S'il s'affiche bien, c'est gagné ! Vous pouvez supprimer l'instruction `helpView.show()`.
+
+
+## D.5. _Propriétés et méthodes statiques :_ La classe Router
+
+Dans cet exercice, je vous propose de développer une classe `Router` qui, à l'aide des **propriétés et méthodes statiques**, va gérer l'affichage à la fois du titre de la vue, et de son contenu.
+
+C'est une classe qui nous servira dans les prochains TP et qui nous permettra de
+naviguer d'une vue à l'autre sans rechargement de page (_principe de base des [SPA](https://en.wikipedia.org/wiki/Single-page_application)_).
+
+
+### D.5.1. Principe du Routing
+
+**En web le terme de "routing" ("routage" en français) désigne la façon dont une application décide de quelle vue afficher à quel moment.**
+
+Dans [de](https://laravel.com/docs/8.x/routing) [nombreux](https://reactrouter.com/) [frameworks](https://angular.io/guide/router) [de](https://guides.emberjs.com/release/routing/) [développement](https://router.vuejs.org/) (_frontend, [backend](https://symfony.com/doc/current/routing.html) ou [mobile](https://reactnavigation.org/) !_) ce mécanisme de **"routing"** est confié à ce qu'on appelle un **"Router"** (_d'où le nom de notre classe_).
+
+**Le principe d'un `Router` est toujours le même :**
+- on lui donne la liste de **toutes les vues de l'application**
+- **à chaque vue** de la liste est associée **une "clé"** (_un "identifiant"_)
+- au clic sur un lien, on envoie au `Router` **la clé de la vue que l'on veut afficher**
+- le `Router` cherche alors dans sa liste de vues **celle qui correspond à cette clé** puis l'affiche
+
+Bien souvent, les **clés** qui sont choisies pour identifier les vues sont des morceaux d'URL, des "chemins" (_"path" en anglais_). Par exemple, dans JSteam on associera à HelpView la "clé" `"/help"` (_le `href` du lien "Support"_).
+
+On a déjà plus ou moins un fonctionnement de ce type dans la fonction `handleMenuLinkClick`, mais on va essayer de faire quelque chose de plus propre (_tout en travaillant de nouvelles syntaxes de POO_).
+
+Ajoutez donc à la fin de votre fichier `main.js` (_après la déclaration de `helpView`_):
+```js
+const gameListView = new View(document.querySelector('.viewContent > .gameList'));
+const aboutView = new View(document.querySelector('.viewContent > .about'));
+const routes = [
+	{ path: '/', view: gameListView },
+	{ path: '/about', view: aboutView },
+	{ path: '/help', view: helpView },
+];
+```
+
+Vous voyez qu'on a créé 3 routes pour chacune des vues de notre menu (_et 2 instances de la classe `View` pour la page "Magasin" et "A propos"_).
+
+Pour tester notre Router au fur et à mesure, commencez par commenter la ligne suivante (_c'est le Router qui va maintenant se charger ça_) :
+```js
+// On affiche la gameList par défaut
+document.querySelector('.gameList').classList.add('active');
+```
+
+Testez votre code, la gameList ne doit plus apparaître :
+
+<img src="images/readme/router-gamelist-hidden.png">
+
+### D.5.2 Rappels de syntaxe
+**Dans une application il n'y a (en général) qu'un seul Router. Pour ça on pourrait utiliser le design pattern [Singleton _(wikipedia)_](https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)) mais je vous propose ici plutôt de travailler avec les propriétés et méthodes statiques.**
+
+Pour rappel les propriétés et méthodes statiques se déclarent à l'aide du mot clé `static`. Ces propriétés/méthodes n'existent qu'au niveau de la classe (et pas de l'instance) et s'utilisent comme ceci :
+
+```js
+class Counter {
+	static counter = 0;
+    static getCounter() {
+		return this.counter++;
+    }
+}
+
+// Les méthodes et propriété statiques s'appellent sans avoir besoin d'instancier la classe
+// (pas de `new Counter()` nécessaire)
+console.log(
+	Counter.getCounter(),   // 0
+    Counter.counter,        // 1
+    Counter.getCounter(),   // 1
+    Counter.counter,        // 2
+);
+```
+
+### D.5.3. La classe `Router`
+
+1. **Dans le module `src/Router.js` créez une classe `Router`** avec une propriété statique `routes`
+2. **Dans le `src/main.js`, renseignez la valeur de `routes` comme ceci :**
+	```js
+	Router.routes = routes;
+	```
+
+	Où `routes` est le tableau de routes créé à l'étape [D.5.1. Principe du Routing](#d51-principe-du-routing)
+
+3. **Développez une méthode statique `Router.navigate(path)` qui permette d'afficher la `view` sélectionnée.**
+
+	Cette méthode va devoir parcourir le tableau de routes à la recherche de celle qui correspond au paramètre `path` envoyé dans `Router.navigate(path)`, appeler la méthode `.show()` sur la view correspondant à la route, et appeler la méthode `.hide()` sur la vue précédente (s'il y en avait une).
+
+	Pour tester cette méthode ajoutez dans votre fichier `main.js` la ligne suivante :
+	```js
+	Router.navigate('/about');
+	```
+	Le rendu attendu est le suivant :
+
+	<img src="images/readme/router-navigate-about.png">
+
+4. **Enfin, modifiez le contenu de la fonction `handleMenuLinkClick` pour faire en sorte qu'elle utilise la méthode `Router.navigate()`.** Normalement vous devriez gagner pas mal de lignes !
+
+	Modifiez le `main.js` pour qu'au chargement de la page, ce ne soit plus la page "À propos" mais la gameList qui s'affiche par défaut.
+
+
 
 ## Étape suivante <!-- omit in toc -->
-Si vous avez terminé cette partie sur la POO, il est l'heure de mettre en place les modules dans la partie suivante : [C. Les modules](C-modules.md).
+Si vous avez terminé cette partie sur la POO, et qu'il vous reste du temps allons un peu plus loin dans la partie : [E. POO avancée](E-poo-avancee.md).
