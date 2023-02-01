@@ -124,13 +124,13 @@ Passez successivement (_pensez à tester à chaque étape que tout fonctionne to
 	> _**NB :** On ne déplace ici que la **déclaration** de la fonction, **PAS** le `addEventListener` qui y fait référence !_
 	>
 	> _Même principe pour les prochaines fonctions à déplacer ci-dessous_
-2. **la fonction `handleHelpFormSubmit` dans un module `src/Help.js`** (_export nommé ie. sans le mot clé `défault`_)
+2. **la fonction `handleHelpFormSubmit` dans un module `src/HelpView.js`** (_export nommé ie. sans le mot clé `défault`_)
 3. **la fonction `renderGameThumbnail` dans un module `src/renderGameThumbnail.js`** (_export default_)
-4. **la fonction `renderGameList` (_export default_) dans un module `src/GameList.js`**
+4. **la fonction `renderGameList` (_export default_) dans un module `src/GameListView.js`**
 
 		> _la fonction renderGameList utilise des informations issues d'autres modules (notamment le tableau `data` et la fonction `renderGameThumbnail`) pensez donc à utiliser les bons import et à faire le ménage des imports désormais inutiles dans le `main.js` !_
 
-5. **Passez enfin les fonctions `toggleSearchForm` et `handleSearchFormSubmit` dans le module `src/GameList.js`** créé précédemment.
+5. **Passez enfin les fonctions `toggleSearchForm` et `handleSearchFormSubmit` dans le module `src/GameListView.js`** créé précédemment.
 
 	Rechargez la page dans votre navigateur et tentez d'afficher le formulaire de recherche : **une erreur se déclenche :**
 
@@ -138,11 +138,11 @@ Passez successivement (_pensez à tester à chaque étape que tout fonctionne to
 
 	> _**NB :** si cette erreur n'est pas captée par vscode comme dans la capture ci-dessus, vérifiez que vous avez bien coché la case "Uncaught Exceptions" comme indiqué dans le point [B.2.2. Les points d'arrêt](./B-debug-vscode.md#b22-les-points-darrêt)_)
 
-	En fait cette erreur est logique : on a déplacé dans `GameList.js` nos 2 fonctions sans remarquer que toutes les deux utilisaient des constantes définies dans le `main.js` : `searchForm` et `toggleSearchButton` (_qui sont 2 Element HTML_)
+	En fait cette erreur est logique : on a déplacé dans `GameListView.js` nos 2 fonctions sans remarquer que toutes les deux utilisaient des constantes définies dans le `main.js` : `searchForm` et `toggleSearchButton` (_qui sont 2 Element HTML_)
 
-	On pourrait être tenté d'exporter ces 2 constantes depuis le `main.js` puis de les importer dans `GameList.js` mais on créerait alors des dépendances croisées entre ces deux fichiers (_`main.js` aurait besoin de `GameList.js`, et `GameList.js` aurait besoin de `main.js`_).
+	On pourrait être tenté d'exporter ces 2 constantes depuis le `main.js` puis de les importer dans `GameListView.js` mais on créerait alors des dépendances croisées entre ces deux fichiers (_`main.js` aurait besoin de `GameListView.js`, et `GameListView.js` aurait besoin de `main.js`_).
 
-	Plutôt que de créer ce genre ["d'inception"](https://fr.wikipedia.org/wiki/Inception), déplacez ces 2 constantes dans le module `GameList` puis rechargez la page.
+	Plutôt que de créer ce genre ["d'inception"](https://fr.wikipedia.org/wiki/Inception), déplacez ces 2 constantes dans le module `GameListView` puis rechargez la page.
 
 	<img src="images/readme/module-referenceerror2.png">
 
@@ -158,7 +158,7 @@ Passez successivement (_pensez à tester à chaque étape que tout fonctionne to
 	searchForm.addEventListener('submit', handleSearchFormSubmit);
 	```
 
-	**En effet ces deux lignes utilisent les constantes qu'on vient de déplacer.** On pourrait résoudre le problème en les exportant depuis `GameList.js` pour les importer ensuite dans le `main.js` mais je vous propose ici plutôt de passer ces deux lignes directement dans le module `GameList.js` ainsi pas besoin de rajouter des export/import supplémentaires et par ailleurs ça va nous arranger pour la suite des exercices.
+	**En effet ces deux lignes utilisent les constantes qu'on vient de déplacer.** On pourrait résoudre le problème en les exportant depuis `GameListView.js` pour les importer ensuite dans le `main.js` mais je vous propose ici plutôt de passer ces deux lignes directement dans le module `GameListView.js` ainsi pas besoin de rajouter des export/import supplémentaires et par ailleurs ça va nous arranger pour la suite des exercices.
 
 	> ⚠️⚠️ _**Attention :**_ ⚠️⚠️ _un module ne devrait normalement contenir que des déclarations de fonctions, de classes ou des constantes "simples", et c'est le code qui "importe" le module qui décide de déclencher ou non, et à quel moment, les fonctions ou méthodes importées._
 	>
@@ -168,8 +168,8 @@ Passez successivement (_pensez à tester à chaque étape que tout fonctionne to
 	Une fois tous déplacé, ne devraient rester dans votre `main.js` que les lignes suivantes :
 
 	```js
-	import renderGameList from './GameList.js';
-	import { handleHelpFormSubmit } from './Help.js';
+	import renderGameList from './GameListView.js';
+	import { handleHelpFormSubmit } from './HelpView.js';
 	import { handleMenuLinkClick } from './Router.js';
 
 	// Activation du lien du menu
