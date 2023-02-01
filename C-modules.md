@@ -31,7 +31,24 @@ import vehicle from './vehicle.js';
 console.log( vehicle ); // 'The RV'
 ```
 
-Le [support navigateur des modules ES6](https://caniuse.com/#feat=es6-module) est plutôt bon mais encore un peu juste pour des applications grand public *(absence de support sur IE et android 4.4)*.
+Dans l'exemple ci-dessus on utilise un **export par défaut** (_`export default ...`_) mais il existe un deuxième type d'export : les **exports nommés** (_`named exports` en anglais_). \
+Si l'on réécrit l'exemple ci-dessus avec un export nommé cela donnera :
+```js
+// vehicle.js
+export const vehicle = 'the RV';
+```
+```js
+// main.js
+import {vehicle} from './vehicle.js';
+console.log( vehicle ); // 'The RV'
+```
+
+Les export nommés diffèrent des `export default` parce que :
+- on peut avoir plusieurs exports nommés mais un seul export default
+- pour importer une valeur exportée avec un export nommé, on est obligé de mettre des accolades autour du nom de la variable dans l'import
+- on est obligés d'écrire le nom de la variable qu'on importe EXACTEMENT comme elle est écrite dans le module qui exporte (pas de faute de frappe, même casse, etc.), alors que pour les `export default` on peut importer en mettant n'importe quel nom (_le nom de l'export est en fait "default"_)
+
+Le [support navigateur des modules ES6](https://caniuse.com/#feat=es6-module) est plutôt bon (_peut-être un peu juste certaines applications qui nécessiteraient le support de IE et android 4.4_) :
 
 <a href="http://caniuse.com/#feat=es6-module">
 	<picture>
@@ -41,7 +58,7 @@ Le [support navigateur des modules ES6](https://caniuse.com/#feat=es6-module) es
 	</picture>
 </a>
 
-Dans un premier temps nous ferons abstraction de ces questions de compatibilité et nous nous appuierons sur le fait que **les dernières versions de Chromium/Chrome et de FireFox supportent nativement les modules ES6**.
+Dans un premier temps nous ferons de toute façon abstraction de ces questions de compatibilité et nous nous appuierons sur le fait que **les dernières versions de Chromium/Chrome et de FireFox supportent nativement les modules ES6**.
 
 Nous verrons plus tard dans le TP comment rendre nos modules compatibles avec les vieux navigateurs grâce à Webpack.
 
@@ -93,7 +110,7 @@ Nous verrons plus tard dans le TP comment rendre nos modules compatibles avec le
 	> export default data; // OK !
 	> ```
 
-	> _**NB3 :** Un export simple (pas par défaut) d'une const est en revanche autorisé :_
+	> _**NB3 :** Un export simple (pas par défaut, on parle d'[export nommé (mdn)](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/export#description)) d'une const est en revanche autorisé :_
 	> ```js
 	> export const data = [...]; // OK !
 	> ```
