@@ -111,7 +111,7 @@ function handleSearchFormSubmit(event) {
 	event.preventDefault();
 	const searchInput = searchForm.querySelector('[name=search]'),
 		orderingSelect = searchForm.querySelector('[name=ordering]');
-	renderGameList(searchInput.value, orderingSelect.selectedOptions[0].value);
+	renderGameList(searchInput.value, orderingSelect.value);
 }
 searchForm.addEventListener('submit', handleSearchFormSubmit);
 
@@ -151,7 +151,6 @@ function renderGameList(search = '', ordering) {
 	// parcours du tableau + génération du code HTML de la gameList
 	let html = '';
 	data
-		.slice() // on clone le tableau pour que le sort ne modifie pas l'ordre des éléments
 		.filter(game => game.name.toLowerCase().includes(search.toLowerCase())) // recherche
 		.sort(sortingFunction) // tri
 		.forEach(name => (html += renderGameThumbnail(name))); // génération du HTML
