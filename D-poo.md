@@ -18,7 +18,7 @@ _**Dans cette partie du TP nous allons faire un peu de POO pour essayer d'améli
 	- [D.5.1. Principe du Routing](#d51-principe-du-routing)
 	- [D.5.2 Rappels de syntaxe](#d52-rappels-de-syntaxe)
 	- [D.5.3. La classe `Router`](#d53-la-classe-router)
-- [D.5.4. Router et viewTitle](#d54-router-et-viewtitle)
+	- [D.5.4. Router et viewTitle](#d54-router-et-viewtitle)
 
 
 ## D.1. Notre problème
@@ -282,7 +282,7 @@ console.log(
 4. **Enfin, modifiez le contenu de la fonction `handleMenuLinkClick` pour faire en sorte qu'elle utilise la méthode `Router.navigate()`.** Normalement vous devriez gagner pas mal de lignes !
 
 
-## D.5.4. Router et viewTitle
+### D.5.4. Router et viewTitle
 Notre module `src/Router.js` permet de passer d'une vue à l'autre mais il reste un problème avec l'affichage du  titre de la page : quand on appelle `Router.navigate('/about')` dans le `main.js`, le titre de la page reste "MAGASIN" au lieu de "À PROPOS". Notre titre ne change qu'au clic.
 
 Pour résoudre ce problème, ajoutez à chaque route une propriété `title` comme ceci :
