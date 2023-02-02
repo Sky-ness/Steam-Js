@@ -22,14 +22,14 @@ _**Dans cette partie du TP nous allons faire un peu de POO pour essayer d'améli
 
 
 ## D.1. Notre problème
-_**Dans la partie B. du TP qu'on vient de terminer, on a beaucoup amélioré l'organisation de notre code en le répartissant dans différents fichiers, mais quel est le problème ?**_
+_**Dans la partie B. du TP qu'on vient de terminer, on a beaucoup amélioré l'organisation de notre code en le répartissant dans différents fichiers, mais on a quand même encore un problème.**_
 
-En fait, le principe des modules est normalement d'avoir **des fichiers JS qui puissent être réutilisables facilement** sur d'autres projets.
+En fait, le principe des modules c'est normalement d'avoir **des fichiers JS qui puissent être réutilisables facilement** sur d'autres projets.
 
-Or, dans notre projet ce n'est pas vraiment le cas car plusieurs de nos modules :
-- font référence à la variable globale `document` (_pour faire des `document.querySelector`_) et vont donc chercher eux-même les balises n'importe où dans la page.
+Or, dans notre code ce n'est pas vraiment le cas car plusieurs de nos modules :
+- font référence à la variable globale `document` (_pour faire des `document.querySelector(...)`_) et vont donc chercher eux-même les balises n'importe où dans la page.
 
-	C'est un problème car si on importe par exemple notre module `Help.js` (_formulaire de contact/support_) dans un autre projet, et que ce projet contient, dans son code HTML, plusieurs formulaires différents en plus du formulaire de contact, on ne peut pas garantir que les 2 lignes suivantes iront bien chercher les bonnes balises, celles du formulaire de contact, et pas celles d'un autre formulaire de la page :
+	C'est un problème car si on importe par exemple notre module `Help.js` (_formulaire de contact/support_) dans un autre projet, et que ce projet contient plusieurs formulaires différents en plus du formulaire de contact, on ne peut pas garantir que les 2 lignes suivantes iront bien chercher dans le HTML les bonnes balises, c'est à dire celles du formulaire de contact et pas celles d'un autre formulaire de la page :
 	```js
 	// src/Help.js
 	const subjectInput = document.querySelector('input[name=subject]');
@@ -91,7 +91,7 @@ heisenberg.fullName();
 
 
 ## D.3. La classe HelpView
-Pour commencer cette amélioration de notre code avec la POO, travaillons un peu sur le module `src/HelpView.js`.
+_**Pour commencer cette amélioration de notre code avec la POO, travaillons un peu sur le module `src/HelpView.js`.**_
 
 Actuellement il contient uniquement une fonction `handleHelpFormSubmit` qui fait référence à la variable globale `document` :
 
@@ -235,7 +235,7 @@ Testez votre code, la gameList ne doit plus apparaître :
 <img src="images/readme/router-gamelist-hidden.png">
 
 ### D.5.2 Rappels de syntaxe
-**Dans une application il n'y a (en général) qu'un seul Router. Pour ça on pourrait utiliser le design pattern [Singleton _(wikipedia)_](https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)) mais je vous propose ici plutôt de travailler avec les propriétés et méthodes statiques.**
+**Dans une application il n'y a (en général) qu'un seul Router. Pour ça on pourrait utiliser le design pattern [Singleton _(wikipedia)_](https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)) mais je vous propose ici de travailler plutôt avec les propriétés et méthodes statiques.**
 
 Pour rappel les propriétés et méthodes statiques se déclarent à l'aide du mot clé `static`. Ces propriétés/méthodes n'existent qu'au niveau de la classe (et pas de l'instance) et s'utilisent comme ceci :
 
@@ -271,7 +271,9 @@ console.log(
 
 	Cette méthode va devoir parcourir le tableau de routes à la recherche de celle qui correspond au paramètre `path` envoyé dans `Router.navigate(path)`, appeler la méthode `.show()` sur la view correspondant à la route, et appeler la méthode `.hide()` sur la vue précédente (s'il y en avait une).
 
-	Pour tester cette méthode ajoutez dans votre fichier `main.js` la ligne suivante :
+	> _Pour chercher une cellule dans un tableau vous pouvez utiliser la méthode [`.find()` (mdn)](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/find) de la classe Array _
+
+	Pour tester votre méthode `navigate`, ajoutez dans votre fichier `main.js` la ligne suivante :
 	```js
 	Router.navigate('/about');
 	```
@@ -283,7 +285,7 @@ console.log(
 
 
 ### D.5.4. Router et viewTitle
-Notre module `src/Router.js` permet de passer d'une vue à l'autre mais il reste un problème avec l'affichage du  titre de la page : quand on appelle `Router.navigate('/about')` dans le `main.js`, le titre de la page reste "MAGASIN" au lieu de "À PROPOS". Notre titre ne change qu'au clic.
+_**Notre module `src/Router.js` permet de passer d'une vue à l'autre mais il reste un problème avec l'affichage du  titre de la page : quand on appelle `Router.navigate('/about')` dans le `main.js`, le titre de la page reste "MAGASIN" au lieu de "À PROPOS". Notre titre ne change qu'au clic.**_
 
 Pour résoudre ce problème, ajoutez à chaque route une propriété `title` comme ceci :
 ```js
@@ -307,7 +309,7 @@ Ajoutez maintenant une nouvelle propriété statique `titleElement` au Router qu
 Router.titleElement = document.querySelector('.viewTitle');
 ```
 
-Utilisez maintenant la propriété `title` de chaque route dans la méthode `navigate` du `Router` pour lui permettre d'afficher le titre de la vue sélectionnée !
+Utilisez maintenant la propriété `title` de chaque route et la propriété statique `titleElement` dans la méthode `navigate` du `Router` pour lui permettre d'afficher le titre de la vue sélectionnée !
 
 Une fois que tout est OK, remettez la gameList comme page initiale en remplaçant `Router.navigate('/about')` par `Router.navigate('/')`.
 

@@ -280,7 +280,7 @@ Vous l'aurez peut-être remarqué, les deux scripts que l'on vient d'ajouter au 
 1. **Renommez** le fichier `build/main.bundle.js` en `build/main.bundle.dev.js`
 2. Stoppez la commande `npm run watch` (<kbd>CTRL</kbd>+<kbd>C</kbd>) et **lancez à la place la commande `npm run build`**.
 3. **Comparez** le fichier `main.bundle.js` généré avec le mode "production" et le `main.bundle.dev.js` qui avait été généré en mode "development". A votre avis, quelle est l'utilité du mode "production" ?
-4. **Demandez au formateur qui encadre votre séance TP si vous avez vu juste avant de passer à la suite.**
+4. **Demandez à l'enseignant.e qui encadre votre séance TP si vous avez vu juste avant de passer à la suite.**
 
 ## C.6. Webpack : Live reload
 **Pour terminer ce chapitre sur les modules et puisqu'on vient d'installer webpack, je vous propose d'utiliser une fonctionnalité de webpack qui va nous simplifier la vie à savoir le ["webpack dev server" _(documentation)_](https://webpack.js.org/configuration/dev-server/).**

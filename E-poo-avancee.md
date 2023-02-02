@@ -44,7 +44,9 @@ Commencez par remplacer la page affichée initialement dans le `main.js` en remp
 Router.navigate('/help')
 ```
 
-On voit bien en faisant ça que le lien du menu "Support" ne se sélectionne pas.
+On voit bien en faisant ça que le lien du menu "Support" ne se sélectionne pas alors qu'il devrait :
+
+<img src="images/readme/router-nav-inactive.png">
 
 Pour régler ce problème vous allez :
 - rajouter une propriété statique privée `menuElement` dans la classe `Router`
@@ -63,7 +65,10 @@ Pour régler ce problème vous allez :
 
 Une fois tout ça fait, si vous rechargez la page, le lien "Support" doit être actif, mais si vous cliquez sur les liens du menu le lien actif doit changer.
 
-À nouveau sur cette exercice, du point de vue de la personne qui visite notre site, rien n'a changé : pas de nouvelle fonctionnalité ! Mais par contre, au niveau du code, on a pu supprimer de notre module `Router.js` toutes les références à l'objet global `document` ce qui permet de faire de notre module `Router.js` un module vraiment réutilisable dans un autre projet !
+<img src="images/readme/router-nav-active.png">
+
+_À nouveau sur cette exercice, du point de vue de la personne qui visite notre site, rien n'a changé : pas de nouvelle fonctionnalité !_ \
+_Mais par contre, au niveau du code, en supprimant toutes les références à l'objet global `document` on a rendu notre module `Router.js` facilement réutilisable dans un autre projet !_
 
 ## E.3. History API
 
@@ -74,11 +79,11 @@ Cette API est un ensemble de méthodes de l'objet `window`, disponibles de base,
 
 Quand l'utilisateur change de page (_pour passer de la liste au formulaire par exemple_) on va pouvoir modifier, en JS, l'url courante :
 
-<img src="images/readme/changement-url.gif" />
+<img src="images/readme/history-pushstate.gif" />
 
 Ce qui permet ensuite d'utiliser les boutons précédent/suivant du navigateur (_là aussi sans rechargement de page_) :
 
-<img src="images/readme/boutons-prev-next.gif" />
+<img src="images/readme/history-popstate.gif" />
 
 1. **Dans la méthode `Router.navigate()`, appelez [`window.history.pushState()` _(mdn)_](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState) pour modifier l'URL de la page.**
 
@@ -103,7 +108,7 @@ _**Notre application est presque terminée, à un détail près : l'absence de [
 
 En effet, si vous vous rendez directement sur http://localhost:8000/help dans votre navigateur (_sans passer par la racine_), le serveur vous retourne une erreur 404 à la place de la page de détail.
 
-<img src="images/readme/404.gif" />
+<img src="images/readme/404.png" />
 
 En fait, lorsque vous lancez la requête en entrant cette URL dans la barre d'adresse du navigateur, le serveur http lancé avec `npx serve` cherche par défaut à trouver un fichier `help.html` ou bien un fichier `index.html` dans un sous dossier `/help/`. Autant dire que ça n'a aucune chance de fonctionner comme ça.
 
@@ -127,7 +132,7 @@ Heureusement `webpack dev server` dispose d'une option `historyApiFallback` qui 
 
 _**À partir de maintenant, vous pouvez en principe charger le site depuis n'importe quelle URL ! Youpi. Merci le deep linking !**_
 
-<img src="images/readme/deeplinking.gif" />
+<img src="images/readme/history-final.gif" />
 
 ## E.5. GameList
 **Pour finir ce TP je vous propose de convertir le module GameListView.js en classe.**
