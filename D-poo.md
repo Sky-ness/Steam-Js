@@ -18,6 +18,7 @@ _**Dans cette partie du TP nous allons faire un peu de POO pour essayer d'améli
 	- [D.5.1. Principe du Routing](#d51-principe-du-routing)
 	- [D.5.2 Rappels de syntaxe](#d52-rappels-de-syntaxe)
 	- [D.5.3. La classe `Router`](#d53-la-classe-router)
+- [D.5.4. Router et viewTitle](#d54-router-et-viewtitle)
 
 
 ## D.1. Notre problème
@@ -109,7 +110,7 @@ Le principe sera le suivant :
 - on enverra à notre classe `HelpView` l'élément HTML (_la balise_) dans laquelle se trouve le formulaire `<article class="help">` (_[l. 56 du fichier `index.html`](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/index.html#L56)_).
 - c'est le constructeur de la classe qui ajoutera l'écouteur d'événement submit sur le formulaire
 
-**Si le principe est compris passons à la pratique**(_dans le cas contraire, demandez  de l'aide à votre encadrant.e de TP_) :
+**Si le principe est compris passons à la pratique** (_dans le cas contraire, demandez  de l'aide à votre encadrant.e de TP_) :
 
 1. **Dans `HelpView.js`, créez une classe nommée `HelpView`** (_à côté de la fonction `handleHelpFormSubmit`_)
 2. **Ajoutez-y un constructeur** qui recevra un paramètre nommé `element`
@@ -117,6 +118,8 @@ Le principe sera le suivant :
 4. **Créez dans la classe `HelpView` une méthode `handleSubmit(event)`** et mettez-y le code contenu dans la fonction `handleHelpFormSubmit` (_vous pouvez ensuite supprimer la fonction `handleHelpFormSubmit`_)
 
 	Remplacez y toutes les références à l'objet `document` par la propriété publique `element`
+
+	> _**Rappel :** notre paramètre `element` contient une instance de la classe `Element` (un élément HTML) il est donc possible d'appeler dessus la méthode `querySelector()`_
 
 	> _**Rappel :** dans une classe en JS, le mot clé `this` est toujours obligatoire pour accéder à une propriété ou une méthode_
 
@@ -129,26 +132,33 @@ Le principe sera le suivant :
 	const helpForm = document.querySelector('.helpForm');
 	helpForm.addEventListener('submit', handleHelpFormSubmit);
 	```
+
+	Une fois l'écouteur d'événement ajouté, vous pouvez supprimer ces 2 lignes du `main.js`.
+
 	> _**Attention 1 :** la classe `HelpView` ne doit plus utiliser la variable globale `document` !_
 
 	> _**Attention 2 :** lorsqu'on utilise `addEventListener()` dans une classe on se retrouve confrontés à des problèmes de scope de `this` : dans la méthode déclenchée lorsque l'événement se produit, la valeur de `this` est "transformée" : ce n'est plus notre instance mais ça devient l'élément HTML qui a déclenché l'événement (dans notre cas la balise `<form>`)._
 	>
-	> Pour éviter ces problèmes le mieux quand on travaille avec des classes et de préférer l'emploi de **arrow functions** comme ceci :
+	> Pour éviter ces problèmes quand on travaille avec des classes le plus simple est de préférer l'emploi de **arrow functions** :
 	> ```js
-	> myElement.addEventListener('click', event => this.maMethode(event));
+	> // Au lieu d'écrire ceci :
+	> myElement.addEventListener('click', this.maMethode); // pas bien
+	>
+	> // on écrira plutôt ceci :
+	> myElement.addEventListener('click', event => this.maMethode(event)); // bien !
 	> ```
 
-
-	Une fois l'écouteur d'événement ajouté, vous pouvez supprimer ces 2 lignes du `main.js`.
 
 6. **Si vous ne l'aviez pas déjà fait ajoutez dans le fichier `mains.js` la ligne suivante :**
 	```js
 	const helpView = new HelpView(document.querySelector('.viewContent .help'));
 	```
 
-	A partir de maintenant notre application doit fonctionner comme avant (_vérifiez que la `HelpView` fait correctement son travail et détecte bien les champs vides puis ouvre bien la fenêtre de rédaction d'un email_) mais avec deux avantages :
+	Vérifiez que la `HelpView` fait correctement son travail et détecte bien les champs vides puis ouvre bien la fenêtre de rédaction d'un email.
+
+	Du point de vue de l'utilisateur ou de l'utilisatrice, notre application fonctionne donc exactement comme avant mais au niveau du code on a maintenant 2 gros avantages :
 	- notre module `HelpView` n'a plus besoin d'accéder à la variable globale `document`
-	- on a pu simplifier le code du `main.js` en écoutant le `submit` directement depuis la classe `HelpView` elle-même
+	- on a pu simplifier le code du `main.js` en écoutant le `submit` directement dans la classe `HelpView` elle-même
 
 ## D.4. Héritage : La classe View
 _**Je vous propose maintenant de créer une classe `View` qui va servir de base à toutes nos vues**_ (_`GameList`, `HelpView` et les futures "pages" de notre application JSteam_).
@@ -163,11 +173,10 @@ _**Je vous propose maintenant de créer une classe `View` qui va servir de base 
 
 	> _**NB :** vous pouvez supprimer la déclaration de la propriété publique `element` puisqu'elle est maintenant héritée_
 
-	> _**Souvenez-vous :** pour appeler le constructeur de la classe parente, c'est la fonction `super()` qu'il faut invoquer. Par ailleurs ça doit obligatoirement être la première instruction de votre constructeur enfant._
+	> _**Souvenez-vous :** pour appeler le constructeur de la classe parente, c'est la fonction `super()` qu'il faut invoquer. Par ailleurs cette instruction `super` doit obligatoirement être la première instruction du constructeur de votre classe enfant._
 
-3. **Pour vérifier si votre classe fonctionne correctement**, faites appel à la méthode `show` de votre instance `helpView` :
+3. **Pour vérifier si votre classe fonctionne correctement**, faites appel à la méthode `show` de votre instance `helpView`, dans le `main.js` ajoutez à la fin :
 	```js
-	const helpView = new HelpView(document.querySelector('.viewContent > .help'));
 	helpView.show();
 	```
 
@@ -180,7 +189,7 @@ _**Je vous propose maintenant de créer une classe `View` qui va servir de base 
 
 ## D.5. _Propriétés et méthodes statiques :_ La classe Router
 
-Dans cet exercice, je vous propose de développer une classe `Router` qui, à l'aide des **propriétés et méthodes statiques**, va gérer l'affichage à la fois du titre de la vue, et de son contenu.
+Dans cet exercice, je vous propose maintenant de développer une classe `Router` qui, à l'aide des **propriétés et méthodes statiques**, va gérer l'affichage à la fois du titre de la vue, et de son contenu.
 
 C'est une classe qui nous servira dans les prochains TP et qui nous permettra de
 naviguer d'une vue à l'autre sans rechargement de page (_principe de base des [SPA](https://en.wikipedia.org/wiki/Single-page_application)_).
@@ -232,16 +241,16 @@ Pour rappel les propriétés et méthodes statiques se déclarent à l'aide du m
 
 ```js
 class Counter {
-	static counter = 0;
+    static counter = 0;
     static getCounter() {
-		return this.counter++;
+        return this.counter++;
     }
 }
 
 // Les méthodes et propriété statiques s'appellent sans avoir besoin d'instancier la classe
 // (pas de `new Counter()` nécessaire)
 console.log(
-	Counter.getCounter(),   // 0
+    Counter.getCounter(),   // 0
     Counter.counter,        // 1
     Counter.getCounter(),   // 1
     Counter.counter,        // 2
@@ -272,9 +281,36 @@ console.log(
 
 4. **Enfin, modifiez le contenu de la fonction `handleMenuLinkClick` pour faire en sorte qu'elle utilise la méthode `Router.navigate()`.** Normalement vous devriez gagner pas mal de lignes !
 
-	Modifiez le `main.js` pour qu'au chargement de la page, ce ne soit plus la page "À propos" mais la gameList qui s'affiche par défaut.
 
+## D.5.4. Router et viewTitle
+Notre module `src/Router.js` permet de passer d'une vue à l'autre mais il reste un problème avec l'affichage du  titre de la page : quand on appelle `Router.navigate('/about')` dans le `main.js`, le titre de la page reste "MAGASIN" au lieu de "À PROPOS". Notre titre ne change qu'au clic.
+
+Pour résoudre ce problème, ajoutez à chaque route une propriété `title` comme ceci :
+```js
+const routes = [
+	{ path: '/', view: gameListView, title: 'Magasin' },
+	{ path: '/about', view: aboutView, title: 'À propos' },
+	{ path: '/help', view: helpView, title: 'Support' },
+];
+```
+Dans le `main.js` supprimez la ligne :
+```js
+document.querySelector('.viewTitle').innerHTML = '<h1>MAGASIN</h1>';
+```
+Dans la fonction `handleMenuLinkClick` supprimez aussi la ligne :
+```js
+document.querySelector('.viewTitle').innerHTML = `<h1>${linkText}</h1>`;
+```
+
+Ajoutez maintenant une nouvelle propriété statique `titleElement` au Router qu'on va renseigner dans le `main.js` comme ceci :
+```js
+Router.titleElement = document.querySelector('.viewTitle');
+```
+
+Utilisez maintenant la propriété `title` de chaque route dans la méthode `navigate` du `Router` pour lui permettre d'afficher le titre de la vue sélectionnée !
+
+Une fois que tout est OK, remettez la gameList comme page initiale en remplaçant `Router.navigate('/about')` par `Router.navigate('/')`.
 
 
 ## Étape suivante <!-- omit in toc -->
-Si vous avez terminé cette partie sur la POO, et qu'il vous reste du temps allons un peu plus loin dans la partie : [E. POO avancée](E-poo-avancee.md).
+Si vous avez terminé cette partie sur la POO, allons un peu plus loin dans la partie : [E. POO avancée](E-poo-avancee.md).

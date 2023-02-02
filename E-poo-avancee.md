@@ -8,7 +8,6 @@ _**Dans cette partie je vous propose quelques exercices complémentaires pour am
 - [E.1. private : Router et menu](#e1-private-router-et-menu)
 	- [E.1.1. Syntaxe : les propriétés privées](#e11-syntaxe-les-propriétés-privées)
 	- [E.1.2. Mise en oeuvre](#e12-mise-en-oeuvre)
-- [E.2. Router et title](#e2-router-et-title)
 - [E.3. History API](#e3-history-api)
 - [E.4. Le deep linking](#e4-le-deep-linking)
 - [E.5. GameList](#e5-gamelist)
@@ -16,11 +15,11 @@ _**Dans cette partie je vous propose quelques exercices complémentaires pour am
 ## E.1. private : Router et menu
 **L'objectif ici est de faire en sorte que le Router soit capable, tout seul, d'activer/désactiver les liens du menu en fonction de la route qu'on cherche à afficher.**
 
-On va pour cela s'appuyer sur une propriété privée `#menuElement`
+On va pour cela s'appuyer sur une propriété privée `#menuElement`.
 
 ### E.1.1. Syntaxe : les propriétés privées
 
-Pour déclarer et utiliser des propriétés ou méthodes privées il suffit de les préfixer du caractère `'#'`comme ceci :
+Pour déclarer et utiliser des propriétés ou méthodes privées il suffit de les préfixer du caractère `'#'` comme ceci :
 
 ```js
 class Character {
@@ -35,62 +34,36 @@ class Character {
 
 Comme les propriétés publiques, le support des propriétés et méthodes privées a été rajouté tout récemment dans ECMAScript (ES2022/ES13 sortie en juin 2022). Le `preset-env` de Babel permet de les utiliser dans notre code !
 
-Il est tout à fait possible de cumuler le `#` (_private_) avec le mot clé `static`
+Notez qu'il est tout à fait possible de cumuler le `#` (_private_) avec le mot clé `static`
 
 > _**NB :** Si vous vous demandez pourquoi on écrit `#propriete` et pas `private propriete` comme dans d'autres langages, la réponse se trouve ici :_ https://github.com/tc39/proposal-class-fields/blob/master/PRIVATE_SYNTAX_FAQ.md#why-arent-declarations-private-x
 
 ### E.1.2. Mise en oeuvre
-Si l'on met dans le `main.js`
+Commencez par remplacer la page affichée initialement dans le `main.js` en remplaçant `Router.navigate('/');` par
 ```js
 Router.navigate('/help')
 ```
-On s'attend à ce que le lien "Support" du menu soit sélectionné.
 
-Pour ce faire, on vous demande de :
+On voit bien en faisant ça que le lien du menu "Support" ne se sélectionne pas.
+
+Pour régler ce problème vous allez :
 - rajouter une propriété statique privée `menuElement` dans la classe `Router`
-- dans le `main.js` de passer `document.querySelector('.mainMenu')` à cette propriété statique `menuElement` à l'aide d'une nouvelle méthode `Router.setMenuElement()`
-- écouter le clic sur tous les liens contenus dans `menuElement` à l'intérieur de cette méthode `setMenuElement` de manière à supprimer les deux lignes suivantes du `main.js` :
+- créer une méthode statique `setMenuElement()` dans la classe `Router`
+- dans le `main.js` appelez cette nouvelle méthode `Router.setMenuElement()` en lui envoyant `document.querySelector('.mainMenu')`
+- à l'intérieur de la méthode `setMenuElement` écoutez le clic sur tous les liens contenus dans `menuElement` de manière à pouvoir supprimer les deux lignes suivantes du `main.js` :
 
 	```js
-	// on écoute le clic sur tous les liens du menu
 	const menuLinks = document.querySelectorAll('.mainMenu a');
 	menuLinks.forEach(link => link.addEventListener('click', handleMenuLinkClick));
 	```
 
-	> _Souvenez-vous des problèmes de scope de `this` avec `addEventListener` et de la technique d'utiliser les arrow functions_
-- dans la méthode `navigate` de la classe Router, de désactiver le lien qui correspond à l'ancienne vue affichée (_s'il y en avait une_) et d'activer celui qui correspond à la route demandée.
-- nettoyer la fonction `handleMenuLinkClick` des portions de code devenues inutiles
+	> _Souvenez-vous des problèmes de scope de `this` avec `addEventListener` vus tout à l'heure et de la technique d'utiliser les arrow functions_
+- dans la méthode `navigate` de la classe Router, retirez la classe CSS `active` au lien qui correspond à l'ancienne vue affichée (_s'il y en avait une_) et rajoutez la sur le lien qui correspond à la route demandée.
+- nettoyez enfin la fonction `handleMenuLinkClick` des portions de code devenues inutiles
 
-## E.2. Router et title
-Notre module `src/Router.js` est presque terminé mais il reste un problème : l'affichage du  titre de la page :
-- d'abord on utilise encore la variable globale `document` dans la fonction `handleMenuLinkClick`
-- mais surtout quand on appelle `Router.navigate('/help')` dans le `main.js`, le titre de la page reste "MAGASIN" au lieu de "SUPPORT". Notre titre ne change qu'au clic.
+Une fois tout ça fait, si vous rechargez la page, le lien "Support" doit être actif, mais si vous cliquez sur les liens du menu le lien actif doit changer.
 
-Pour résoudre ce problème, ajoutez à chaque route une propriété `title` comme ceci :
-```js
-const routes = [
-	{ path: '/', view: gameListView, title: 'Magasin' },
-	{ path: '/about', view: aboutView, title: 'À propos' },
-	{ path: '/help', view: helpView, title: 'Support' },
-];
-```
-Dans le `main.js` supprimez la ligne :
-```js
-document.querySelector('.viewTitle').innerHTML = '<h1>MAGASIN</h1>';
-```
-Dans la fonction `handleMenuLinkClick` supprimez aussi la ligne :
-```js
-document.querySelector('.viewTitle').innerHTML = `<h1>${linkText}</h1>`;
-```
-
-Ajoutez une propriété statique titleElement au Router renseignée dans le `main.js` comme ceci :
-```js
-Router.titleElement = document.querySelector('.viewTitle');
-```
-Et utilisez maintenant la propriété `title` de chaque route dans la méthode `navigate` du `Router` pour lui permettre d'afficher le titre de la vue sélectionnée !
-
-Une fois que tout est OK, remettez la gameList comme page initiale en remplaçant `Router.navigate('/help')` par `Router.navigate('/')`.
-
+À nouveau sur cette exercice, du point de vue de la personne qui visite notre site, rien n'a changé : pas de nouvelle fonctionnalité ! Mais par contre, au niveau du code, on a pu supprimer de notre module `Router.js` toutes les références à l'objet global `document` ce qui permet de faire de notre module `Router.js` un module vraiment réutilisable dans un autre projet !
 
 ## E.3. History API
 
@@ -167,4 +140,4 @@ On aura :
 ```js
 const gameListView = new GameListView(document.querySelector('.viewContent > .gameList'));
 ```
-Le but étant de ne plus avoir aucune référence à l'objet global `document` dans notre module !
+Le but étant de ne plus avoir aucune référence à l'objet global `document` dans notre module `GameListView.js` !
