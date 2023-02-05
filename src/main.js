@@ -166,7 +166,7 @@ renderGameList();
  * Fonction déclenchée au submit du formulaire de la page "Support"
  * Vérifie si les champs sont correctement renseignés et lance la rédaction
  * d'un email prérempli avec les infos saisies par l'utilisateur.rice
- * @param {*} event
+ * @param {Event} event
  */
 function handleHelpFormSubmit(event) {
 	event.preventDefault();
