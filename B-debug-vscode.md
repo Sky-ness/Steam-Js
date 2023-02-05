@@ -16,13 +16,15 @@ _**Pour débugger notre code, on a jusqu'ici toujours utilisé les devtools int�
 
 ## B.1. Configuration
 
-**Pour pouvoir debugger directement dans vscode, vscode a besoin d'une instance de Chrome en mode debug, ce qui va lui permettre de communiquer avec les devtools. On peut s'amuser à lancer Chrome en mode debug en le lançant en ligne de commande, mais le plus simple c'est de laisser vscode lancer Chrome tout seul, comme un grand.**
+**Pour pouvoir debugger directement dans vscode, vscode a besoin d'une instance de Chrome en mode debug, ce qui va lui permettre de communiquer avec les devtools.**
 
-> _**NB :** Il est aussi possible d'utiliser Firefox mais dans ce cas il vous faut installer l'extension vscode suivante : https://marketplace.visualstudio.com/items?itemName=firefox-devtools.vscode-firefox-debug_
+> _**NB :** Il est aussi possible d'utiliser Firefox mais la configuration du debug dans Firefox est plus complexe et peut prendre du temps. Si vous n'y êtes pas allergique, je vous conseille d'utiliser chrome qui est configuré par défaut dans vscode._
 >
-> _**Attention :** la configuration du debug dans Firefox est assez complexe et peut prendre du temps. Si vous n'y êtes pas allergique, je vous conseille d'utiliser chrome qui est configuré par défaut dans vscode_
+> _Si vous n'avez pas Chrome et que vous souhaitez utiliser Firefox, alors suivez donc les instructions du fichier [B. Débugger dans vscode : Firefox](./B-debug-vscode-firefox.md) avant de revenir ici_
 
-Il y a plusieurs techniques pour configurer tout ça dans vscode mais la solution que je vous propose est la suivante :
+**On peut s'amuser à lancer Chrome en mode debug en le lançant en ligne de commande, mais le plus simple c'est de laisser vscode lancer Chrome tout seul, comme un grand.**
+
+Il y a plusieurs techniques pour configurer tout ça dans vscode mais la solution la plus simple est la suivante :
 1. **Ouvrez le fichier `src/main.js` dans vscode** (avec <kbd>CTRL</kbd>+<kbd>P</kbd>)
 2. **Lancez une session de Debug :**
 	- soit en appuyant sur la touche <kbd>F5</kbd>
@@ -66,7 +68,7 @@ Il y a plusieurs techniques pour configurer tout ça dans vscode mais la solutio
 
 ## B.2. Utilisation du mode debug
 
-Cette nouvelle fenêtre de Chrome communique maintenant avec vscode. C'est ce qui va permettre à vscode d'offrir plusieurs fonctionnalités de debug intéressantes :
+Cette nouvelle fenêtre de Chrome (ou Firefox) communique maintenant avec vscode. C'est ce qui va permettre à vscode d'offrir plusieurs fonctionnalités de debug intéressantes :
 
 ### B.2.1. La Debug console
 **La "Debug console" qui s'affiche en bas, correspond plus ou moins à la "Console" de Chrome.**
