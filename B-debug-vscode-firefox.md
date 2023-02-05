@@ -4,7 +4,6 @@
 
 _**Si vous n'avez pas Chrome sur votre poste, vous pouvez aussi utiliser Firefox pour profiter du debugger de vscodium mais la configuration est plus complexe, d'où ce readme spécifique.**_
 
-La configuration diffère un peu selon que vous utilisez VSCodium ou VSCode :
 
 ## B.1. Installer l'extension "Debugger for Firefox"
 
