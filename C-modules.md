@@ -316,6 +316,7 @@ Avec **webpack dev server** on va pouvoir lancer les 2 à la fois, en une seule 
 	- à la fin du fichier, entre la clé `devtool: 'source-map',` et la dernière accolade, insérez :
 		```js
 		devServer: {
+			hot: false,
 			static: {
 				directory: './',
 				watch: {
