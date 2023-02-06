@@ -85,10 +85,10 @@ _**Maintenant que vous êtes un.e pro des appels AJAX, attardons nous quelques m
 
 Contrairement aux applis web classiques, lorsqu'un appel AJAX commence, le navigateur ne donne aucun indice permettant à l'utilisateur de deviner qu'il se passe quelque chose (_la page ne s'efface pas, il n'y a pas de "loader" ou de barre de progression_), il peut donc avoir l'impression que sa demande n'a pas été prise en compte, que le site est "planté", voire cliquer frénétiquement sur un bouton pour le faire marcher (_ce qui n'aura comme autre effet que de lancer autant de requêtes HTTP supplémentaires..._).
 
-**Il faut donc donner cette information à l'utilisateur nous même, en affichant par exemple un message ou une animation dans la page.**\
+**Il faut donc donner cette information à l'utilisateur nous même, en affichant par exemple un message ou une animation dans la page.**
 
 Dans la `GameListView` :
-1. ajoutez la classe 'is-loading' à la balise `<section class="results"></section>` juste avant de lancer l'appel AJAX à l'API, et retirez la classe `is-loading` une fois les données reçues (_**attention à l'ordre d'exécution des instructions !**_)
+1. ajoutez la classe `is-loading` à la balise `<section class="results"></section>` juste avant de lancer l'appel AJAX à l'API, puis retirez la classe `is-loading` une fois les données reçues (_**attention à l'ordre d'exécution des instructions !**_)
 
 	> _**NB :** Il est possible que comme l'API répond parfois très rapidement, vous n'ayez pas le temps de voir le loader apparaître._
 	>
@@ -100,7 +100,7 @@ Dans la `GameListView` :
 	>
 	> _**Astuce :** Une fois vos tests terminés, pensez à désactiver le bridage !!!_ :wink:
 
-2. Désactivez le bouton du formulaire de recherche pendant que l'appel AJAX est en cours pour éviter que l'utilisateur ne soumette plusieurs fois la même recherche !
+2. **Désactivez le bouton du formulaire de recherche pendant que l'appel AJAX est en cours** pour éviter que l'utilisateur ne soumette plusieurs fois la même recherche !
 
 	> _**NB1 :** La désactivation d'un bouton se fait en ajoutant un attribut [`disabled` (mdn)](https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/disabled)_
 
