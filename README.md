@@ -1,15 +1,15 @@
 <img src="images/readme/header.jpg">
 
 ## Objectifs
-- Mettre en oeuvre le système de modules
-- Savoir faire de la POO en JS
-- Débugger et développer plus facilement
+- Savoir charger des ressources distantes avec AJAX
+- Générer un code HTML en fonction de la valeur retournée par un appel AJAX
+- Connecter un formulaire à un webservice distant
 
 ## Sommaire
 Pour plus de clarté, les instructions du TP se trouvent dans des fichiers distincts (un fichier par sujet), procédez dans l'ordre sinon, ça fonctionnera beaucoup moins bien !
 
 1. [A. Préparatifs](A-preparatifs.md)
-2. [B. Debugger dans vscode](B-debug-vscode.md)
-3. [C. Les modules](C-modules.md)
-4. [D. POO](D-poo.md)
-5. [E. POO avancée](E-poo-avancee.md)
+2. [B. Charger un fichier statique](B-fichier-statique.md)
+3. [C. Interroger une API REST](C-api-rest.md)
+4. [D. GameDetail](D-poo.md)
+5. [E. Optimisations](E-poo-avancee.md)
