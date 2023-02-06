@@ -45,7 +45,7 @@ _**Maintenant que vous avez votre clé d'API, connectons notre appli aux webserv
 
 2. Dans la méthode `renderGameList()` **lancez un appel AJAX vers l'URL https://api.rawg.io/api/games?key=xxxxxxxxxxxxxxxxxxxxxx** (_n'oubliez pas votre clé d'API_).
 
-	> _**NB2 :** cette méthode `renderGameList() {...}` -[codée lors du précédent TP](https://gitlab.univ-lille.fr/js/tp3/-/blob/master/E-poo-avancee.md#e5-gamelist)- est appelée par la `GameListView` lorsqu'elle est affichée (méthode `show`) et quand l'utilisateur.rice soumet le formulaire de recherche (méthode `handleSearchFormSubmit()`)._
+	> _**NB2 :** cette méthode `renderGameList() {...}` -[codée lors du précédent TP](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/E-poo-avancee.md#e5-gamelist)- est appelée par la `GameListView` lorsqu'elle est affichée (méthode `show`) et quand l'utilisateur.rice soumet le formulaire de recherche (méthode `handleSearchFormSubmit()`)._
 	>
 	> _En plaçant notre appel AJAX dans cette méthode `renderGameList()`, la requête AJAX sera du coup déclenchée **à chaque fois que l'utilisateur arrive sur la page "MAGASIN"** mais aussi **à chaque fois qu'il fera une recherche** ! Ce qui permettra plus tard dans le TP d'avoir toujours des données à jour et de passer les critères de recherche à l'API._
 
