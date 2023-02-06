@@ -51,7 +51,7 @@ export default class GameListView extends View {
 		data
 			.filter(game => game.name.toLowerCase().includes(search.toLowerCase())) // recherche
 			.sort(sortingFunction) // tri
-			.forEach(name => (html += renderGameThumbnail(name))); // génération du HTML
+			.forEach(game => (html += renderGameThumbnail(game))); // génération du HTML
 		// maj de la page HTML
 		this.element.querySelector('.results').innerHTML = html;
 	}
