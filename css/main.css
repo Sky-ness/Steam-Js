@@ -75,6 +75,7 @@ a:hover {
 .viewContainer {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 .is-loading {

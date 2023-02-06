@@ -12,7 +12,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 }
-.helpForm button[type="submit"] {
+.button, .helpForm button[type="submit"] {
 	align-self: center;
 	margin-top: 30px;
 	border: 1px solid #181a21;
@@ -22,14 +22,16 @@
 	font-weight: bold;
 	cursor: pointer;
 	transition: all .15s cubic-bezier(0.19, 1, 0.22, 1);
+	transition: all .3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	background-image: linear-gradient(90deg, #06BFFF 50%, #2D73FF 90%);
 	background-size: 200%;
-	background-position: 50%;
+	background-position: 99% 0;
 	color: white;
 }
-.helpForm button[type="submit"]:hover {
+.button:hover, .helpForm button[type="submit"]:hover {
 	/* background-image: linear-gradient(90deg, #06BFFF 30%, #2D73FF 100%); */
 	background-position: 35%;
+	background-position: 0 0;
 	border-color: #06BFFF;
 }
 .helpForm label {

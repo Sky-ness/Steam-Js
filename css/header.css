@@ -17,30 +17,31 @@ body > header > nav {
 	max-width: 1000px;
 }
 
-body > header .logo {
+.logo {
 	display: flex;
 	align-items: center;
 	color: #c5c3c0;
 	text-decoration: none;
 	padding-right: 50px;
 }
-body > header .logo img {
+.logo img {
 	height: 44px;
 }
-body > header .logo span {
+.logo span {
 	display: inline-block;
 	text-transform: uppercase;
 	font-size: 24px;
 	font-weight: 500;
-	letter-spacing: 1px;
+	letter-spacing: .08em;
 	white-space: nowrap;
 	margin-left: 10px;
+	margin-left: 0.45em;
 	transform: translateX(-4px);
 }
-body > header .logo em {
+.logo em {
 	font-style: normal;
 }
-body > header .logo small {
+.logo small {
 	font-family: OpenSansCondensed;
 	font-size: 14px;
 	letter-spacing: 5px;
@@ -49,34 +50,34 @@ body > header .logo small {
 	color: #999;
 }
 
-body > header .logo img,
-body > header .logo span,
-body > header .logo em,
-body > header .logo em::first-letter,
-body > header .logo small {
+.logo img,
+.logo span,
+.logo em,
+.logo em::first-letter,
+.logo small {
 	transition: all .5s cubic-bezier(.190, 1.000, .220, 1.000);
 }
-body > header .logo:hover span {
+a.logo:hover span {
 	transform: translateX(0);
 }
-body > header .logo:hover img,
-body > header .logo:hover small {
+body > header a.logo:hover img,
+body > header a.logo:hover small {
 	/* transform: translateY(-1px); */
 	color: #fff;
 }
-body > header .logo em {
+.logo em {
 	display: inline-block;
 }
-body > header .logo em::first-letter {
+.logo em::first-letter {
 	color: #c5c3c033;
 }
-body > header .logo:hover em {
+body > header a.logo:hover em {
 	color: #f0db4f;
 }
-body > header .logo:hover em::first-letter {
+body > header a.logo:hover em::first-letter {
 	color: inherit;
 }
-body > header .logo:hover img {
+body > header a.logo:hover img {
 	filter: brightness(2);
 }
 body > header ul.mainMenu {
