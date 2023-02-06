@@ -55,15 +55,24 @@ Il va vous servir de base pour ce nouveau TP.
 
 ## A.2. Lancement de l'application
 
-Dans le TP précédent nous avons configuré webpack pour activer le Live Reload. La commande pour lancer le projet a donc changé par rapport aux précédents TPs : plus besoin de deux commandes (_1 pour lancer un serveur http, 1 autre pour compiler le code avec webpack et babel_), on peut maintenant lancer tout en une seule commande grâce à webpack-dev-server :
+Dans le TP précédent nous avons [configuré webpack pour activer le Live Reload](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/C-modules.md#c6-webpack-live-reload). \
+La commande pour lancer le projet a donc changé par rapport aux précédents TPs : plus besoin de deux commandes (_1 pour lancer un serveur http, 1 autre pour compiler le code avec webpack et babel_), on peut maintenant lancer tout en une seule commande grâce à webpack-dev-server :
 
 1. **Lancez webpack dev server** dans un terminal intégré de VSCodium (<kbd>CTRL</kbd>+<kbd>J</kbd> *(PC)* / <kbd>CMD</kbd>+<kbd>J</kbd> *(Mac)*) :
 	```bash
 	npm start
 	```
 
-2. **Lancez une session de debug dans vscode**
-	TODO
+2. **Pour afficher votre site, plutôt que d'ouvrir vous-même votre navigateur, utilisez la fonctionnalité de debug dans VSCode testée lors du précédent TP :**
+
+	> _Si vous n'aviez pas pu faire cette partie pour des questions de compatibilité de Firefox, je vous invite à :_
+	> 1. _suivre le tutoriel spécifique à Firefox ici : https://gitlab.univ-lille.fr/js/tp3/-/blob/main/B-debug-vscode-firefox.md_
+	> 2. _prendre connaissance des différentes possibilités offertes par le debug dans vscode ici : https://gitlab.univ-lille.fr/js/tp3/-/blob/main/B-debug-vscode.md#b2-utilisation-du-mode-debug_
+
+	Pour lancer votre site en mode "debug dans vscode", tapez <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> puis sélectionnez "Debug: Select and start debugging".
+
+	Choisissez le navigateur que vous souhaitez lancer (Firefox ou Chrome), une nouvelle fenêtre de votre navigateur doit s'ouvrir (on considérera pour la suite que c'est Chrome que vous avez choisi).
+
 4. **Vérifiez dans le navigateur qui s'est ouvert que la page `index.html` s'affiche correctement** :
 
 	<img src="images/readme/screen-00.png" >
@@ -72,16 +81,37 @@ Dans le TP précédent nous avons configuré webpack pour activer le Live Reload
 
 ## A.3. Solution du TP2
 
-WIP / à mettre à jour
-
 **Avant de vous lancer dans ce TP, prenez 5 à 10 minutes pour lire le code contenu dans le dossier `/src`** et comparez le avec votre code du précédent TP.
 
 **C'est important de bien comprendre le code qui vous est fourni car vous allez avoir à le modifier dans ce TP** : si des points ne sont pas clairs interrogez votre encadrant.e de TP !
 
-**Attention : si vous n'aviez pas eu le temps de terminer le TP3**, portez une attention toute particulière aux classes `Router`, `View` et `GameListView`.
+**Attention : si vous n'aviez pas eu le temps de terminer le TP3**, portez une attention toute particulière aux classes :
+- `Router`
+- `View`
+- et `GameListView`
 
-TODO : vérifier que deeplinking ok/ bts prev/next du navigateur : lien vers readme du TP4
-TODO : vérifier que compris Router : ecouter clic sur logo et navigate Home
+Si vous n'aviez pas terminé le TP3, voici également une fonctionnalité nouvelle de JSteam : la Hitory API et le deeplinking.
+
+Ces deux fonctionnalités permettent à votre code JS de changer l'adresse dans la barre d'adresse **SANS rechargement de page** et d'utiliser également les boutons précédent/suivant du navigateur : essayez un peu les liens du menu et la navigation avec les boutons précédent/suivant du navigateur.
+
+<img src="images/readme/history-final.gif" />
+
+Le code de cette fonctionnalité se trouve à la fin du `main.js` :
+```js
+// chargement de la vue initiale selon l'URL demandée par l'utilisateur.rice (Deep linking)
+Router.navigate(window.location.pathname);
+// gestion des boutons précédent/suivant du navigateur (History API)
+window.onpopstate = () => Router.navigate(document.location.pathname, true);
+```
+
+et dans la méthode `Router.navigate` :
+```js
+// History API : ajout d'une entrée dans l'historique du navigateur
+// pour pouvoir utiliser les boutons précédent/suivant
+if (!skipPushState) {
+	window.history.pushState(null, null, path);
+}
+```
 
 ## Étape suivante <!-- omit in toc -->
-Maintenant que votre code compile, vous pouvez passer à l'étape suivante : [B. Les bases de l'API DOM](B-les-bases.md)
+Maintenant que tout est clair et que votre site est lancé, passons au premier exercice : [B. Charger un fichier statique](B-fichier-statique.md)

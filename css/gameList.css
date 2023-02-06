@@ -76,10 +76,15 @@
 	cursor: pointer;
 	transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.searchForm button[type=submit]:hover {
+.searchForm button[type=submit]:not(:disabled)hover {
 	filter: brightness(1.1);
 }
-
+.searchForm button[type=submit]:disabled {
+	opacity: .7;
+	cursor: wait;
+	background-color: #454d58;
+	color:#fff5;
+}
 .gameList,
 .gameList .results {
 	display: flex;
@@ -132,6 +137,7 @@
 } */
 .gameList a > img {
 	object-fit: cover;
+	background: linear-gradient(-20deg, #1c2a3f, #1a4156);
 	height: calc(100% - 38px);
 	object-position: top left;
 	transition: all .5s cubic-bezier(0.785, 0.135, 0.15, 0.86);

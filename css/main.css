@@ -82,8 +82,8 @@ a:hover {
 	position:relative;
 	min-height: 300px;
 }
-.is-loading * {
-	display: none;
+.is-loading > * {
+	display: none !important;
 }
 .is-loading:before {
 	content: '';
@@ -101,8 +101,8 @@ a:hover {
 	left:50%;
 	width: 50px;
 	height: 50px;
-	border: 1px black solid;
-	border-top-color: rgba(0,0,0,.1);
+	border: 1px #67c1f5 solid;
+	border-top-color: #67c1f533;
 	z-index: 2;
 	border-radius: 50%;
 	animation: rotate .5s linear infinite;
