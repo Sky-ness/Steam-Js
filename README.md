@@ -11,4 +11,4 @@ Pour plus de clarté, les instructions du TP se trouvent dans des fichiers disti
 1. [A. Préparatifs](A-preparatifs.md)
 2. [B. Charger un fichier statique](B-fichier-statique.md)
 3. [C. Interroger une API REST](C-api-rest.md)
-4. [D. GameDetail](D-gamedetail.md)
+4. [D. GameDetailView](D-gamedetail.md)

@@ -107,4 +107,4 @@ Dans la `GameListView` :
 	> _**NB2 :** Vous remarquerez peut-être que les styles CSS appliqués au bouton lorsqu'il est désactivé permettent à l'internaute de savoir que quelque chose se passe : bouton grisé + curseur "wait"_
 
 ## Étape suivante  <!-- omit in toc -->
-Maintenant que l'on est capable de faire communiquer notre appli JS avec un serveur distant, nous allons voir dans le prochain exercice comment envoyer des données au serveur pour qu'il les enregistre en bdd : [C. AJAX : POST & formulaires](C-post.md).
+Maintenant que vous savez comment faire communiquer une appli JS avec un serveur distant, voyons comment réappliquer ça sur une deuxième page dans la partie [D. GameDetailView](D-gamedetail.md).
