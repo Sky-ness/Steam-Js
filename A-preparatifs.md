@@ -99,7 +99,7 @@ Ces deux fonctionnalités permettent à votre code JS de changer l'adresse dans 
 Le code de cette fonctionnalité se trouve à la fin du `main.js` :
 ```js
 // chargement de la vue initiale selon l'URL demandée par l'utilisateur.rice (Deep linking)
-Router.navigate(window.location.pathname);
+Router.navigate(window.location.pathname, true);
 // gestion des boutons précédent/suivant du navigateur (History API)
 window.onpopstate = () => Router.navigate(document.location.pathname, true);
 ```
