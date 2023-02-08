@@ -91,13 +91,13 @@ A partir de maintenant le plus dur est fait !
 
 Notre classe GameDetail connaît le slug du jeu à afficher, elle va dont pouvoir interroger l'API REST pour avoir tous les détails du jeu :
 
-1. En vous inspirant de l'appel AJAX qu'on a fait dans la `GameListView`, appelez le webservice https://api.rawg.io/api/games/&lt;slug&gt;?key=xxxxxxxxxxx (_cf. https://api.rawg.io/docs/#operation/games_read_)
+1. **En vous inspirant de l'appel AJAX qu'on a fait dans la `GameListView`, appelez le webservice** https://api.rawg.io/api/games/&lt;slug&gt;?key=xxxxxxxxxxx (_cf. https://api.rawg.io/docs/#operation/games_read_)
 
-2. Une fois la réponse du webservice reçue, affichez le nom du jeu dans la page (_toujours dans `this.element`_) :
+2. **Une fois la réponse du webservice reçue, affichez le nom du jeu dans la page** (_toujours dans `this.element`_) :
 
 	<img src="images/readme/detail-name.png" />
 
-3. Maintenant que vous avez récupéré le contenu du jeu, affichez des informations supplémentaires dans la page, par exemple :
+3. **Maintenant que vous avez récupéré le contenu du jeu, affichez des informations supplémentaires dans la page**, par exemple :
 	- note metacritic / date de parution
 	- plateformes supportées (parent_platform)
 	- genres
@@ -105,7 +105,7 @@ Notre classe GameDetail connaît le slug du jeu à afficher, elle va dont pouvoi
 	- description
 	- image de fond
 
-	Si vous voulez un exemple de code HTML qui fonctionne avec les styles CSS qui vous sont fournis, en voici un (_notez que les genres et les plateformes sont des listes_):
+	Si vous voulez un exemple de code HTML qui fonctionne avec les styles CSS qui vous sont fournis, en voici un (_notez que les genres et les plateformes sont des listes, vous aurez donc potentiellement plusieurs balises `<li>`_) :
 
 	```html
 	<div class="backgroundImage">
@@ -153,24 +153,52 @@ Le rendu devrait ressembler à ceci :
 
 ## D.4. Lien GameList / GameDetail et modification du Router
 
-- modification href renderGameThumbnail
-	- récupérer l'info depuis le JSON retourné par le WS
-	- remplacer le href de l'image par celui du slug
-- modification GameList
-	- ajout écouteur d'événement clic
-		- porter attention à quel moment le faire (dans le show)
-			- soit dans le show + querySelectorAll + addEventListener
-			- soit dans le constructeur + querySelector + test sur le target
-	- récupération href
+_**Maintenant que la `GameDetailView` fonctionne, ne reste plus qu'à faire en sorte qu'on puisse passer de la page liste à la page détail en cliquant sur une vignette.**_
+
+Pour faire ça, il va falloir écouter le clic sur les vignettes dans la `GameListView`, puis appeler `Router.navigate()` avec l'URL correspondant à la page détail du jeu sur lequel on a cliqué.
+
+1. **Pour simplifier le travail de la `GameListView` commencez par modifier dans la fonction `renderGameThumbnail()` le `href` de la balise `<a>` des vignettes** :
+
+	```js
+	return `<a href="${background_image}">
+	```
+
+	au lieu de faire un lien vers `image_background` faites donc un lien vers `/detail-slug-du-jeu` (_en remplaçant bien sûr `slug-du-jeu` par ... le `slug` du jeu !_ 😅)
+
+2. **Une fois le href modifié, dans la classe `GameListView` écoutez le clic sur les liens des vignettes**, récupérez le href du lien cliqué, et appelez la méthode `Router.navigate`.
+
+	Par exemple si l'on clique sur la vignette de Mario Kart 8 Deluxe, le href du lien doit être `/detail-mario-kart-8-deluxe` et donc la GameListView doit faire appel à `Router.navigate('/detail-mario-kart-8-deluxe')`
+
+	> _**Indice :** comme on a plusieurs liens à écouter, il vous faudra probablement un querySelectorAll, une boucle et appeler addEventListener pour chaque vignette._
+
+	> _**Indice 2 :** pour récupérer la valeur du `href` vous pouvez utiliser la propriété `event.currentTarget` qui contient le lien sur lequel on a cliqué, et la méthode `getAttribute` pour récupérer la valeur du `href`_
+
+	> _**Indice 3 :** faites attention à faire vos addEventListener à un moment où les liens existent dans la page..._
+
+Si on clique sur la vignette du jeu "The Witcher 3: Wild Hunt", la page de détail doit s'afficher **SANS RECHARGEMENT DE PAGE !!** (_vérifiez bien dans l'onglet network des devtools que la page n'est pas rechargée complètement quand vous cliquez sur le lien_) :
 
 <img src="images/readme/detail-nav.png" />
 
 
 ## D.5. Screenshots
-https://api.rawg.io/docs/#operation/games_screenshots_list
+**Pour terminer cet exercice je vous propose d'afficher des screenshots dans la page détail.**
+
+Il se trouve en effet que l'API de rawg dispose d'un endpoint spécial pour ça : https://api.rawg.io/docs/#operation/games_screenshots_list
+
+Dans la `GameDetailView`, **interrogez ce webservice**, puis une fois les résultats reçus, générez pour chaque screenshot le code HTML suivant :
 
 ```html
 <a href="..."><img src="..." /></a>
 ```
 
+Puis insérez le code HTML ainsi généré dans la balise `<div class="screenshots"></div>`.
+
+Le rendu doit être le suivant :
+
 <img src="images/readme/detail-screenshots.png" />
+
+Voilà !
+
+Si vous le souhaitez vous pouvez encore améliorer la page :
+- détecter le clic sur le lien "Tous les jeux" pour rediriger vers la page liste sans rechargement de page
+- faire en sorte que les critères de recherche ne soient pas perdus lors du passage liste -> detail -> liste
