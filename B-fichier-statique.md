@@ -38,7 +38,7 @@ On pourrait coder ça directement dans le fichier `main.js` mais comme vu lors d
 
 1. **Commencez par créer une classe spéciale pour la vue "À propos" :** créez un fichier `src/AboutView.js` et codez-y une classe `AboutView` qui hérite de la classe `View`.
 
-2. **Dans le `main.js` modifiez la déclaration de la constante `helpView` :** plutôt que d'instancier la classe `View`, instanciez votre nouvelle classe `HelpView`.
+2. **Dans le `main.js` modifiez la déclaration de la constante `aboutView` :** plutôt que d'instancier la classe `View`, instanciez votre nouvelle classe `AboutView`.
 
 	Testez le changement de page dans le navigateur, vérifiez que la page http://localhost:8000/about fonctionne toujours :
 
@@ -67,7 +67,7 @@ On pourrait coder ça directement dans le fichier `main.js` mais comme vu lors d
 	</div>
 	```
 
-4. **Dans la classe `HelpView`, surchargez la méthode `show` et lancez le chargement du fichier `about.html` avec fetch :**
+4. **Dans la classe `AboutView`, surchargez la méthode `show` et lancez le chargement du fichier `about.html` avec fetch :**
 	```js
 	fetch('./about.html');
 	```
