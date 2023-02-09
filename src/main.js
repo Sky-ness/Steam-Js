@@ -27,6 +27,6 @@ Router.titleElement = document.querySelector('.viewTitle');
 Router.setMenuElement(document.querySelector('.mainMenu'));
 
 // chargement de la vue initiale selon l'URL demandée par l'utilisateur.rice (Deep linking)
-Router.navigate(window.location.pathname);
+Router.navigate(window.location.pathname, true);
 // gestion des boutons précédent/suivant du navigateur (History API)
 window.onpopstate = () => Router.navigate(document.location.pathname, true);
