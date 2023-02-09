@@ -6,8 +6,6 @@
 
 **Pour voir si vous avez bien tout assimilé, voyons dans cet exercice si vous êtes capables de développer une page de détail pour les jeux de notre liste !**
 
-Le principe est simple : faire en sorte que quand on clique sur une vignette de jeu dans la liste, on soit redirigé vers une page de détail du jeu qu'on a choisi, avec des informations supplémentaires (_screenshots, plateformes supportées, description, etc._).
-
 
 ## Sommaire <!-- omit in toc -->
 - [D.1. Création de GameDetailView](#d1-création-de-gamedetailview)
@@ -16,6 +14,8 @@ Le principe est simple : faire en sorte que quand on clique sur une vignette de 
 - [D.4. Lien GameList / GameDetail et modification du Router](#d4-lien-gamelist-gamedetail-et-modification-du-router)
 - [D.5. Screenshots](#d5-screenshots)
 
+
+Le principe de cet exercice est simple : faire en sorte que quand on clique sur une vignette de jeu dans la liste, on soit redirigé vers une page de "détail" du jeu qu'on a choisi, avec des informations supplémentaires (_screenshots, plateformes supportées, description, etc._).
 
 > _Pour cet exercice vous pouvez choisir de faire tout.e seul.e comme un.e grand.e ou bien suivre les instructions ci-dessous._
 >
@@ -31,11 +31,11 @@ Cette balise est contenue dans la balise `<div class="viewContent activeOnly">`,
 
 La première étape que je vous propose est donc de faire en sorte qu'on soit capables d'afficher cette balise "gameDetail" :
 
-1. Créez une classe `GameDetailView` qui hérite de la classe `View` dans un module `src/GameDetail.js`.
+1. **Créez une classe `GameDetailView`** qui hérite de la classe `View` dans un module `src/GameDetail.js`.
 
 	> _pour le moment on n'a pas de comportement particulier à ajouter à cette classe, faites la juste étendre de `View`._
-2. Dans le fichier `main.js` créez une instance de cette classe `GameDetailView` nommée `gameDetailView` (_avec un "g" minuscule_) et passez en paramètre du constructeur la balise `<article class="gameDetail">`
-3. Pour afficher cette vue, il faut dire au Router quelle URL lui correspond. Cela se fait en modifiant le tableau `routes` qui ressemble actuellement à ceci :
+2. **Dans le fichier `main.js` créez une instance de cette classe `GameDetailView` nommée `gameDetailView` (_avec un "g" minuscule_)** et passez en paramètre du constructeur la balise (Element) `<article class="gameDetail">`
+3. **Pour afficher cette vue, il faut dire au Router quelle URL lui correspond.** Cela se fait en modifiant le tableau `routes` qui ressemble actuellement à ceci :
 
 	```js
 	const routes = [
@@ -50,18 +50,19 @@ La première étape que je vous propose est donc de faire en sorte qu'on soit ca
 	- dans la propriété `title` ce que vous voulez (_par exemple `'Détail jeu'`_)
 	- dans la propriété `path` mettons pour le moment une adresse temporaire pour nous permettre de tester notre page : `/detail`
 
-		> _on dit "temporaire" car à un moment donné il faudra bien dire à faire figurer dans l'adresse l'id du jeu que la page de détail doit afficher_
+		> _on dit "temporaire" car à un moment donné il faudra bien mettre dans l'URL l'id du jeu que la page détail doit afficher_
 		>
-		> _Pour le moment on essaie déjà d'afficher la page, on verra par la suite comment faire ça_
-4. Maintenant que la route est créée, rendez vous sur l'adresse http://localhost:8000/detail normalement la balise `<article class="gameDetail">` doit s'afficher  :
+		> _Mais pour le moment on va faire simple, on va déjà essayer juste d'afficher la page, on verra par la suite comment passer l'id_
+
+4. **Maintenant que la route est créée, rendez-vous sur l'adresse http://localhost:8000/detail** normalement la balise `<article class="gameDetail">` doit s'afficher  :
 
 	<img src="images/readme/detail-init.png" />
 
 ## D.2. Récupération du jeu à afficher
 
-Notre GameDetailView s'affiche mais elle est pour le moment incapable de savoir quel jeu charger.
+La première étape est terminée : notre `GameDetailView` s'affiche. Mais par contre elle est pour le moment incapable de savoir quel jeu afficher.
 
-Pour lui indiquer le jeu à récupérer depuis l'API on va passer dans l'URL de la page un [`slug` _(wikipedia)_](https://fr.wikipedia.org/wiki/Slug_(journalisme)#En_informatique). Chaque jeu de l'API de rawg dispose d'un slug unique, si vous inspectez la réponse du webservice https://api.rawg.io/api/games?key=votre-cle-d-api vous verrez qu'on a bien pour chaque jeu une propriété `slug` :
+Pour lui indiquer le jeu à afficher on va passer dans l'URL de la page un ["`slug`" _(wikipedia)_](https://fr.wikipedia.org/wiki/Slug_(journalisme)#En_informatique). Chaque jeu de l'API de rawg dispose en effet d'un slug unique. Si vous inspectez la réponse du webservice https://api.rawg.io/api/games?key=votre-cle-d-api vous verrez qu'on a bien pour chaque jeu une propriété `slug` :
 
 <img src="images/readme/detail-api-slug.png" />
 
@@ -69,27 +70,30 @@ On va donc maintenant essayer de faire en sorte que lorsque l'on va sur http://l
 - le Router soit capable de savoir que c'est la route qui correspond à `GameDetailView` qu'il doit afficher
 - le Router envoie à la `GameDetailView` la partie de l'URL qui se trouve **après** les caractères `"detail-"` (_par exemple en paramètre de l'appel à la méthode `show`_)
 
-Il y a plein de techniques pour faire ça, mais vous pouvez par exemple :
-1. Remplacer le `path` de votre route `/detail` par `/detail-*`
-2. Dans la méthode `Router.navigate()`, au moment où le `Router` parcourt toutes les routes pour trouver celle qui correspond à l'URL demandée (`const route = this.routes.find(...)`), tester si le `path` de la route termine par une `*` et si l'URL demandée (_dans notre exemple `/detail-mario-kart-8-deluxe`_) **commence** par la même chose que ce qui se trouve avant l'`*` dans la route.
+Il y a plein de techniques pour faire ça, mais je vous propose de procéder comme ceci :
+1. Dans le tableau `routes` du `main.js` remplacez le `path` de votre route `/detail` par `/detail-*`
+2. Dans la méthode `Router.navigate()`, au moment où le `Router` parcourt toutes les routes pour trouver celle qui correspond à l'URL demandée (`const route = this.routes.find(...)`), testez si le `path` de la route **termine** par une `*` et si l'URL demandée (_dans notre exemple `/detail-mario-kart-8-deluxe`_) **commence** par la même chose que ce qui se trouve avant l'`*` dans la route.
 
-	Exemple :
-	- si la `route.path` est `/detail-*` on prend tout ce qui se trouve "avant" le `*` donc `/detail-`
-	- on vérifie si l'URL demandée (`path`) commence par `/detail-`. Dans le cas de  `/detail-mario-kart-8-deluxe` c'est bien le cas, c'est donc cette route là qui est la bonne et que doit retourner le `this.routes.find`
+	> _**NB :** la classe String dispose justement de méthodes pour tester si une chaîne **commence** ou **termine** par une autre..._
 
-	Essayez de charger la page http://localhost:8000/detail-mario-kart-8-deluxe, si tout va bien c'est la page Détail qui doit s'afficher. Idem si vous vous rendez sur http://localhost:8000/detail-red-dead-redemption
+	> _**Exemple :** pour bien comprendre :_
+	> - _si la `route.path` est `/detail-*`, comme elle termine par `*` on prend tout ce qui se trouve "avant" le `*` donc `/detail-`_
+	> - _une fois cette chaîne sans le `*` calculée (`/detail-`) on vérifie si l'URL demandée (`path`) commence par `/detail-`. Dans le cas de  `/detail-mario-kart-8-deluxe` c'est bien le cas, c'est donc cette route là (`{path:'/detail-*', view:gameDetailView, title: 'Détail jeu'}`) qui est la bonne et que doit retourner le `this.routes.find`_
 
-	<img src="images/readme/detail-init.png" />
+	Une fois que vous avez modifié votre Router, essayez de charger la page http://localhost:8000/detail-mario-kart-8-deluxe : si tout va bien c'est la page détail qui doit s'afficher. Idem si vous vous rendez sur http://localhost:8000/detail-red-dead-redemption
 
-3. le Router doit envoyer à la vue le reste de l'URL (ce qui correspond au caractère `*` dans l'URL courante), ici ce sera tout ce qui se trouve après `/detail-` soit `mario-kart-8-deluxe`
-4. Dans la `GameDetailView` récupérez cette information dans la méthode `show` (_pensez que c'est un override et qu'il faut donc faire appel à `super.show()`_) et affichez la dans la page, par exemple avec une instruction `this.element.innerHTML = ...`
+		<img src="images/readme/detail-init.png" />
+
+3. **le Router doit envoyer à la vue le reste de l'URL** (_ce qui correspond au caractère `*` dans l'URL courante_), ici ce sera tout ce qui se trouve après `/detail-` soit `mario-kart-8-deluxe`
+
+4. **Dans la `GameDetailView` récupérez cette information dans la méthode `show`** (_pensez que c'est un override et qu'il faut donc faire appel à `super.show()`_) et affichez la dans la page, par exemple avec une instruction `this.element.innerHTML = ...`
 
 	<img src="images/readme/detail-slug.png" />
 
 ## D.3. Appel webservice et affichage
-A partir de maintenant le plus dur est fait !
+_**A partir de maintenant le plus dur est fait !**_
 
-Notre classe GameDetail connaît le slug du jeu à afficher, elle va dont pouvoir interroger l'API REST pour avoir tous les détails du jeu :
+Notre classe GameDetail connaît le slug du jeu à afficher, elle va dont pouvoir interroger l'API REST pour récupérer tous les détails du jeu :
 
 1. **En vous inspirant de l'appel AJAX qu'on a fait dans la `GameListView`, appelez le webservice** https://api.rawg.io/api/games/&lt;slug&gt;?key=xxxxxxxxxxx (_cf. https://api.rawg.io/docs/#operation/games_read_)
 
@@ -105,7 +109,7 @@ Notre classe GameDetail connaît le slug du jeu à afficher, elle va dont pouvoi
 	- description
 	- image de fond
 
-	Si vous voulez un exemple de code HTML qui fonctionne avec les styles CSS qui vous sont fournis, en voici un (_notez que les genres et les plateformes sont des listes, vous aurez donc potentiellement plusieurs balises `<li>`_) :
+	Si vous voulez un exemple de code HTML qui fonctionne avec les styles CSS qui vous sont fournis, en voici un (_notez que les genres et les plateformes sont des listes, vous aurez donc potentiellement plusieurs balises `<li>`, notez aussi que vous n'êtes pas obligé.e.s de tout coder, vous pouvez laisser certaines parties en dur si vous le souhaitez_) :
 
 	```html
 	<div class="backgroundImage">
@@ -199,6 +203,6 @@ Le rendu doit être le suivant :
 
 Voilà !
 
-Si vous le souhaitez vous pouvez encore améliorer la page :
+**Si vous le souhaitez vous pouvez encore améliorer la page :**
 - détecter le clic sur le lien "Tous les jeux" pour rediriger vers la page liste sans rechargement de page
 - faire en sorte que les critères de recherche ne soient pas perdus lors du passage liste -> detail -> liste
