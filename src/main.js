@@ -1,7 +1,8 @@
+import AboutView from './AboutView.js';
+import GameDetailView from './GameDetailView.js';
 import GameListView from './GameListView.js';
 import HelpView from './HelpView.js';
 import Router from './Router.js';
-import View from './View.js';
 
 // Modification du footer
 document.querySelector('body > footer > div:nth-of-type(2)').innerHTML +=
@@ -12,13 +13,19 @@ const helpView = new HelpView(document.querySelector('.viewContent .help'));
 const gameListView = new GameListView(
 	document.querySelector('.viewContent > .gameList')
 );
-const aboutView = new View(document.querySelector('.viewContent > .about'));
+const aboutView = new AboutView(
+	document.querySelector('.viewContent > .about')
+);
+const gameDetailView = new GameDetailView(
+	document.querySelector('.viewContent > .gameDetail')
+);
 
 // mise en place du Router
 const routes = [
 	{ path: '/', view: gameListView, title: 'Magasin' },
 	{ path: '/about', view: aboutView, title: 'À propos' },
 	{ path: '/help', view: helpView, title: 'Support' },
+	{ path: '/detail-*', view: gameDetailView, title: 'Détail jeu' },
 ];
 Router.routes = routes;
 // élément dans lequel afficher le <h1> de la vue

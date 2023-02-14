@@ -39,15 +39,37 @@ export default class Router {
 	 * @param {Boolean} skipPushState active/désactive le pushState (gestion des boutons précédent/suivant du navigateur)
 	 */
 	static navigate(path, skipPushState = false) {
-		const route = this.routes.find(route => route.path === path);
+		const route = this.routes.find(route => {
+			// TP4 / D. GameDetail : D.2. Récupération du jeu à afficher
+			// Gestion du cas de la page "Détail jeu"
+			// Si le path de la route termine par "*" comme dans "/detail-*"
+			if (route.path.endsWith('*')) {
+				// alors on vérifie si le path courant (l'URL demandée par l'internaute)
+				// commence par la même chose que la route sans "*"
+				const routePathStart = route.path.replace('*', ''); // ex. "/detail-"
+				return path.startsWith(routePathStart); // "/detail-mario-kart" commence par "/detail-"
+			} else {
+				// en cas de route sans caractère "*" on teste juste l'égalité simple
+				// entre le path (ex. "/help")
+				// et le path de chaque route ("/help", "/about", "/", ...)
+				return route.path === path;
+			}
+		});
 		if (route) {
 			// on masque la vue précédente
 			if (this.currentRoute) {
 				this.currentRoute.view.hide();
 			}
 			this.currentRoute = route;
+			// TP4 / D. GameDetail : D.2. Récupération du jeu à afficher
 			// on affiche la nouvelle vue
-			route.view.show();
+			let viewParam;
+			if (route.path.endsWith('*')) {
+				const routePathStart = route.path.replace('*', ''); // route.path = "/detail-*" -> routePathStart = "/detail-"
+				const pathEnd = path.replace(routePathStart, ''); // path = "/detail-mario-kart" -> pathEnd = "mario-kart"
+				viewParam = pathEnd;
+			}
+			route.view.show(viewParam);
 			this.titleElement.innerHTML = `<h1>${route.title}</h1>`;
 
 			// Activation/désactivation des liens du menu
@@ -55,12 +77,6 @@ export default class Router {
 				newMenuLink = this.#menuElement.querySelector(`a[href="${path}"]`);
 			previousMenuLink?.classList.remove('active'); // on retire la classe "active" du précédent menu
 			newMenuLink?.classList.add('active'); // on ajoute la classe CSS "active" sur le nouveau lien
-			// NB: on utilise ici le optional chaining operator `?.` : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Optional_chaining
-			// cet opérateur permet d'éviter d'avoir à tester si la constante `previousMenuLink` n'est pas nulle
-			// et donc d'éviter d'avoir à faire un `if` comme ceci :
-			// if (previousMenuLink) {
-			// 	previousMenuLink.classList.remove('active');
-			// }
 
 			// History API : ajout d'une entrée dans l'historique du navigateur
 			// pour pouvoir utiliser les boutons précédent/suivant

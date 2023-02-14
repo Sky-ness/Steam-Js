@@ -1,6 +1,6 @@
-import data from './data.js';
-
+import { API_KEY } from './config.js';
 import renderGameThumbnail from './renderGameThumbnail.js';
+import Router from './Router.js';
 import View from './View.js';
 
 export default class GameListView extends View {
@@ -36,24 +36,33 @@ export default class GameListView extends View {
 	 * @param {string} ordering ordre d'affichage des résultats
 	 */
 	renderGameList(search = '', ordering) {
-		// calcul de la fonction de tri selon le paramètre ordering
-		let sortingFunction;
-		switch (ordering) {
-			case '-metacritic':
-				sortingFunction = (a, b) => b.metacritic - a.metacritic;
-				break;
-			case '-released':
-				sortingFunction = (a, b) => b.released.localeCompare(a.released);
-				break;
-		}
-		// parcours du tableau + génération du code HTML de la gameList
-		let html = '';
-		data
-			.filter(game => game.name.toLowerCase().includes(search.toLowerCase())) // recherche
-			.sort(sortingFunction) // tri
-			.forEach(game => (html += renderGameThumbnail(game))); // génération du HTML
-		// maj de la page HTML
-		this.element.querySelector('.results').innerHTML = html;
+		this.element.querySelector('.results').classList.add('is-loading');
+		this.searchForm.querySelector('button').disabled = true;
+		this.searchForm.querySelector('button').setAttribute('disabled', true);
+		fetch(
+			`https://api.rawg.io/api/games?search=${encodeURIComponent(
+				search
+			)}&ordering=${encodeURIComponent(ordering)}&key=${API_KEY}`
+		)
+			.then(response => response.json())
+			.then(data => {
+				// rendu de la liste des jeux
+				let html = '';
+				data.results.forEach(game => (html += renderGameThumbnail(game)));
+				this.element.querySelector('.results').innerHTML = html;
+				// suppression du "loader" et réactivation du formulaire
+				this.element.querySelector('.results').classList.remove('is-loading');
+				this.searchForm.querySelector('button').disabled = false;
+				// détection du clic sur les vignettes de jeu
+				// pour navigation vers la page détail (sans rechargement de page)
+				const gameLinks = this.element.querySelectorAll('.results > a');
+				gameLinks.forEach(gameLink =>
+					gameLink.addEventListener('click', event => {
+						event.preventDefault();
+						Router.navigate(gameLink.getAttribute('href'));
+					})
+				);
+			});
 	}
 	/**
 	 * Fonction qui permet d'afficher ou masquer le formulaire de recherche
