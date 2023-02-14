@@ -46,7 +46,7 @@ La première étape que je vous propose est donc de faire en sorte qu'on soit ca
 	```
 
 	Ajoutez donc une nouvelle `route` (_un nouvel objet littéral_) dans le tableau `routes` avec :
-	- dans le paramètre `view` votre instance `gameListView`.
+	- dans le paramètre `view` votre instance `gameDetailView`.
 	- dans la propriété `title` ce que vous voulez (_par exemple `'Détail jeu'`_)
 	- dans la propriété `path` mettons pour le moment une adresse temporaire pour nous permettre de tester notre page : `/detail`
 
