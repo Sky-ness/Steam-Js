@@ -32,8 +32,8 @@ _**jQuery doit permettre de simplifier notre code, voyons dans cette partie du T
 	> _**Pour jQuery, on n'a pas utilisé l'option `--save-dev` car on va utiliser jQuery dans notre code, de fait il est installé dans la section `"dependencies"`.**_
 	>
 	> _Documentation officielle :_
-	> - _dependencies : https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies_
-	> - _devDependencies : https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies_
+	> - _dependencies : https://docs.npmjs.com/cli/v9/configuring-npm/package-json#dependencies_
+	> - _devDependencies : https://docs.npmjs.com/cli/v9/configuring-npm/package-json#devdependencies_
 
 
 4. **Une fois tout installé, vous pouvez relancer la compilation à l'aide de la commande :**
